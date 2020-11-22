@@ -13,7 +13,6 @@
   }
   header,
   .animation {
-    width: fit-content;
     justify-self: center;
   }
   header {
@@ -25,9 +24,7 @@
     height: 2px;
   }
   header > a {
-    margin-block-start: 1rem;
-    display: block;
-    width: fit-content;
+    display: inline-block;
   }
   .animation {
     grid-area: animation;
