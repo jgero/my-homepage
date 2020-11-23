@@ -30,6 +30,7 @@ body {
   --light-3: #BEC5FF;
   --light-4: #DEE4FA;
   --light-5: #F8FBFF;
+  --warn: #FF0000;
 }
 
 h1, h2 {

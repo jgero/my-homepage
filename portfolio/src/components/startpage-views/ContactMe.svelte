@@ -4,9 +4,21 @@
   let email = "";
   let name = "";
   let message = "";
+  let resultMessage = "";
+
+  const messageRegExp = new RegExp("^[\\w\\näöüÄÖÜ .,-]+$");
+
+  function checkMessage() {
+    document
+      .getElementById("message")
+      .setCustomValidity(
+        messageRegExp.test(message) ? "" : "Please match the requested format."
+      );
+  }
 
   async function sendContactInfo() {
-    // sanatize input here and add regexes
+    document.getElementById("submit-button").disabled = true;
+    resultMessage = "Sending E-Mail...";
     const res = await fetch("/contact.json", {
       method: "POST",
       headers: {
@@ -18,9 +30,20 @@
         message,
       }),
     });
-    const json = await res.json();
-    let result = JSON.stringify(json);
-    console.log(result);
+    const response = await res.json();
+    if (response.success) {
+      resultMessage = "E-Mail was sent successfully!";
+      setTimeout(() => {
+        resultMessage = "";
+      }, 5000);
+    } else {
+      resultMessage = "Something went wrong";
+      setTimeout(() => {
+        resultMessage = "";
+      }, 5000);
+      console.error(`Sending mail failed with: ${response.message}`);
+    }
+    document.getElementById("submit-button").disabled = false;
   }
 </script>
 
@@ -50,6 +73,11 @@
     flex-direction: column;
   }
 
+  form:invalid > button,
+  button:disabled {
+    opacity: 0.4;
+  }
+
   .input-container {
     position: relative;
     margin-top: 0.4rem;
@@ -68,12 +96,17 @@
     top: -0.5rem;
     font-size: 0.5rem;
   }
+  .input-container > input:invalid + label.stowed,
+  .input-container > textarea:invalid + label.stowed {
+    color: var(--warn);
+  }
   div.input-container:nth-child(3) {
     flex: 1;
   }
   input,
   textarea {
     outline: none;
+    box-shadow: none;
     padding: 0.4rem;
     width: 100%;
     font-size: 1rem;
@@ -95,6 +128,15 @@
   textarea:focus {
     border-bottom-color: var(--light-1);
   }
+  p.snackbar {
+    position: fixed;
+    bottom: 5em;
+    left: 10em;
+    background: var(--light-3);
+    padding: 0.5em 2em;
+    max-width: 300px;
+    border-radius: 0.4em;
+  }
 </style>
 
 <div class="container">
@@ -110,22 +152,39 @@
     out:fly={{ x: 200, duration: 200 }}
     on:submit|preventDefault={sendContactInfo}>
     <div in:fly={{ x: 200, duration: 1500, delay: 0 }} class="input-container">
-      <input type="text" id="email" bind:value={email} />
+      <input type="email" id="email" required bind:value={email} />
       <label for="email" class={email ? 'stowed' : ''}>E-Mail</label>
     </div>
     <div
       in:fly={{ x: 200, duration: 1500, delay: 200 }}
       class="input-container">
-      <input type="text" id="name" bind:value={name} />
+      <input
+        type="text"
+        id="name"
+        required
+        pattern="^[\wäöüÄÖÜ .-]+$"
+        bind:value={name} />
       <label for="name" class={name ? 'stowed' : ''}>Name</label>
     </div>
     <div
       in:fly={{ x: 200, duration: 1500, delay: 400 }}
       class="input-container">
-      <textarea id="message" bind:value={message} />
+      <textarea
+        id="message"
+        required
+        on:change={checkMessage}
+        bind:value={message} />
       <label for="message" class={message ? 'stowed' : ''}>Message</label>
     </div>
-    <button in:fly={{ x: 200, duration: 1500, delay: 600 }} class="primary">send
-      message</button>
+    <button
+      type="submit"
+      id="submit-button"
+      in:fly={{ x: 200, duration: 1500, delay: 600 }}
+      class="primary">send message</button>
   </form>
 </div>
+{#if resultMessage !== ''}
+  <p transition:fly={{ y: 70, duration: 200 }} class="snackbar">
+    {resultMessage}
+  </p>
+{/if}
