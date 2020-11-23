@@ -35,23 +35,25 @@ export async function post(req, res) {
 
   // create a nodemailer transporter
   const transporter = createTransport({
-    service: "gmail",
+    host: "mail.privateemail.com",
+    port: 465,
     auth: {
       user: responsePayloadAddress,
       pass: responsePayloadPassword,
     },
   });
+
   // set name as heading
   let htmlMessage = `<h1>Message from: ${data.name}</h1>`;
   // set message as paragraph
-  htmlMessage = `<p>${data.message}</p>`;
+  htmlMessage += `<p>${data.message}</p>`;
 
   let mailOptions = {
     from: responsePayloadAddress,
     replyTo: data.email,
-    to: "johannes.gerold.ext@gmail.com",
+    to: "mail@jgero.me",
     cc: "",
-    subject: "contact form on my webpage",
+    subject: "[my webpage] contact form submission",
     html: htmlMessage,
   };
   transporter
