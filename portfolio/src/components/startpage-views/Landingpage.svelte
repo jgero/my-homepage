@@ -47,12 +47,11 @@
       <br />
       gerold
     </h1>
-    <div in:fly={{ x: -200, duration: 1500, delay: 600 }}>
-      <h2 in:fly={{ x: -200, duration: 1500, delay: 800 }}>
-        web developer,
-        <br />full stack.
-      </h2>
-    </div>
+    <div in:fly={{ x: -200, duration: 1500, delay: 600 }} />
+    <h2 in:fly={{ x: -200, duration: 1500, delay: 800 }}>
+      web developer,
+      <br />full stack.
+    </h2>
   </header>
   <figure>
     <Clouds />
