@@ -58,10 +58,6 @@
 <style>
 </style>
 
-<svelte:head>
-  <title>Sapper project template</title>
-</svelte:head>
-
 {#if fragment === '#top'}
   <Landingpage />
 {:else if fragment === '#project_showcase'}

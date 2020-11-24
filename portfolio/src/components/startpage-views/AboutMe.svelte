@@ -33,6 +33,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Johannes Gerold - about me</title>
+</svelte:head>
+
 <div class="wrapper">
   <header out:fly={{ x: -200, duration: 200 }}>
     <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>about me</h1>

@@ -1,6 +1,8 @@
 <script>
   import Nav from "../components/Nav.svelte";
   import Sidebar from "../components/Sidebar.svelte";
+
+  export let segment;
 </script>
 
 <style>
@@ -18,7 +20,9 @@
 <Nav />
 
 <main>
-  <Sidebar />
+  {#if !segment}
+    <Sidebar />
+  {/if}
   <div>
     <slot />
   </div>

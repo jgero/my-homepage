@@ -34,8 +34,9 @@
     margin: 1rem 0;
   }
 
-  button {
+  a {
     margin-inline-end: 1em;
+    display: inline-block;
   }
 
   figure {
@@ -61,6 +62,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Johannes Gerold - project showcase</title>
+</svelte:head>
+
 <div class="wrapper">
   <section>
     <header out:fly={{ x: -200, duration: 200 }}>
@@ -81,7 +86,7 @@
       Google cloud Firebase service.
     </p>
     <div in:fly={{ x: -200, duration: 1500, delay: 1000 }}>
-      <button class="primary">see more</button>
+      <a href="/project_showcases/roesena" class="button primary">see more</a>
       <a href="https://rösena.de" class="button stroked" target="_blank">visit
         webpage</a>
     </div>

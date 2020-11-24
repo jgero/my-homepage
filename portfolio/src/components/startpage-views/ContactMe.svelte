@@ -139,6 +139,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Johannes Gerold - contact me</title>
+</svelte:head>
+
 <div class="container">
   <header out:fly={{ x: -200, duration: 200 }}>
     <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>contact me</h1>

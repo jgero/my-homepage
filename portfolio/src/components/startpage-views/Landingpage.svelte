@@ -34,6 +34,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Johannes Gerold - startpage</title>
+</svelte:head>
+
 <div class="container">
   <header>
     <h1
