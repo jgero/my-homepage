@@ -50,24 +50,29 @@
 <style>
   div.container {
     display: grid;
-    grid-template-rows: 1fr 3fr 1fr;
-    grid-template-columns: min-content auto;
-    grid-template-areas: ". ." "header form" ". .";
-    padding: 2rem;
-    box-sizing: border-box;
     height: 100%;
+    padding: 10vh 2rem;
+    box-sizing: border-box;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "header form";
   }
   header {
     grid-area: header;
+    width: max-content;
+    justify-self: center;
   }
   header > div {
     background-color: var(--dark-4);
     height: 2px;
   }
+  header > h1 {
+    margin-top: 1em;
+  }
 
   form {
     grid-area: form;
     width: 400px;
+    padding: 10vh;
     justify-self: center;
     display: flex;
     flex-direction: column;
@@ -147,9 +152,7 @@
   <header out:fly={{ x: -200, duration: 200 }}>
     <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>contact me</h1>
     <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
-    <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>
-      johannes.gerold.ext@gmail.com
-    </h2>
+    <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>mail@jgero.me</h2>
   </header>
 
   <form

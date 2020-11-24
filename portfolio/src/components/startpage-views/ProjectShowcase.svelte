@@ -10,9 +10,10 @@
   .wrapper {
     display: grid;
     height: 100%;
-    grid-template-columns: 10rem 1fr 2fr 10rem;
-    grid-template-rows: 1fr 3fr 1fr;
-    grid-template-areas: ". . . ." ". text images ." ". . . .";
+    padding: 10vh 2rem;
+    box-sizing: border-box;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "text images";
   }
 
   div.spacer {
@@ -22,7 +23,6 @@
   }
 
   section {
-    width: min-content;
     grid-area: text;
   }
 
@@ -42,23 +42,29 @@
   figure {
     grid-area: images;
     position: relative;
+    width: max-content;
+    padding-left: 10vw;
+    height: max-content;
+    padding-bottom: 10vw;
+    margin: 0;
+    align-self: center;
+    justify-self: center;
   }
-  img:nth-child(1) {
+  img:nth-child(2),
+  img:nth-child(3) {
+    position: absolute;
     top: 0;
     right: 0;
   }
   img:nth-child(2) {
-    top: 5vw;
-    right: 5vw;
+    transform: translate(-5vw, 5vw);
   }
   img:nth-child(3) {
-    top: 10vw;
-    right: 10vw;
+    transform: translate(-10vw, 10vw);
   }
 
   img {
     width: 30vw;
-    position: absolute;
   }
 </style>
 
@@ -67,8 +73,8 @@
 </svelte:head>
 
 <div class="wrapper">
-  <section>
-    <header out:fly={{ x: -200, duration: 200 }}>
+  <section out:fly={{ x: -200, duration: 200 }}>
+    <header>
       <h1>
         <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>project showcase</h1>
         <div in:fly={{ x: -200, duration: 1500, delay: 200 }} class="spacer" />

@@ -1,4 +1,7 @@
 <script>
+  import { stores } from "@sapper/app";
+  const { page } = stores();
+
   import Nav from "../components/Nav.svelte";
   import Sidebar from "../components/Sidebar.svelte";
 
@@ -20,7 +23,7 @@
 <Nav />
 
 <main>
-  {#if !segment}
+  {#if !segment & !$page.error}
     <Sidebar />
   {/if}
   <div>

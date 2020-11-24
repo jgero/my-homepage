@@ -7,9 +7,11 @@
   .container {
     display: grid;
     height: 100%;
-    grid-template-columns: 2rem 1fr 3fr 2rem;
-    grid-template-rows: 1fr 1fr 4fr 1fr;
-    grid-template-areas: ". . . ." ". header . ." ". header clouds ." ". . . .";
+    padding: 10vh 2rem;
+    box-sizing: border-box;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 4fr;
+    grid-template-areas: "header ." "header clouds";
   }
   h1,
   h2 {
@@ -18,7 +20,7 @@
 
   header {
     grid-area: header;
-    width: min-content;
+    width: max-content;
     justify-self: center;
   }
 
@@ -39,23 +41,18 @@
 </svelte:head>
 
 <div class="container">
-  <header>
-    <h1
-      in:fly={{ x: -200, duration: 1500, delay: 800 }}
-      out:fly={{ x: -200, duration: 200, delay: 0 }}>
+  <header out:fly={{ x: -200, duration: 200, delay: 0 }}>
+    <h1 in:fly={{ x: -200, duration: 1500, delay: 400 }}>
       johannes
       <br />
       gerold
     </h1>
-    <div
-      in:fly={{ x: -200, duration: 1500, delay: 1000 }}
-      out:fly={{ x: -200, duration: 200, delay: 50 }} />
-    <h2
-      in:fly={{ x: -200, duration: 1500, delay: 1200 }}
-      out:fly={{ x: -200, duration: 200, delay: 100 }}>
-      web developer,
-      <br />full stack.
-    </h2>
+    <div in:fly={{ x: -200, duration: 1500, delay: 600 }}>
+      <h2 in:fly={{ x: -200, duration: 1500, delay: 800 }}>
+        web developer,
+        <br />full stack.
+      </h2>
+    </div>
   </header>
   <figure>
     <Clouds />

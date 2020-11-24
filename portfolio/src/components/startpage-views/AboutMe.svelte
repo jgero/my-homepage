@@ -7,17 +7,17 @@
   .wrapper {
     display: grid;
     height: 100%;
-    grid-template-rows: 2fr 1fr;
-    grid-template-columns: 2rem 1fr 3fr 2rem;
-    grid-template-areas: ". header animation ." ". . . .";
-  }
-  header,
-  .animation {
-    justify-self: center;
+    padding: 10vh 2rem;
+    box-sizing: border-box;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "header animation";
   }
   header {
     grid-area: header;
-    align-self: center;
+    width: max-content;
+  }
+  header > h1 {
+    margin-top: 1em;
   }
   header > div {
     background-color: var(--dark-4);
@@ -26,10 +26,15 @@
   header > a {
     display: inline-block;
   }
+  header,
+  .animation {
+    justify-self: center;
+  }
   .animation {
     grid-area: animation;
     transform: scale(1.5);
-    align-self: flex-end;
+    align-self: center;
+    width: min-content;
   }
 </style>
 
