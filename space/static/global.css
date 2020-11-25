@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  color: #e5e5e5;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+a {
+  color: inherit;
+}
