@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import { fly } from "svelte/transition";
   import Sidebar from "../components/Sidebar.svelte";
   import Landingpage from "../components/startpage-views/Landingpage.svelte";
   import ProjectShowcase from "../components/startpage-views/ProjectShowcase.svelte";
@@ -58,9 +59,13 @@
 
 <style>
   main {
-    display: flex;
+    position: absolute;
+    width: 100%;
     height: 100%;
+    box-sizing: border-box;
+    padding-top: 4rem;
     overflow: hidden;
+    display: flex;
   }
 
   div {
@@ -68,7 +73,7 @@
   }
 </style>
 
-<main>
+<main out:fly={{ x: -200, duration: 200 }}>
   <Sidebar />
   <div>
     {#if fragment === '#top'}

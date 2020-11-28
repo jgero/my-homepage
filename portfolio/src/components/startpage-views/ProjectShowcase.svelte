@@ -79,7 +79,7 @@
         <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>project showcase</h1>
         <div in:fly={{ x: -200, duration: 1500, delay: 200 }} class="spacer" />
         <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>
-          web-app for carnival club
+          web-app for a carnival club
         </h2>
       </h1>
     </header>

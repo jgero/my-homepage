@@ -1,4 +1,6 @@
 <script>
+  import { fly, fade } from "svelte/transition";
+
   import image1 from "images/portfolio_project_1.png";
   import image2 from "images/roesena_mobile.png";
 
@@ -76,6 +78,14 @@
 </script>
 
 <style>
+  main {
+    position: absolute;
+    overflow-y: auto;
+    top: 4rem;
+    height: calc(100% - 4rem);
+    display: flex;
+    flex-direction: column;
+  }
   .hero-section {
     display: flex;
     justify-content: space-evenly;
@@ -91,6 +101,7 @@
   figure {
     margin: 0;
     margin-right: -8vw;
+    z-index: 2;
   }
   figure > img {
     box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -191,52 +202,56 @@
   }
 </style>
 
-<div class="hero-section">
-  <header>
-    <h1>RöSeNa - App</h1>
-    <div />
-    <h2>web-app for a carnival club</h2>
-  </header>
+<main out:fly={{ x: 200, duration: 200 }}>
+  <div class="hero-section">
+    <header>
+      <h1 in:fly={{ duration: 1500, x: -200 }}>RöSeNa - App</h1>
+      <div in:fly={{ duration: 1500, x: -200, delay: 200 }} />
+      <h2 in:fly={{ duration: 1500, x: -200, delay: 400 }}>
+        web-app for a carnival club
+      </h2>
+    </header>
 
-  <figure>
-    <img src={image1} alt="webpage screenshot desktop" />
-    <img src={image2} alt="webpage screenshot mobile" />
-  </figure>
-</div>
-
-<div class="tech-section">
-  <header>
-    <h1>technologies</h1>
-    <div />
-  </header>
-
-  <div class="tech-cards-container">
-    {#each technologies as tech}
-      <section>
-        <span class="material-icons">{tech.icon}</span>
-        <h2>{tech.name}</h2>
-        <p>{tech.text}</p>
-      </section>
-    {/each}
+    <figure in:fly={{ duration: 1500, x: 200 }}>
+      <img src={image1} alt="webpage screenshot desktop" />
+      <img src={image2} alt="webpage screenshot mobile" />
+    </figure>
   </div>
-</div>
 
-<div class="feature-section">
-  <header>
-    <h1>features</h1>
-    <div />
-  </header>
-  <div class="feature-container">
-    {#each features as feature}
-      <section>
-        <div class="icon-wrapper">
-          <span class="material-icons">{feature.icon}</span>
-        </div>
-        <div class="text-wrapper">
-          <h2>{feature.name}</h2>
-          <p>{feature.text}</p>
-        </div>
-      </section>
-    {/each}
+  <div in:fade class="tech-section">
+    <header>
+      <h1>technologies</h1>
+      <div />
+    </header>
+
+    <div class="tech-cards-container">
+      {#each technologies as tech}
+        <section>
+          <span class="material-icons">{tech.icon}</span>
+          <h2>{tech.name}</h2>
+          <p>{tech.text}</p>
+        </section>
+      {/each}
+    </div>
   </div>
-</div>
+
+  <div class="feature-section">
+    <header>
+      <h1>features</h1>
+      <div />
+    </header>
+    <div class="feature-container">
+      {#each features as feature}
+        <section>
+          <div class="icon-wrapper">
+            <span class="material-icons">{feature.icon}</span>
+          </div>
+          <div class="text-wrapper">
+            <h2>{feature.name}</h2>
+            <p>{feature.text}</p>
+          </div>
+        </section>
+      {/each}
+    </div>
+  </div>
+</main>

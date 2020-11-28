@@ -8,6 +8,7 @@
   nav {
     position: sticky;
     top: 0;
+    height: 4rem;
     background-color: var(--light-5);
     transition: box-shadow linear 0.3s;
     z-index: 99;
