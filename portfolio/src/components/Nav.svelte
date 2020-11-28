@@ -1,5 +1,7 @@
 <script>
   import github from "images/github.png";
+
+  export let hasShadow;
 </script>
 
 <style>
@@ -7,8 +9,11 @@
     position: sticky;
     top: 0;
     background-color: var(--light-5);
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow linear 0.3s;
     z-index: 99;
+  }
+  nav.shadow {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
   }
   ul {
     --space: 1em;
@@ -36,7 +41,7 @@
   }
 </style>
 
-<nav>
+<nav class={hasShadow ? 'shadow' : ''}>
   <ul>
     <li><a href="/#top">johannes gerold</a></li>
     <li><a href="/#contact_me">contact me</a></li>
