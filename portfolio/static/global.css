@@ -9,6 +9,8 @@ html, body, #sapper {
 #sapper {
   display: flex;
   flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
 }
 
 body {
