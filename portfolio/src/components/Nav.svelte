@@ -3,6 +3,13 @@
 </script>
 
 <style>
+  nav {
+    position: sticky;
+    top: 0;
+    background-color: var(--light-5);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+    z-index: 99;
+  }
   ul {
     --space: 1em;
     margin: 0;

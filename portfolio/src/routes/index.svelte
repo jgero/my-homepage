@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import Sidebar from "../components/Sidebar.svelte";
   import Landingpage from "../components/startpage-views/Landingpage.svelte";
   import ProjectShowcase from "../components/startpage-views/ProjectShowcase.svelte";
   import AboutMe from "../components/startpage-views/AboutMe.svelte";
@@ -56,14 +57,28 @@
 </script>
 
 <style>
+  main {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  div {
+    flex: 1;
+  }
 </style>
 
-{#if fragment === '#top'}
-  <Landingpage />
-{:else if fragment === '#project_showcase'}
-  <ProjectShowcase />
-{:else if fragment === '#about_me'}
-  <AboutMe />
-{:else if fragment === '#contact_me'}
-  <ContactMe />
-{/if}
+<main>
+  <Sidebar />
+  <div>
+    {#if fragment === '#top'}
+      <Landingpage />
+    {:else if fragment === '#project_showcase'}
+      <ProjectShowcase />
+    {:else if fragment === '#about_me'}
+      <AboutMe />
+    {:else if fragment === '#contact_me'}
+      <ContactMe />
+    {/if}
+  </div>
+</main>
