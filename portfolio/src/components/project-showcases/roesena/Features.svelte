@@ -61,9 +61,26 @@
 </script>
 
 <style>
+  .feature-section {
+    background-color: var(--light-2);
+    --box-spacing: 10rem;
+  }
+  @media screen and (max-width: 600px) {
+    .feature-section {
+      --box-spacing: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   .feature-section > header {
-    margin-left: 10rem;
-    margin-top: 10rem;
+    margin-left: var(--box-spacing);
+    margin-top: var(--box-spacing);
+  }
+  @media screen and (max-width: 600px) {
+    .feature-section > header {
+      margin-left: 0;
+    }
   }
   header {
     width: max-content;
@@ -75,27 +92,36 @@
   .feature-section > header > h1 {
     color: var(--light-5);
   }
-  .feature-section {
-    background-color: var(--light-2);
-  }
   .feature-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 10rem;
+    padding: var(--box-spacing);
+  }
+  @media screen and (max-width: 600px) {
+    .feature-container {
+      justify-content: center;
+    }
   }
   .feature-section section {
     --spacing: 3rem;
-    --box-width: 35vw;
-    --size-minus-space: calc(var(--box-width) - 2 * var(--spacing));
+    --box-width: max(300px, 35vw);
+    /* --size-minus-space: calc(var(--box-width) - 2 * var(--spacing)); */
     display: flex;
     box-sizing: border-box;
     padding: var(--spacing);
     margin-bottom: var(--spacing);
     width: var(--box-width);
+    /* width: var(--box-width); */
+    min-width: 300px;
     border-radius: var(--spacing);
     background-color: var(--light-5);
     box-shadow: 7px 7px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+  @media screen and (max-width: 600px) {
+    .feature-section section {
+      --spacing: 2rem;
+    }
   }
   .feature-section section .icon-wrapper {
     display: flex;

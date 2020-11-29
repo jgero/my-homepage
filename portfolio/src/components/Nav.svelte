@@ -36,6 +36,10 @@
   li:first-child {
     margin-right: auto;
   }
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
 
   li:not(:first-child) {
     margin-inline-start: calc(2 * var(--space));

@@ -13,6 +13,7 @@
     overflow-y: auto;
     top: 4rem;
     height: calc(100% - 4rem);
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -20,6 +21,12 @@
     display: flex;
     justify-content: space-evenly;
     margin-top: 10rem;
+  }
+  @media screen and (max-width: 600px) {
+    .hero-section {
+      flex-direction: column;
+      align-items: center;
+    }
   }
   header {
     width: max-content;
@@ -35,6 +42,11 @@
     margin: 0;
     margin-right: -8vw;
     z-index: 2;
+  }
+  @media screen and (max-width: 600px) {
+    figure {
+      margin-top: 2rem;
+    }
   }
   figure > img {
     box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);

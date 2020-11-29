@@ -15,7 +15,6 @@ html, body, #sapper {
 
 body {
   font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
   margin: 0;
   color: var(--dark-2);
 }

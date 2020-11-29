@@ -26,13 +26,25 @@
 <style>
   .tech-section {
     background-color: var(--light-1);
+    --box-spacing: 10rem;
+  }
+  @media screen and (max-width: 600px) {
+    .tech-section {
+      --box-spacing: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
   .tech-section > header {
-    margin-left: 10rem;
-    margin-top: 10rem;
-  }
-  header {
+    margin-left: var(--box-spacing);
+    margin-top: var(--box-spacing);
     width: max-content;
+  }
+  @media screen and (max-width: 600px) {
+    .tech-section > header {
+      margin-left: 0;
+    }
   }
   header > div {
     background-color: var(--dark-4);
@@ -46,10 +58,17 @@
     --box-width: 400px;
     --size-minus-space: calc(var(--box-width) - 2 * var(--spacing));
     width: var(--box-width);
+    margin-bottom: var(--spacing);
     border-radius: var(--spacing);
     background-color: var(--light-5);
     position: relative;
     box-shadow: 7px 7px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+  @media screen and (max-width: 600px) {
+    .tech-section section {
+      --spacing: 2rem;
+      --box-width: 300px;
+    }
   }
   .tech-section section > h2 {
     height: var(--box-width);
@@ -72,10 +91,16 @@
     padding-bottom: var(--spacing);
   }
   .tech-cards-container {
-    padding: 10rem;
-    margin-bottom: -15rem;
+    padding: var(--box-spacing);
+    margin-bottom: calc(var(--box-spacing) * -1.8);
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width: 600px) {
+    .tech-cards-container {
+      justify-content: center;
+    }
   }
 </style>
 
