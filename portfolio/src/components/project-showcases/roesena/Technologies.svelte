@@ -5,20 +5,20 @@
     {
       name: "Angular",
       icon: "fullscreen",
-      text:
-        "The web framework used for building the app is angular with it's component library angular-material. To manage the state of the app the Redux Pattern is used with the help of NgRx.",
+      text: `The web framework used for building the app is angular with it's component library angular-material.
+            To manage the state of the app the redux pattern is used with the help of NgRx.`,
     },
     {
       name: "CI with GitHub actions",
       icon: "cached",
-      text:
-        "Continuous integration is used to automatically test and deploy security rules for the firebase services, cloud functions, database indexes and the hosted files.",
+      text: `Continuous integration is used to automatically test and deploy security rules for the firebase services,
+            cloud functions, database indexes and the hosted files.`,
     },
     {
       name: "deployed to Firebase",
       icon: "cloud",
-      text:
-        "All the services the app provides are running on the google firebase plattform. This includes the authentication, image storage, database, cloud functions and hosting.",
+      text: `All the services the app provides are running on the google firebase plattform.
+            This includes the authentication, image storage, database, cloud functions and hosting.`,
     },
   ];
 </script>
