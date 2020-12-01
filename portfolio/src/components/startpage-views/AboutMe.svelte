@@ -12,9 +12,23 @@
     grid-template-columns: 1fr 3fr;
     grid-template-areas: "header animation";
   }
+  @media screen and (max-width: 600px) {
+    .wrapper {
+      padding: 5vh 2rem;
+      grid-template-columns: auto;
+      grid-template-rows: 2fr 3fr;
+      grid-template-areas: "header" "animation";
+    }
+  }
   header {
     grid-area: header;
     width: max-content;
+    justify-self: center;
+  }
+  @media screen and (max-width: 600px) {
+    header {
+      justify-self: unset;
+    }
   }
   header > h1 {
     margin-top: 1em;
@@ -26,15 +40,23 @@
   header > a {
     display: inline-block;
   }
-  header,
-  .animation {
-    justify-self: center;
-  }
   .animation {
     grid-area: animation;
+    position: relative;
+    width: 100%;
+  }
+  .positioning-helper {
+    position: absolute;
+    top: 25%;
+    right: 30%;
     transform: scale(1.5);
-    align-self: center;
-    width: min-content;
+  }
+  @media screen and (max-width: 600px) {
+    .positioning-helper {
+      top: 0%;
+      right: -13%;
+      transform: scale(0.5);
+    }
   }
 </style>
 
@@ -60,6 +82,8 @@
     in:fly={{ y: 300, duration: 3000 }}
     out:fly={{ y: 300, duration: 200 }}
     class="animation">
-    <SolarSystemAnimated />
+    <div class="positioning-helper">
+      <SolarSystemAnimated />
+    </div>
   </div>
 </div>

@@ -31,6 +31,11 @@
     width: max-content;
     justify-self: center;
   }
+  @media screen and (max-width: 600px) {
+    header {
+      justify-self: unset;
+    }
+  }
 
   header > div {
     background-color: var(--dark-4);

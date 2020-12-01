@@ -56,10 +56,23 @@
     grid-template-columns: 1fr 3fr;
     grid-template-areas: "header form";
   }
+  @media screen and (max-width: 600px) {
+    div.container {
+      padding: 5vh 2rem;
+      grid-template-columns: auto;
+      grid-template-rows: 1fr 3fr;
+      grid-template-areas: "header" "form";
+    }
+  }
   header {
     grid-area: header;
     width: max-content;
     justify-self: center;
+  }
+  @media screen and (max-width: 600px) {
+    header {
+      justify-self: unset;
+    }
   }
   header > div {
     background-color: var(--dark-4);
@@ -76,6 +89,13 @@
     justify-self: center;
     display: flex;
     flex-direction: column;
+  }
+  @media screen and (max-width: 600px) {
+    form {
+      padding: 0;
+      width: 200px;
+      justify-self: unset;
+    }
   }
 
   form:invalid > button,

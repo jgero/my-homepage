@@ -15,6 +15,14 @@
     grid-template-columns: 1fr 3fr;
     grid-template-areas: "text images";
   }
+  @media screen and (max-width: 600px) {
+    .wrapper {
+      padding: 5vh 2rem;
+      grid-template-columns: auto;
+      grid-template-rows: 3fr 2fr;
+      grid-template-areas: "text" "images";
+    }
+  }
 
   div.spacer {
     background-color: var(--dark-4);
