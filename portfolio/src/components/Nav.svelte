@@ -49,7 +49,7 @@
 <nav class={hasShadow ? 'shadow' : ''}>
   <ul>
     <li><a href="/#top">johannes gerold</a></li>
-    <li><a href="/#contact_me">contact me</a></li>
+    <li><a class="button stroked" href="/#contact_me">contact me</a></li>
     <li>
       <a href="https://github.com/jgero" target="_blank">
         <img src={github} alt="github icon" />

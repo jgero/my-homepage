@@ -1,6 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
-  import { quintOut, quintIn } from "svelte/easing";
+  import { quintOut } from "svelte/easing";
 </script>
 
 <style>

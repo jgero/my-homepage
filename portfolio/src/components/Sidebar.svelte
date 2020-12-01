@@ -27,9 +27,11 @@
 
 <style>
   aside {
-    --sidebar-width: 128px;
+    --sidebar-width: 5rem;
+    --nav-width: calc(var(--sidebar-width) / 3);
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: var(--sidebar-width);
   }
 
@@ -40,7 +42,7 @@
   ul {
     margin: 0;
     padding: 0;
-    margin-inline-start: calc(var(--sidebar-width) / 4);
+    width: var(--nav-width);
   }
 
   li {
@@ -54,7 +56,7 @@
   a {
     color: rgba(0, 0, 0, 0);
     font-size: 0;
-    width: calc(var(--sidebar-width) / 4);
+    width: calc(var(--nav-width) / 2);
     height: 3px;
     background-color: var(--light-2);
     display: block;
@@ -62,7 +64,7 @@
   }
 
   [aria-current] {
-    width: calc(var(--sidebar-width) / 3);
+    width: var(--nav-width);
     background-color: var(--light-1);
   }
 

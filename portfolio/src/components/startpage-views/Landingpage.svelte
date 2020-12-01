@@ -13,6 +13,14 @@
     grid-template-rows: 1fr 4fr;
     grid-template-areas: "header ." "header clouds";
   }
+  @media screen and (max-width: 600px) {
+    .container {
+      padding: 5vh 2rem;
+      grid-template-columns: auto;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: "header" "clouds";
+    }
+  }
   h1,
   h2 {
     margin: 1rem 0;
@@ -29,10 +37,22 @@
     height: 2px;
     width: 100%;
   }
+  .wrapper {
+    grid-area: clouds;
+    position: relative;
+  }
 
   figure {
-    grid-area: clouds;
     margin: 0;
+    position: absolute;
+    top: 0;
+    left: 17%;
+  }
+  @media screen and (max-width: 600px) {
+    figure {
+      transform: scale(0.5) translate(-50%, -50%);
+      left: 0;
+    }
   }
 </style>
 
@@ -53,7 +73,9 @@
       <br />full stack.
     </h2>
   </header>
-  <figure>
-    <Clouds />
-  </figure>
+  <div class="wrapper">
+    <figure>
+      <Clouds />
+    </figure>
+  </div>
 </div>

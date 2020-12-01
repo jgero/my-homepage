@@ -13,6 +13,7 @@
   onMount(() => {
     window.addEventListener("hashchange", updateFragment);
     window.addEventListener("wheel", onScroll);
+    window.addEventListener("touchmove", onScroll);
     fragment = window.location.hash;
   });
 
@@ -20,6 +21,7 @@
     try {
       window.removeEventListener("hashchange", updateFragment);
       window.removeEventListener("wheel", onScroll);
+      window.removeEventListener("touchmove", onScroll);
     } catch (e) {
       fragment = undefined;
     }
@@ -30,29 +32,49 @@
   }
 
   let timer;
+  let delta;
+  let firstTouchPosition;
   function onScroll(ev) {
     clearTimeout(timer);
     const currentPageIndex = pages.findIndex((el) => el === fragment);
-    if (ev.deltaY > 0) {
+    if (ev.deltaY) {
+      // wheel event
+      delta = ev.deltaY;
+    } else if (ev.changedTouches) {
+      // touchmove event
+      if (!firstTouchPosition) {
+        // set where the touch starts
+        firstTouchPosition = ev.changedTouches[0].pageY;
+      } else {
+        // calculate delta
+        delta = firstTouchPosition - ev.changedTouches[0].pageY;
+      }
+    } else {
+      return;
+    }
+
+    if (delta > 0) {
       // scroll down
       if (currentPageIndex === pages.length - 1) {
         // when already at the last page do nothing
         return;
       }
-      timer = setTimeout(
-        () => (window.location.hash = pages[currentPageIndex + 1]),
-        100
-      );
+      timer = setTimeout(() => {
+        window.location.hash = pages[currentPageIndex + 1];
+        // reset values
+        delta = firstTouchPosition = undefined;
+      }, 100);
     } else {
       // scroll up
       if (currentPageIndex === 0) {
         // when already at the first page do nothing
         return;
       }
-      timer = setTimeout(
-        () => (window.location.hash = pages[currentPageIndex - 1]),
-        100
-      );
+      timer = setTimeout(() => {
+        window.location.hash = pages[currentPageIndex - 1];
+        // reset values
+        delta = firstTouchPosition = undefined;
+      }, 100);
     }
   }
 </script>

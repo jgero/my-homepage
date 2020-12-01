@@ -1,5 +1,11 @@
 @import './buttons.css';
 
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 html, body, #sapper {
   width: 100%;
   height: 100%;
