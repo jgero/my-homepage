@@ -1,7 +1,17 @@
 steps:
+# get latest version of the portfolio image from the registry (for build cache)
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull eu.gcr.io/$PROJECT_ID/portfolio-page:latest || exit 0']
 # build the portfolio image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest', '-f', './container/prod.Dockerfile', '.']
+  args: [
+          'build',
+          '-t', 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest',
+          '-f', './container/prod.Dockerfile',
+          '--cache-from', 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest',
+          '.'
+        ]
   dir: 'portfolio'
   timeout: 120s
 # push the portfolio image to Container Registry
@@ -20,9 +30,19 @@ steps:
   - 'europe-west1'
   - '--platform'
   - 'managed'
+# get latest version of the space image from the registry (for build cache)
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull eu.gcr.io/$PROJECT_ID/space-page:latest || exit 0']
 # build the space image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/space-page:latest', '-f', './container/prod.Dockerfile', '.']
+  args: [
+          'build',
+          '-t', 'eu.gcr.io/$PROJECT_ID/space-page:latest', 
+          '-f', './container/prod.Dockerfile', 
+          '--cache-from', 'eu.gcr.io/$PROJECT_ID/space-page:latest',
+          '.'
+        ]
   dir: 'space'
   timeout: 120s
 # push the space image to Container Registry
@@ -41,9 +61,19 @@ steps:
   - 'europe-west1'
   - '--platform'
   - 'managed'
+# get latest version of the main image from the registry (for build cache)
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull eu.gcr.io/$PROJECT_ID/main-page:latest || exit 0']
 # build the main image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/main-page:latest', '-f', './container/prod.Dockerfile', '.']
+  args: [
+          'build', 
+          '-t', 'eu.gcr.io/$PROJECT_ID/main-page:latest',
+          '-f', './container/prod.Dockerfile',
+          '--cache-from', 'eu.gcr.io/$PROJECT_ID/main-page:latest',
+          '.'
+        ]
   dir: 'main'
   timeout: 120s
 # push the main image to Container Registry
