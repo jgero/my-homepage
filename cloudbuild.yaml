@@ -8,11 +8,10 @@ steps:
   args: [
           'build',
           '-t', 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest',
-          '-f', './container/prod.Dockerfile',
+          '-f', './docker/prod.Dockerfile',
           '--cache-from', 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest',
-          '.'
+          './portfolio'
         ]
-  dir: 'portfolio'
   timeout: 120s
 # push the portfolio image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
@@ -39,11 +38,10 @@ steps:
   args: [
           'build',
           '-t', 'eu.gcr.io/$PROJECT_ID/space-page:latest', 
-          '-f', './container/prod.Dockerfile', 
+          '-f', './docker/prod.Dockerfile', 
           '--cache-from', 'eu.gcr.io/$PROJECT_ID/space-page:latest',
-          '.'
+          './space'
         ]
-  dir: 'space'
   timeout: 120s
 # push the space image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
@@ -70,11 +68,10 @@ steps:
   args: [
           'build', 
           '-t', 'eu.gcr.io/$PROJECT_ID/main-page:latest',
-          '-f', './container/prod.Dockerfile',
+          '-f', './docker/prod.Dockerfile',
           '--cache-from', 'eu.gcr.io/$PROJECT_ID/main-page:latest',
-          '.'
+          './main'
         ]
-  dir: 'main'
   timeout: 120s
 # push the main image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
