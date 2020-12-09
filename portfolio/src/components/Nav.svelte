@@ -1,5 +1,5 @@
 <script>
-  import github from "images/github.png";
+  import github from "../../static/images/github.png";
 
   export let hasShadow;
 </script>

@@ -3,8 +3,8 @@
   import Technologies from "../../components/project-showcases/roesena/Technologies.svelte";
   import Features from "../../components/project-showcases/roesena/Features.svelte";
 
-  import image1 from "images/portfolio_project_1.png";
-  import image2 from "images/roesena_mobile.png";
+  import image1 from "../../../static/images/portfolio_project_1.png";
+  import image2 from "../../../static/images/roesena_mobile.png";
 </script>
 
 <style>

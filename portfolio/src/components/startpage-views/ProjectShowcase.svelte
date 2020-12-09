@@ -1,9 +1,9 @@
 <script>
   import { fly } from "svelte/transition";
 
-  import image1 from "images/portfolio_project_1.png";
-  import image2 from "images/portfolio_project_2.png";
-  import image3 from "images/portfolio_project_3.png";
+  import image1 from "../../../static/images/portfolio_project_1.png";
+  import image2 from "../../../static/images/portfolio_project_2.png";
+  import image3 from "../../../static/images/portfolio_project_3.png";
 </script>
 
 <style>
