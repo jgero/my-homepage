@@ -1,57 +1,6 @@
 <script>
-  const topics = [
-    {
-      icon: "directions_run",
-      text: `Sports is a very important part of my life. Since 13 years i do acrobatics in a local club,
-            in which i am a trainer for multiple groups aswell. With inline skating and running outside
-            of that i am active more or less every day.`,
-    },
-    {
-      icon: "public",
-      text: `Space, astronomy and space probes and travel are a fascinating science. Seeing the wonders
-            of our universe and how they are discovered inspires and motivates me to be productive every day.`,
-    },
-    {
-      icon: "code",
-      text: `Programming is the largest part of my life. Most of the time i work with Web-Aplications,
-            because i love the open plattform the web is.`,
-    },
-  ];
-  import BarChart from "../components/BarChart.svelte";
-  const languageData = [
-    { name: "JavaScript", group: "language", frequency: "daily" },
-    { name: "WebAssembly", group: "language", frequency: "infrequent" },
-    { name: "TypeScript", group: "language", frequency: "weekly" },
-    { name: "HTML", group: "language", frequency: "daily" },
-    { name: "CSS", group: "language", frequency: "daily" },
-    { name: "Java", group: "language", frequency: "infrequent" },
-    { name: "C/C++", group: "language", frequency: "known" },
-    { name: "Python", group: "language", frequency: "infrequent" },
-    { name: "Go", group: "language", frequency: "infrequent" },
-    { name: "Dart", group: "language", frequency: "known" },
-  ];
-  const opsData = [
-    { name: "Docker", group: "ops", frequency: "daily" },
-    { name: "Kubernetes", group: "ops", frequency: "known" },
-    { name: "Podman", group: "ops", frequency: "known" },
-    { name: "Gradle", group: "ops", frequency: "known" },
-    { name: "Google Cloud", group: "ops", frequency: "daily" },
-    { name: "Firebase", group: "ops", frequency: "weekly" },
-  ];
-  const frameworkData = [
-    { name: "Angular", group: "framework", frequency: "weekly" },
-    { name: "Svelte/Sapper", group: "framework", frequency: "weekly" },
-    { name: "Flutter", group: "framework", frequency: "known" },
-    { name: "Hibernate", group: "framework", frequency: "infrequent" },
-  ];
-  const databaseData = [
-    { name: "Firestore", group: "database", frequency: "weekly" },
-    { name: "Mongodb", group: "database", frequency: "infrequent" },
-    { name: "Redis", group: "database", frequency: "known" },
-    { name: "Neo4j", group: "database", frequency: "infrequent" },
-    { name: "Cassandra", group: "database", frequency: "known" },
-    { name: "SQL", group: "database", frequency: "known" },
-  ];
+  import Topics from "../components/about_me/Topics.svelte";
+  import Charts from "../components/about_me/Charts.svelte";
 </script>
 
 <style>
@@ -63,6 +12,21 @@
     width: 100%;
     --box-spacing: 20rem;
     --max-text-width: 350px;
+  }
+  @media screen and (max-width: 1300px) {
+    main {
+      --box-spacing: 10rem;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    main {
+      --box-spacing: 3rem;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    main {
+      --box-spacing: 1rem;
+    }
   }
   header {
     width: max-content;
@@ -76,6 +40,7 @@
   }
   :not(.topic-wrapper) > section {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
     padding: 4rem 2rem;
@@ -95,37 +60,6 @@
   }
   section > p {
     max-width: var(--max-text-width);
-  }
-  .topic-wrapper {
-    margin-top: calc(var(--box-spacing) * -1.5);
-    padding: var(--box-spacing);
-    background-color: var(--light-1);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-bottom: 0;
-  }
-  .topic-wrapper > section {
-    background-color: var(--light-5);
-    box-shadow: 7px 7px 10px 0 rgba(0, 0, 0, 0.25);
-    border-radius: 2rem;
-    padding: 2rem;
-    width: calc(var(--max-text-width) * 0.7);
-    margin-bottom: calc(var(--box-spacing) * 0.5);
-  }
-  .topic-wrapper > section > span {
-    width: calc(var(--max-text-width) / 2);
-    height: calc(var(--max-text-width) / 2);
-    line-height: calc(var(--max-text-width) / 2);
-    font-size: calc(var(--max-text-width) / 2);
-    display: block;
-    margin: 0 auto;
-  }
-
-  .chart-wrapper {
-    background-color: var(--light-5);
-    padding: var(--box-spacing);
-    margin-top: calc(var(--box-spacing) * -1);
   }
 </style>
 
@@ -152,20 +86,6 @@
       showcased on this website.
     </p>
   </section>
-
-  <div class="topic-wrapper">
-    {#each topics as topic}
-      <section>
-        <span class="material-icons">{topic.icon}</span>
-        <p>{topic.text}</p>
-      </section>
-    {/each}
-  </div>
-
-  <div class="chart-wrapper">
-    <BarChart data={languageData} heading={'Languages'} />
-    <BarChart data={opsData} heading={`Operation Tools`} />
-    <BarChart data={frameworkData} heading={'Frameworks'} />
-    <BarChart data={databaseData} heading={'Databases'} />
-  </div>
+  <Topics />
+  <Charts />
 </main>

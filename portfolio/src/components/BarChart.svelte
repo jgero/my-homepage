@@ -14,6 +14,9 @@
     --step-2: 150px;
     --step-3: 200px;
     --step-4: 300px;
+    margin: 0;
+    margin-block-end: 2rem;
+    margin-inline-end: 2rem;
   }
   figcaption {
     font-size: 1.5rem;
