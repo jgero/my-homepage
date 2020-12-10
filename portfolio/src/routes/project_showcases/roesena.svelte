@@ -11,6 +11,7 @@
   main {
     position: absolute;
     overflow-y: auto;
+    overflow-x: hidden;
     top: 4rem;
     height: calc(100% - 4rem);
     width: 100%;

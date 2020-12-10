@@ -1,4 +1,6 @@
 <script>
+  import { fly } from "svelte/transition";
+
   const topics = [
     {
       icon: "directions_run",
@@ -47,7 +49,7 @@
   }
 </style>
 
-<div>
+<div in:fly={{ y: 200, duration: 1000 }}>
   {#each topics as topic}
     <section>
       <span class="material-icons">{topic.icon}</span>

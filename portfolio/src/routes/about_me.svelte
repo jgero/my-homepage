@@ -1,4 +1,6 @@
 <script>
+  import { fly } from "svelte/transition";
+
   import Topics from "../components/about_me/Topics.svelte";
   import Charts from "../components/about_me/Charts.svelte";
 </script>
@@ -7,6 +9,7 @@
   main {
     position: absolute;
     overflow-y: auto;
+    overflow-x: hidden;
     top: 4rem;
     height: calc(100% - 4rem);
     width: 100%;
@@ -67,13 +70,13 @@
   <title>Johannes Gerold - About Me</title>
 </svelte:head>
 
-<main>
+<main out:fly={{ x: 200, duration: 200 }}>
   <header>
-    <h1>who am i?</h1>
-    <div />
+    <h1 in:fly={{ x: -200, duration: 1500 }}>who am i?</h1>
+    <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
   </header>
 
-  <section>
+  <section in:fly={{ y: -200, duration: 500, delay: 1000 }}>
     <img src="/images/me.webp" alt="me" />
     <p>
       I am a passionate software developer born in 1998 in Baden-Württemberg,
