@@ -73,8 +73,11 @@
       <h2 in:fly={{ duration: 1500, x: -200, delay: 400 }}>
         web-app for a carnival club
       </h2>
-      <a href="https://rösena.de" class="button stroked" target="_blank">visit
-        webpage</a>
+      <a
+        in:fly={{ duration: 1500, x: -200, delay: 600 }}
+        href="https://rösena.de"
+        class="button stroked"
+        target="_blank">visit webpage</a>
     </header>
 
     <figure in:fly={{ duration: 1500, x: 200 }}>
