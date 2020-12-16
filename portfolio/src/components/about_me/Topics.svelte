@@ -4,19 +4,19 @@
   const topics = [
     {
       icon: "directions_run",
-      text: `Sports is a very important part of my life. Since 13 years i do acrobatics in a local club,
-            in which i am a trainer for multiple groups aswell. With inline skating and running outside
-            of that i am active more or less every day.`,
+      text: `Sport is a very important part of my life. I have been doing acrobatics for 13 years at a local
+            club, at which i am a coach for multiple groups as well. Additionally to the organized sport, I am
+            inline skating and running outside, so I am active more or less every day.`,
     },
     {
       icon: "public",
-      text: `Space, astronomy and space probes and travel are a fascinating science. Seeing the wonders
+      text: `Space, astronomy, space probes and space travel are a fascinating science. Seeing the wonders
             of our universe and how they are discovered inspires and motivates me to be productive every day.`,
     },
     {
       icon: "code",
-      text: `Programming is the largest part of my life. Most of the time i work with Web-Aplications,
-            because i love the open plattform the web is.`,
+      text: `Programming is the largest part of my life. Most of the time I work with Web-Aplications,
+            because I love the web for the open plattform it is.`,
     },
   ];
 </script>

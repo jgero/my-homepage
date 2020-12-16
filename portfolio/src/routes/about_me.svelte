@@ -81,8 +81,8 @@
     <p>
       I am a passionate software developer born in 1998 in Baden-Württemberg,
       Germany. While studying for my Bachelors degree in Aalen from 2016 to
-      2020, programming became not only my future job, but also a loved
-      free-time activity. Right after finishing my Bachelors degree i started my
+      2020, programming became not only my future profession, but also a beloved
+      free-time activity. Right after finishing my Bachelors degree I started my
       Masters degree in 2020.
       <br />
       Web development has been my main focus, most of my bigger projects are
