@@ -79,9 +79,15 @@
     padding: 32px;
     box-sizing: border-box;
   }
+  @media screen and (max-width: 600px) {
+    figure {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  }
 
   figcaption {
-    width: 400px;
+    max-width: 400px;
   }
 
   figcaption > h3 {
@@ -94,7 +100,7 @@
     color: #f1c46d;
   }
   #cadenceChart {
-    width: 40vw;
+    min-width: 40vw;
   }
   :global(.apexcharts-tooltip) {
     color: black;

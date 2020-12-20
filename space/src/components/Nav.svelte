@@ -28,6 +28,12 @@
     background-color: rgba(90, 90, 90, 0.6);
   }
 
+  @media screen and (max-width: 600px) {
+    nav {
+      padding: 0 1rem;
+    }
+  }
+
   nav.hidden {
     transform: translateY(-110%);
   }

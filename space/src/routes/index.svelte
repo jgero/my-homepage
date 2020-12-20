@@ -31,6 +31,15 @@
     grid-template-rows: 3fr 2fr;
     grid-template-areas: "moon . ." "moon headings .";
   }
+  @media screen and (max-width: 600px) {
+    div.startpage-wrapper {
+      height: unset;
+
+      grid-template-columns: auto;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: "moon" "headings";
+    }
+  }
 
   img.background {
     grid-area: moon;
@@ -39,15 +48,16 @@
 
   section {
     grid-area: headings;
+    padding: 1rem;
   }
 
   h1 {
-    font-size: 72px;
+    font-size: 4.5rem;
     margin: 0;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 300;
     color: #909090;
     margin: 0.2em 0 0 0;
