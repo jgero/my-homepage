@@ -42,6 +42,13 @@
     grid-template-rows: 10% 40% 50%;
     grid-template-areas: ". . . ." ". . . f9" ". headings . f9";
   }
+  @media screen and (max-width: 600px) {
+    div.screen-one {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: "headings" "f9";
+    }
+  }
 
   img.background {
     width: 50%;
@@ -50,22 +57,45 @@
     top: 200px;
     pointer-events: none;
   }
+  @media screen and (max-width: 600px) {
+    img.background {
+      position: unset;
+      width: 90%;
+    }
+
+    img.background,
+    header {
+      align-self: center;
+      justify-self: center;
+    }
+  }
 
   header {
     grid-area: headings;
   }
 
   h1 {
-    font-size: 72px;
+    font-size: 4.5rem;
     margin: 0;
     color: #e6e6e6;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 300;
     color: #f1c46d;
     margin: 0.2em 0 0 0;
+  }
+  @media screen and (max-width: 600px) {
+    header {
+      padding: 1rem;
+    }
+    h1 {
+      font-size: 3rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+    }
   }
 
   .spacer {
