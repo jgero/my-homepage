@@ -1,12 +1,18 @@
 <script>
   import falcon from "images/f9.png";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
   import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
 
   onMount(() => {
     // move the image on scroll
     document.querySelector("body").addEventListener("scroll", calculateScroll);
+  });
+  onDestroy(() => {
+    // remove scroll event listener
+    document
+      .querySelector("body")
+      .removeEventListener("scroll", calculateScroll);
   });
 
   function calculateScroll(ev) {
