@@ -5,7 +5,7 @@
 
   onMount(() => {
     // get the falcon 9 launches per month starting january 2014
-    fetch("https://api.spacexdata.com/v3/launches/past?rocket=falcon9")
+    fetch("https://api.spacexdata.com/v4/launches/past?rocket=falcon9")
       // only keep the JSON part
       .then((response) => response.json())
       .then((launchesJSON) => {
@@ -18,11 +18,11 @@
         }
         // filter out launches before january 2014
         const launches = launchesJSON.filter(
-          (launch) => new Date(2014, 0) < new Date(launch.launch_date_utc)
+          (launch) => new Date(2014, 0) < new Date(launch.date_utc)
         );
         // count the launches per month
         launches.forEach((launch) => {
-          const d = new Date(launch.launch_date_utc);
+          const d = new Date(launch.date_utc);
           launchesPerMonthMap.set(
             `${d.getMonth() + 1}/${d.getFullYear()}`,
             launchesPerMonthMap.get(`${d.getMonth() + 1}/${d.getFullYear()}`) +

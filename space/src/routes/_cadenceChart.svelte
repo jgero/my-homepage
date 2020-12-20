@@ -8,8 +8,8 @@
     // go through the launches and start at the second one to always have a previous one to compare it to
     for (let i = 1; i < launches.length; i++) {
       // get date objects from launches
-      const datePreviousLaunch = new Date(launches[i - 1].launch_date_utc);
-      const dateCurrentLaunch = new Date(launches[i].launch_date_utc);
+      const datePreviousLaunch = new Date(launches[i - 1].date_utc);
+      const dateCurrentLaunch = new Date(launches[i].date_utc);
       intervals.push(
         Math.floor(
           (dateCurrentLaunch - datePreviousLaunch) / 1000 / 60 / 60 / 24

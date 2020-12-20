@@ -4,14 +4,18 @@
   import CadenceChart from "./_cadenceChart.svelte";
   import VehicleChart from "./_vehicleChart.svelte";
 
-  let launches;
+  let launches, rockets;
 
   onMount(async () => {
-    const apiResponse = await fetch(
-      "https://api.spacexdata.com/v3/launches/past?order=asc"
+    const apiResponseLaunches = await fetch(
+      "https://api.spacexdata.com/v4/launches/past?order=asc"
+    );
+    const apiResponseRockets = await fetch(
+      "https://api.spacexdata.com/v4/rockets"
     );
     // only keep the JSON part
-    launches = await apiResponse.json();
+    launches = await apiResponseLaunches.json();
+    rockets = await apiResponseRockets.json();
   });
 </script>
 
@@ -68,9 +72,9 @@
   </section>
 </div>
 
-{#if launches}
+{#if launches && rockets}
   <div class="second-page">
     <CadenceChart {launches} />
-    <VehicleChart {launches} />
+    <VehicleChart {rockets} {launches} />
   </div>
 {/if}

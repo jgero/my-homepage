@@ -1,20 +1,24 @@
 <script>
   import { onMount } from "svelte";
 
-  export let launches;
+  export let rockets, launches;
 
   onMount(() => {
-    const vehicleMap = new Map();
-    // enter the vehicles to the map
+    /* const vehicleMap = new Map(); */
+    const rocketMap = new Map();
+    // enter the rockets to the map
     launches.forEach((launch) => {
-      const id = launch.rocket.rocket_id;
-      const name = launch.rocket.rocket_name;
-      if (vehicleMap.has(id)) {
+      const rocketId = launch.rocket;
+      const rocketName = rockets.find((el) => el.id === rocketId).name;
+      if (rocketMap.has(rocketId)) {
         // if entry for that rocket already exists increment the number
-        vehicleMap.set(id, { name, launches: vehicleMap.get(id).launches + 1 });
+        rocketMap.set(rocketId, {
+          name: rocketName,
+          launches: rocketMap.get(rocketId).launches + 1,
+        });
       } else {
         // otherwise set it to 1
-        vehicleMap.set(id, { name, launches: 1 });
+        rocketMap.set(rocketId, { name: rocketName, launches: 1 });
       }
     });
     // create the chart
@@ -23,10 +27,8 @@
         type: "pie",
         width: 380,
       },
-      series: Array.from(vehicleMap.values()).map(
-        (vehicle) => vehicle.launches
-      ),
-      labels: Array.from(vehicleMap.values()).map((vehicle) => vehicle.name),
+      series: Array.from(rocketMap.values()).map((rocket) => rocket.launches),
+      labels: Array.from(rocketMap.values()).map((rocket) => rocket.name),
       colors: ["#f1c46d", "#909090", "#cf1b2a"],
       legend: {
         labels: {

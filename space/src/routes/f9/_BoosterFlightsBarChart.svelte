@@ -5,15 +5,13 @@
 
   onMount(() => {
     // get all cores from the api
-    fetch("https://api.spacexdata.com/v3/cores?block=5")
+    fetch("https://api.spacexdata.com/v4/cores?block=5")
       // just keep the json part of it
       .then((response) => response.json())
       // render the chart
       .then((responseJSON) => {
         // sort the cores by their first flight date
-        const cores = responseJSON.sort(
-          (a, b) => new Date(a.original_launch) > new Date(b.original_launch)
-        );
+        const cores = responseJSON.filter((core) => core.block >= 5);
         // calculate average
         const average =
           cores.map((core) => core.reuse_count + 1).reduce((a, b) => a + b) /
@@ -34,7 +32,7 @@
             },
           ],
           xaxis: {
-            categories: cores.map((core) => core.core_serial),
+            categories: cores.map((core) => core.serial),
             title: {
               text: "booster id",
               style: {
@@ -59,7 +57,7 @@
             },
           },
           fill: {
-            colors: ["#f1c46d"],
+            colors: "#f1c46d",
           },
           annotations: {
             yaxis: [
