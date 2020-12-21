@@ -69,7 +69,7 @@
     <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>about me</h1>
     <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
     <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>
-      i love programming,
+      I love programming,
       <br />
       space and sports
     </h2>

@@ -5,7 +5,7 @@
     {
       icon: "directions_run",
       text: `Sport is a very important part of my life. I have been doing acrobatics for 13 years at a local
-            club, at which i am a coach for multiple groups as well. Additionally to the organized sport, I am
+            club, at which I am a coach for multiple groups as well. Additionally to the organized sport, I am
             inline skating and running outside, so I am active more or less every day.`,
     },
     {
@@ -16,7 +16,7 @@
     {
       icon: "code",
       text: `Programming is the largest part of my life. Most of the time I work with Web-Aplications,
-            because I love the web for the open plattform it is.`,
+            because I love the web fIor the open plattform it is.`,
     },
   ];
 </script>
