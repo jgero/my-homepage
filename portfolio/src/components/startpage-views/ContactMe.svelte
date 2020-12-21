@@ -32,10 +32,15 @@
     });
     const response = await res.json();
     if (response.success) {
+      // show snackbar
       resultMessage = "E-Mail was sent successfully!";
       setTimeout(() => {
         resultMessage = "";
       }, 5000);
+      // clear inputs
+      email = "";
+      name = "";
+      message = "";
     } else {
       resultMessage = "Something went wrong";
       setTimeout(() => {
