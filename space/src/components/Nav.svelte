@@ -22,16 +22,17 @@
   nav {
     box-sizing: border-box;
     width: 100%;
-    padding: 0 40% 0 20%;
+    display: flex;
     transition: transform 0.2s ease-out;
     transition: transform 0.2s ease-out;
     background-color: rgba(90, 90, 90, 0.6);
   }
 
-  @media screen and (max-width: 600px) {
-    nav {
-      padding: 0 1rem;
-    }
+  div.spacer:first-of-type {
+    flex: 1;
+  }
+  div.spacer:last-of-type {
+    flex: 2;
   }
 
   nav.hidden {
@@ -44,13 +45,6 @@
     display: flex;
     justify-content: space-between;
   }
-
-  /* clearfix */
-  /* ul::after {
-		content: '';
-		display: block;
-		clear: both;
-	} */
 
   li {
     display: block;
@@ -76,6 +70,13 @@
     text-decoration: none;
     padding: 1em 0.5em;
     display: block;
+    margin-left: 3rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    a {
+      margin-left: 0;
+    }
   }
 
   a.faded {
@@ -84,11 +85,12 @@
 </style>
 
 <nav class={isHidden ? 'hidden' : ''}>
+  <div class="spacer" />
   <ul>
     <li>
       <a
         aria-current={segment === undefined ? 'page' : undefined}
-        href=".">home</a>
+        href=".">Home</a>
     </li>
     <li>
       <a
@@ -102,14 +104,10 @@
     </li>
     <li>
       <a
-        aria-current={segment === 'general' ? 'page' : undefined}
-        href="general">general</a>
-    </li>
-    <li>
-      <a
         aria-current={segment === 'about' ? 'page' : undefined}
         href="about"
-        class="faded">about</a>
+        class="faded">About</a>
     </li>
   </ul>
+  <div class="spacer" />
 </nav>
