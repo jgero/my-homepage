@@ -15,7 +15,11 @@
 
 <p>Image on Falcon 9 page:</p>
 
-<a href="https://www.flickr.com/photos/spacex/50500804918/">Image from flickr</a>
+<a
+  href="https://www.flickr.com/photos/spacex/50500804918/"
+  target="_blanc">Falcon 9 image from flickr</a>
+<a
+  href="https://www.flickr.com/photos/spacex/38583831555"
+  target="_blanc">Falcon Heavy Image from flickr</a>
 
 <p>This is the 'about' page. There's not much here.</p>
-
