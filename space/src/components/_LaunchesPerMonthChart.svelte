@@ -49,11 +49,6 @@
               ) / 100,
           };
         });
-        // calculate average
-        const average =
-          launchesPerMonth
-            .map((month) => month.launches)
-            .reduce((a, b) => a + b) / launchesPerMonth.length;
         hasLoaded = true;
         // create the chart
         var options = {

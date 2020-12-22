@@ -102,9 +102,6 @@
   #cadenceChart {
     min-width: 40vw;
   }
-  :global(.apexcharts-tooltip) {
-    color: black;
-  }
 </style>
 
 <figure>

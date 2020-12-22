@@ -1,7 +1,10 @@
+<script>
+  import FHRecoveryChart from "../components/_fhRecoveryChart.svelte";
+</script>
+
 <style>
   div {
     width: 100%;
-    overflow-x: hidden;
     background-color: black;
   }
   section {
@@ -11,6 +14,7 @@
     height: 100vh;
     display: flex;
     align-items: center;
+    box-shadow: inset 0px -20px 20px 10px rgba(0, 0, 0, 1);
   }
   header {
     margin-left: 10vw;
@@ -24,4 +28,5 @@
       <h2>The world's most powerful rocket</h2>
     </header>
   </section>
+  <FHRecoveryChart />
 </div>
