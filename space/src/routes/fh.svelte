@@ -15,18 +15,6 @@
   header {
     margin-left: 10vw;
   }
-  h1 {
-    font-size: 4.5rem;
-    margin: 0;
-    color: #e6e6e6;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: #f1c46d;
-    margin: 0.2em 0 0 0;
-  }
 </style>
 
 <div>

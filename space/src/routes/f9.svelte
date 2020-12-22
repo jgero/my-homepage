@@ -1,8 +1,8 @@
 <script>
-  import falcon from "images/f9.png";
   import { onMount, onDestroy } from "svelte";
-  import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
-  import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
+  import f9 from "../../static/images/f9.png";
+  import BoosterFlightsBarChart from "../components/_BoosterFlightsBarChart.svelte";
+  import LaunchesPerMonthChart from "../components/_LaunchesPerMonthChart.svelte";
 
   onMount(() => {
     // move the image on scroll
@@ -73,28 +73,9 @@
   header {
     grid-area: headings;
   }
-
-  h1 {
-    font-size: 4.5rem;
-    margin: 0;
-    color: #e6e6e6;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: #f1c46d;
-    margin: 0.2em 0 0 0;
-  }
   @media screen and (max-width: 600px) {
     header {
       padding: 1rem;
-    }
-    h1 {
-      font-size: 3rem;
-    }
-    h2 {
-      font-size: 1.3rem;
     }
   }
 
@@ -109,7 +90,7 @@
 
 <div class="page-wrapper" id="page-wrapper">
   <div class="screen-one">
-    <img class="background" alt="Falcon 9" src={falcon} id="f9background" />
+    <img class="background" alt="Falcon 9" src={f9} id="f9background" />
     <header>
       <h1>Falcon 9</h1>
       <h2>First orbital class rocket capable of reflight</h2>
