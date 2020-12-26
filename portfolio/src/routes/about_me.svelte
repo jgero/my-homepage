@@ -33,7 +33,6 @@
   }
   header {
     width: max-content;
-    margin-block-start: calc(var(--box-spacing) / 3);
     margin-inline-start: var(--box-spacing);
   }
   header > div {

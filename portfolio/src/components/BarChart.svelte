@@ -5,6 +5,7 @@
 
 <style>
   figure {
+    margin: 0;
     /* overflow hidden is needed to hide stuff when bars are flying in */
     overflow-x: hidden;
     /* add extra space on the right before the overflow cutoff for the label on the bottom right */
@@ -20,6 +21,7 @@
   }
   figcaption {
     font-size: 1.5rem;
+    margin-block-start: 1.5rem;
   }
   div {
     margin: 0.2em;
