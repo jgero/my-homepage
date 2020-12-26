@@ -40,6 +40,10 @@
   header > a {
     display: inline-block;
   }
+  h1,
+  h2 {
+    margin: 1rem 0;
+  }
   .animation {
     grid-area: animation;
     position: relative;

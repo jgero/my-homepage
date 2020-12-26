@@ -23,6 +23,8 @@ body {
   font-family: 'DM Sans', sans-serif;
   margin: 0;
   color: var(--dark-2);
+  /* disable chrome pull to reload */
+  overscroll-behavior-y: contain;
 }
 
 :root {

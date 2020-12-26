@@ -86,6 +86,10 @@
   header > h1 {
     margin-top: 1em;
   }
+  h1,
+  h2 {
+    margin: 1rem 0;
+  }
 
   form {
     grid-area: form;

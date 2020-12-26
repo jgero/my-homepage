@@ -16,7 +16,7 @@
     {
       icon: "code",
       text: `Programming is the largest part of my life. Most of the time I work with Web-Aplications,
-            because I love the web fIor the open plattform it is.`,
+            because I love the web for the open plattform it is.`,
     },
   ];
 </script>
