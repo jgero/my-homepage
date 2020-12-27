@@ -1,6 +1,7 @@
 <script>
   import { fly } from "svelte/transition";
   import SolarSystemAnimated from "../SolarSystemAnimated.svelte";
+  import SolarSystem from "../SolarSystem.svelte";
 </script>
 
 <style>
@@ -51,9 +52,8 @@
   }
   .positioning-helper {
     position: absolute;
-    top: 25%;
-    right: 30%;
-    transform: scale(1.5);
+    top: 0;
+    right: 0;
   }
   @media screen and (max-width: 600px) {
     .positioning-helper {
@@ -87,7 +87,7 @@
     out:fly={{ y: 300, duration: 200 }}
     class="animation">
     <div class="positioning-helper">
-      <SolarSystemAnimated />
+      <SolarSystem />
     </div>
   </div>
 </div>
