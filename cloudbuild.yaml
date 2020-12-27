@@ -1,12 +1,11 @@
 # ---------------------------------------------------------------------------------------
-# ------------------------------- CLOUDBUILD CONFIG -------------------------------------
+# ------------------------------- CLOUD BUILD CONFIG ------------------------------------
 # ---------------------------------------------------------------------------------------
-# The production version of these sapper apps use a multi staged docker build. To improve
-# build times caching is used, but docker currently does not really support caching for
-# multi staged docker builds. When building normally only the final image gets cached.
-# By incrementally building the steps with targets, tagging the builder steps, pushing
-# these intermediate images and using them as cache in the build, caching works for
-# such multi staged builds too.
+# The production version of these sapper apps use a multi staged docker build. Caching 
+# is not automatically supported by cloud build but can be done manually, even in multi
+# staged builds. Because build time currently is not an issue and the caching could
+# create extra cost it is not used anymore.
+# More details at https://github.com/jgero/my-webpage/issues/22
 # ---------------------------------------------------------------------------------------
 steps:
 # ---------------------------------------------------------------------------------------
@@ -17,29 +16,7 @@ steps:
   args:
     - '-c'
     - |
-      docker pull eu.gcr.io/$PROJECT_ID/portfolio-page-app-builder:latest || true
-      docker pull eu.gcr.io/$PROJECT_ID/portfolio-page-runtime-builder:latest || true
-      docker pull eu.gcr.io/$PROJECT_ID/portfolio-page:latest || true
-
       docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/portfolio-page-app-builder:latest \
-          -t eu.gcr.io/$PROJECT_ID/portfolio-page-app-builder:latest \
-          -f ./docker/prod.Dockerfile \
-          --target app-builder \
-          ./portfolio
-
-      docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/portfolio-page-app-builder:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/portfolio-page-runtime-builder:latest \
-          -t eu.gcr.io/$PROJECT_ID/portfolio-page-runtime-builder:latest \
-          -f ./docker/prod.Dockerfile \
-          --target runtime-builder \
-          ./portfolio
-
-      docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/portfolio-page:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/portfolio-page-app-builder:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/portfolio-page-runtime-builder:latest \
           -t eu.gcr.io/$PROJECT_ID/portfolio-page:latest \
           -f ./docker/prod.Dockerfile \
           ./portfolio
@@ -67,29 +44,7 @@ steps:
   args:
     - '-c'
     - |
-      docker pull eu.gcr.io/$PROJECT_ID/space-page-app-builder:latest || true
-      docker pull eu.gcr.io/$PROJECT_ID/space-page-runtime-builder:latest || true
-      docker pull eu.gcr.io/$PROJECT_ID/space-page:latest || true
-
       docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/space-page-app-builder:latest \
-          -t eu.gcr.io/$PROJECT_ID/space-page-app-builder:latest \
-          -f ./docker/prod.Dockerfile \
-          --target app-builder \
-          ./space
-
-      docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/space-page-app-builder:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/space-page-runtime-builder:latest \
-          -t eu.gcr.io/$PROJECT_ID/space-page-runtime-builder:latest \
-          -f ./docker/prod.Dockerfile \
-          --target runtime-builder \
-          ./space
-
-      docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/space-page:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/space-page-app-builder:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/space-page-runtime-builder:latest \
           -t eu.gcr.io/$PROJECT_ID/space-page:latest \
           -f ./docker/prod.Dockerfile \
           ./space
@@ -117,29 +72,7 @@ steps:
   args:
     - '-c'
     - |
-      docker pull eu.gcr.io/$PROJECT_ID/main-page-app-builder:latest || true
-      docker pull eu.gcr.io/$PROJECT_ID/main-page-runtime-builder:latest || true
-      docker pull eu.gcr.io/$PROJECT_ID/main-page:latest || true
-
       docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/main-page-app-builder:latest \
-          -t eu.gcr.io/$PROJECT_ID/main-page-app-builder:latest \
-          -f ./docker/prod.Dockerfile \
-          --target app-builder \
-          ./main
-
-      docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/main-page-app-builder:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/main-page-runtime-builder:latest \
-          -t eu.gcr.io/$PROJECT_ID/main-page-runtime-builder:latest \
-          -f ./docker/prod.Dockerfile \
-          --target runtime-builder \
-          ./main
-
-      docker build \
-          --cache-from eu.gcr.io/$PROJECT_ID/main-page:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/main-page-app-builder:latest \
-          --cache-from eu.gcr.io/$PROJECT_ID/main-page-runtime-builder:latest \
           -t eu.gcr.io/$PROJECT_ID/main-page:latest \
           -f ./docker/prod.Dockerfile \
           ./main
@@ -161,11 +94,5 @@ steps:
   - 'managed'
 images:
 - 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest'
-- 'eu.gcr.io/$PROJECT_ID/portfolio-page-app-builder:latest'
-- 'eu.gcr.io/$PROJECT_ID/portfolio-page-runtime-builder:latest'
 - 'eu.gcr.io/$PROJECT_ID/space-page:latest'
-- 'eu.gcr.io/$PROJECT_ID/space-page-app-builder:latest'
-- 'eu.gcr.io/$PROJECT_ID/space-page-runtime-builder:latest'
 - 'eu.gcr.io/$PROJECT_ID/main-page:latest'
-- 'eu.gcr.io/$PROJECT_ID/main-page-app-builder:latest'
-- 'eu.gcr.io/$PROJECT_ID/main-page-runtime-builder:latest'
