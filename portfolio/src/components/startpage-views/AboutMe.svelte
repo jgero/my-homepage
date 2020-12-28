@@ -47,20 +47,8 @@
   }
   .animation {
     grid-area: animation;
-    position: relative;
-    width: 100%;
-  }
-  .positioning-helper {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  @media screen and (max-width: 600px) {
-    .positioning-helper {
-      top: 0%;
-      right: -13%;
-      transform: scale(0.5);
-    }
+    display: flex;
+    transform: rotate(-16deg);
   }
 </style>
 
@@ -86,8 +74,6 @@
     in:fly={{ y: 300, duration: 3000 }}
     out:fly={{ y: 300, duration: 200 }}
     class="animation">
-    <div class="positioning-helper">
-      <SolarSystem />
-    </div>
+    <SolarSystem />
   </div>
 </div>
