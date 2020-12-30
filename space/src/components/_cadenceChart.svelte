@@ -14,6 +14,9 @@
   const height = 150;
   const width = 800;
 
+  const c1 = "#f1c46d";
+  const c2 = "#e6e6e6";
+
   let intervals = [];
   // go through the launches and start at the second one to always have a previous one to compare it to
   for (let i = 1; i < launches.length; i++) {
@@ -64,12 +67,13 @@
   function generateAxis(node) {
     const xAxis = select(node).append("g");
     xAxis.attr("transform", `translate(0, ${height})`);
+    // x axis label
     xAxis
       .append("text")
       .text("launch intervals")
       .attr("fill", "currentColor")
       .style("text-anchor", "middle")
-      .attr("x", margin + scaleSpace + width / 2)
+      .attr("x", margin + scaleSpace)
       .attr("y", scaleSpace);
     xAxis.call(axisBottom(xScale).ticks(5).tickSize([2]));
     const yAxis = select(node).append("g");
@@ -87,6 +91,30 @@
     return {
       destroy() {},
     };
+  }
+
+  function generateLegend(node) {
+    const circleR = "1em";
+    const legend = select(node).append("g");
+    legend.attr(
+      "transform",
+      `translate(${margin + scaleSpace + width / 2}, ${margin})`
+    );
+    legend.append("circle").attr("r", circleR).attr("class", "legend");
+    legend
+      .append("text")
+      .text("time between launches")
+      .attr("fill", "currentColor")
+      .style("text-anchor", "start")
+      .attr("x", 0)
+      .attr("y", 0);
+    legend
+      .append("text")
+      .text("average")
+      .attr("fill", "currentColor")
+      .style("text-anchor", "start")
+      .attr("x", 0)
+      .attr("y", "1em");
   }
 </script>
 
@@ -124,9 +152,21 @@
 <figure>
   <svg
     viewBox={`0 0 ${width + scaleSpace + 2 * margin} ${height + scaleSpace + 2 * margin}`}>
-    <g use:setup use:generateAxis>
-      <path transition:draw d={valueLine(intervals)} stroke="#f1c46d" />
-      <path transition:draw d={averageLine(intervals)} stroke="#e6e6e6" />
+    <g transform={`translate(${margin + scaleSpace}, ${margin})`}>
+      <g use:generateAxis>
+        <path transition:draw d={valueLine(intervals)} stroke={c1} />
+        <path transition:draw d={averageLine(intervals)} stroke={c2} />
+      </g>
+      <g
+        transform={`translate(${margin + scaleSpace + width / 2}, ${margin})`}
+        font-size="12">
+        <circle r="6" fill={c1} cx="6" cy="6" />
+        <text fill="currentColor" x="18" y="10" text-anchor="start">
+          time between launches
+        </text>
+        <circle r="6" fill={c2} cx="6" cy="20" />
+        <text fill="currentColor" x="18" y="23">average</text>
+      </g>
     </g>
   </svg>
   <figcaption>
