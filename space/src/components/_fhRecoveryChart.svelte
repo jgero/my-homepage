@@ -1,5 +1,19 @@
 <script>
   import { onMount } from "svelte";
+  import LineChart from "./LineChart.svelte";
+  const data = {
+    xAxis: "# of flights",
+    yAxis: "# of landed boosters",
+    datasets: [
+      {
+        name: "landings",
+        color: "#f1c46d",
+        data: [],
+      },
+      { name: "average", color: "#e6e6e6", data: [] },
+    ],
+  };
+  let hasLoaded = false;
   onMount(() => {
     fetch("https://api.spacexdata.com/v4/launches/query", {
       method: "POST",
@@ -11,81 +25,26 @@
     })
       .then((response) => response.json())
       .then((launchesJSON) => {
-        let data = launchesJSON.docs;
-        data = data.map((launch) => {
+        // calculate # of laded boosters per flight
+        data.datasets[0].data = launchesJSON.docs.map((launch) => {
           let landings = 0;
           launch.cores.forEach((core) => {
             if (core.landing_success) {
               landings++;
             }
           });
-          return { landings };
+          return landings;
         });
-        // add average to current launch
-        data = data.map((el, index) => {
-          const arrayUntilNow = data.slice(0, index + 1);
-          return {
-            ...el,
-            average:
-              Math.round(
-                (arrayUntilNow
-                  .map((el) => el.landings)
-                  .reduce((a, b) => a + b) /
-                  (index + 1)) *
-                  100
-              ) / 100,
-          };
+        // calculate average up until current launch
+        data.datasets[1].data = data.datasets[0].data.map((_, index, arr) => {
+          const arrayUntilNow = arr.slice(0, index + 1);
+          return (
+            Math.round(
+              (arrayUntilNow.reduce((a, b) => a + b) / (index + 1)) * 100
+            ) / 100
+          );
         });
-        // create the chart
-        var options = {
-          chart: {
-            type: "line",
-            foreColor: "#FFFFFF",
-          },
-          series: [
-            {
-              name: "# of landed boosters",
-              data: data.map((el) => el.landings),
-            },
-            {
-              name: "average",
-              data: data.map((el) => el.average),
-            },
-          ],
-          colors: ["#f1c46d", "#FFFFFF"],
-          xaxis: {
-            categories: data.map((_, i) => i),
-            title: {
-              text: "flight number",
-              style: {
-                color: "#FFFFFF",
-              },
-            },
-          },
-          yaxis: {
-            title: {
-              text: "# of landed boosters",
-              style: {
-                color: "#FFFFFF",
-              },
-            },
-          },
-          stroke: {
-            curve: ["straight", "smooth"],
-          },
-          dataLabels: {
-            style: {
-              colors: ["#FFFFFF"],
-            },
-          },
-        };
-
-        var chart = new ApexCharts(
-          document.querySelector("#fhRecoveryChart"),
-          options
-        );
-
-        chart.render();
+        hasLoaded = true;
       });
   });
 </script>
@@ -124,6 +83,11 @@
 </style>
 
 <figure>
+  {#if hasLoaded}
+    <LineChart {data} />
+  {:else}
+    <p>.Loading</p>
+  {/if}
   <div id="fhRecoveryChart" />
   <figcaption>
     <h3>booster landings</h3>

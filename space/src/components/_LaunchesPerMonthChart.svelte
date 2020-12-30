@@ -1,7 +1,22 @@
 <script>
   import { onMount } from "svelte";
 
+  import LineChart from "../components/LineChart.svelte";
+
   let hasLoaded = false;
+
+  const data = {
+    xAxis: "month",
+    yAxis: "launches",
+    datasets: [
+      {
+        name: "launches",
+        color: "#f1c46d",
+        data: [],
+      },
+      { name: "average", color: "#e6e6e6", data: [] },
+    ],
+  };
 
   onMount(() => {
     // get the falcon 9 launches per month starting january 2014
@@ -30,76 +45,19 @@
           );
         });
         // build an array from the map
-        let launchesPerMonth = Array.from(launchesPerMonthMap.keys()).map(
-          (key) => ({
-            month: key,
-            launches: launchesPerMonthMap.get(key),
-          })
-        );
+        data.datasets[0].data = Array.from(
+          launchesPerMonthMap.keys()
+        ).map((key) => launchesPerMonthMap.get(key));
         // add average to current launch
-        launchesPerMonth = launchesPerMonth.map((el, index) => {
-          const arrayUntilNow = launchesPerMonth.slice(0, index + 1);
-          return {
-            ...el,
-            average:
-              Math.round(
-                (arrayUntilNow.map((i) => i.launches).reduce((a, b) => a + b) /
-                  (index + 1)) *
-                  100
-              ) / 100,
-          };
+        data.datasets[1].data = data.datasets[0].data.map((_, index, arr) => {
+          const arrayUntilNow = arr.slice(0, index + 1);
+          return (
+            Math.round(
+              (arrayUntilNow.reduce((a, b) => a + b) / (index + 1)) * 100
+            ) / 100
+          );
         });
         hasLoaded = true;
-        // create the chart
-        var options = {
-          chart: {
-            type: "line",
-            foreColor: "#FFFFFF",
-          },
-          series: [
-            {
-              name: "launches",
-              data: launchesPerMonth.map((month) => month.launches),
-            },
-            {
-              name: "average",
-              data: launchesPerMonth.map((month) => month.average),
-            },
-          ],
-          colors: ["#f1c46d", "#FFFFFF"],
-          xaxis: {
-            categories: launchesPerMonth.map((month) => month.month),
-            title: {
-              text: "month",
-              style: {
-                color: "#FFFFFF",
-              },
-            },
-          },
-          yaxis: {
-            title: {
-              text: "launches",
-              style: {
-                color: "#FFFFFF",
-              },
-            },
-          },
-          stroke: {
-            curve: ["straight", "smooth"],
-          },
-          dataLabels: {
-            style: {
-              colors: ["#FFFFFF"],
-            },
-          },
-        };
-
-        var chart = new ApexCharts(
-          document.querySelector("#cadenceChart"),
-          options
-        );
-
-        chart.render();
       });
   });
 </script>
@@ -132,9 +90,6 @@
     font-weight: 300;
     color: #f1c46d;
   }
-  #cadenceChart {
-    min-width: 40vw;
-  }
 </style>
 
 <figure>
@@ -144,8 +99,9 @@
       The steadily increasing launches per month of Falcon 9 since january 2014
     </p>
   </figcaption>
-  {#if !hasLoaded}
+  {#if hasLoaded}
+    <LineChart {data} />
+  {:else}
     <p>loading...</p>
   {/if}
-  <div id="cadenceChart" />
 </figure>
