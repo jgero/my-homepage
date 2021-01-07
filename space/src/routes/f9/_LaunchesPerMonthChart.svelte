@@ -70,6 +70,7 @@
     margin: 0;
     padding: 32px;
     box-sizing: border-box;
+    position: relative;
   }
   @media screen and (max-width: 600px) {
     figure {
