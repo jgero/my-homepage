@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import LineChart from "./LineChart.svelte";
+  import LineChart from "../../components/LineChart.svelte";
   const data = {
     xAxis: "# of flights",
     yAxis: "# of landed boosters",
@@ -64,9 +64,6 @@
       padding: 1rem;
     }
   }
-  #fhRecoveryChart {
-    width: 40vw;
-  }
   figcaption {
     max-width: 400px;
   }
@@ -86,9 +83,8 @@
   {#if hasLoaded}
     <LineChart {data} />
   {:else}
-    <p>.Loading</p>
+    <p>Loading...</p>
   {/if}
-  <div id="fhRecoveryChart" />
   <figcaption>
     <h3>booster landings</h3>
     <p>

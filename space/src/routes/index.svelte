@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
   import moon from "../../static/images/moon.jpg";
-  import CadenceChart from "../components/_cadenceChart.svelte";
-  import VehicleChart from "../components/_vehicleChart.svelte";
+  import CadenceChart from "./_cadenceChart.svelte";
+  import VehicleChart from "./_vehicleChart.svelte";
 
   let launches, rockets;
 

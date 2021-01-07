@@ -1,5 +1,5 @@
 <script>
-  import LineChart from "./LineChart.svelte";
+  import LineChart from "../components/LineChart.svelte";
   export let launches;
 
   const data = {

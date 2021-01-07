@@ -1,5 +1,5 @@
 <script>
-  import FHRecoveryChart from "../components/_fhRecoveryChart.svelte";
+  import FHRecoveryChart from "./_fhRecoveryChart.svelte";
 </script>
 
 <style>

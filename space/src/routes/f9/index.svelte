@@ -1,18 +1,23 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-  import f9 from "../../static/images/f9.png";
-  import BoosterFlightsBarChart from "../components/_BoosterFlightsBarChart.svelte";
-  import LaunchesPerMonthChart from "../components/_LaunchesPerMonthChart.svelte";
+  import f9 from "../../../static/images/f9.png";
+  import BoosterFlightsBarChart from "./_BoosterFlightsBarChart.svelte";
+  import LaunchesPerMonthChart from "./_LaunchesPerMonthChart.svelte";
 
   onMount(() => {
     // move the image on scroll
     document.querySelector("body").addEventListener("scroll", calculateScroll);
   });
+
   onDestroy(() => {
     // remove scroll event listener
-    document
-      .querySelector("body")
-      .removeEventListener("scroll", calculateScroll);
+    try {
+      document
+        .querySelector("body")
+        .removeEventListener("scroll", calculateScroll);
+    } catch (e) {
+      return;
+    }
   });
 
   function calculateScroll(ev) {

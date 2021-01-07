@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
-  import LineChart from "../components/LineChart.svelte";
+  import LineChart from "../../components/LineChart.svelte";
 
   let hasLoaded = false;
 
