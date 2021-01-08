@@ -17,11 +17,13 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    --box-spacing: 10rem;
   }
   .hero-section {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 10rem;
+    padding: 0 var(--box-spacing);
   }
   @media screen and (max-width: 600px) {
     .hero-section {
@@ -38,6 +40,7 @@
   }
   header > a {
     display: inline-block;
+    margin-top: 0.5rem;
   }
   figure {
     margin: 0;

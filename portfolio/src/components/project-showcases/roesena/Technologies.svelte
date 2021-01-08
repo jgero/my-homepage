@@ -26,7 +26,6 @@
 <style>
   .tech-section {
     background-color: var(--light-1);
-    --box-spacing: 10rem;
   }
   @media screen and (max-width: 600px) {
     .tech-section {

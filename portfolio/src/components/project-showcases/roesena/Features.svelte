@@ -63,7 +63,6 @@
 <style>
   .feature-section {
     background-color: var(--light-2);
-    --box-spacing: 10rem;
   }
   @media screen and (max-width: 600px) {
     .feature-section {
