@@ -1,62 +1,50 @@
 <script>
-  import { onMount } from "svelte";
-
   export let rockets, launches;
+  const colors = ["#f1c46d", "#909090", "#cf1b2a"];
 
-  onMount(() => {
-    /* const vehicleMap = new Map(); */
-    const rocketMap = new Map();
-    // enter the rockets to the map
-    launches.forEach((launch) => {
-      const rocketId = launch.rocket;
-      const rocketName = rockets.find((el) => el.id === rocketId).name;
-      if (rocketMap.has(rocketId)) {
-        // if entry for that rocket already exists increment the number
-        rocketMap.set(rocketId, {
-          name: rocketName,
-          launches: rocketMap.get(rocketId).launches + 1,
-        });
-      } else {
-        // otherwise set it to 1
-        rocketMap.set(rocketId, { name: rocketName, launches: 1 });
-      }
-    });
-    // create the chart
-    let options = {
-      chart: {
-        type: "pie",
-        width: 380,
-      },
-      series: Array.from(rocketMap.values()).map((rocket) => rocket.launches),
-      labels: Array.from(rocketMap.values()).map((rocket) => rocket.name),
-      colors: ["#f1c46d", "#909090", "#cf1b2a"],
-      legend: {
-        labels: {
-          colors: ["#FFFFFF"],
-        },
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              position: "bottom",
-            },
-          },
-        },
-      ],
-    };
-
-    var chart = new ApexCharts(
-      document.querySelector("#vehicleChart"),
-      options
-    );
-
-    chart.render();
+  const rocketMap = new Map();
+  // enter the rockets to the map
+  launches.forEach((launch) => {
+    const rocketId = launch.rocket;
+    const rocketName = rockets.find((el) => el.id === rocketId).name;
+    if (rocketMap.has(rocketId)) {
+      // if entry for that rocket already exists increment the number
+      rocketMap.set(rocketId, {
+        name: rocketName,
+        launches: rocketMap.get(rocketId).launches + 1,
+      });
+    } else {
+      // otherwise set it to 1
+      rocketMap.set(rocketId, { name: rocketName, launches: 1 });
+    }
   });
+
+  const data = Array.from(rocketMap.values())
+    // add colors and the width of the bar
+    .map((rocket, i, arr) => {
+      const all = arr.map((el) => el.launches).reduce((a, b) => a + b);
+      const fraction = rocket.launches / all;
+      return {
+        ...rocket,
+        color: colors[i],
+        width: width * fraction,
+      };
+    })
+    // add x offset
+    .map((element, index, arr) => {
+      const prevElements =
+        index > 0
+          ? arr
+              .slice(0, index)
+              .map((el) => el.width)
+              .reduce((a, b) => a + b)
+          : 0;
+      return { ...element, x: prevElements };
+    });
+
+  const margin = 10;
+  const height = 85;
+  const width = 550;
 </script>
 
 <style>
@@ -82,8 +70,9 @@
     font-weight: 300;
     color: #f1c46d;
   }
-  #vehicleChart {
-    width: 40vw;
+  svg {
+    max-width: 40vw;
+    min-width: 35vw;
   }
 </style>
 
@@ -95,5 +84,23 @@
       Not all of them are still in use.
     </p>
   </figcaption>
-  <div id="vehicleChart" />
+  <svg viewBox={`0 0 ${width + 2 * margin} ${height + 2 * margin}`}>
+    <g transform={`translate(${margin}, ${margin})`} font-size="10">
+      {#each data as datapoint}
+        <rect
+          fill={datapoint.color}
+          x={datapoint.x}
+          y={margin}
+          {height}
+          width={datapoint.width} />
+        <text
+          transform="rotate(90)"
+          y={-datapoint.x - 5}
+          x={margin + 5}
+          fill="white">
+          {datapoint.name}
+        </text>
+      {/each}
+    </g>
+  </svg>
 </figure>

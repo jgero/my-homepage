@@ -1,7 +1,7 @@
 {
-  "name": "TODO",
-  "description": "TODO",
-  "version": "0.0.1",
+  "name": "space-page",
+  "description": "Webpage that visualizes some data about space",
+  "version": "1.0.0",
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
@@ -9,7 +9,6 @@
     "start": "node __sapper__/build"
   },
   "dependencies": {
-    "apexcharts": "^3.22.0",
     "compression": "^1.7.1",
     "node-fetch": "^2.6.1",
     "polka": "next",
