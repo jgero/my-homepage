@@ -1,5 +1,6 @@
 <script>
   import { Greeter } from "component-lib";
+  import { StrokedButton } from "component-lib";
 </script>
 
 <style>
@@ -22,3 +23,4 @@
 </p>
 
 <Greeter />
+<StrokedButton />
