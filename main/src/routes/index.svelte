@@ -1,3 +1,13 @@
+<script>
+  import { Greeter } from "component-lib";
+</script>
+
+<style>
+  * {
+    color: blue;
+  }
+</style>
+
 <svelte:head>
   <title>placeholder</title>
 </svelte:head>
@@ -10,3 +20,5 @@
   and the sapce stats page
   <a href="https://space.jgero.me">here</a>
 </p>
+
+<Greeter />

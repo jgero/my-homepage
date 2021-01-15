@@ -7,14 +7,16 @@
 build_docker = docker build \
 									-t my-webpage/$(1):dev \
 									-f ./docker/dev.Dockerfile \
-									./$(1)
+									--build-arg TARGET=$(1) \
+									.
 # function for running a dev image
 run_docker = docker run \
 									--rm \
 									--tty \
-									-v $(PWD)/$(1)/src/:/app/src/ \
-									-v $(PWD)/$(1)/static/:/app/static/ \
-									-v $(PWD)/$(1)/rollup.config.js:/app/rollup.config.js \
+									-v $(PWD)/component-lib/:/app/component-lib/ \
+									-v $(PWD)/$(1)/src/:/app/main/src/ \
+									-v $(PWD)/$(1)/static/:/app/main/static/ \
+									-v $(PWD)/$(1)/rollup.config.js:/app/main/rollup.config.js \
 									-p 3000:3000 \
 									-p 10000:10000 \
 									my-webpage/$(1):dev
@@ -22,7 +24,8 @@ run_docker = docker run \
 build_docker_prod = docker build \
 									-t my-webpage/$(1):prod \
 									-f ./docker/prod.Dockerfile \
-									./$(1)
+									--build-arg TARGET=$(1) \
+									.
 
 #-------------------------------------------------------------------------------#
 #----------------- TARGETS TO BUILD AND RUN DEV CONTAINERS ---------------------#

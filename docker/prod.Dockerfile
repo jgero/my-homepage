@@ -1,20 +1,25 @@
+# using global argument to specify target
+# has to be redeclared in the stages
+ARG TARGET=main
+
 # This stage builds the sapper application.
 FROM node:10 AS app-builder
+ARG TARGET
 WORKDIR /app
-COPY . .
+COPY $TARGET .
 RUN npm install --no-audit --unsafe-perm
 RUN npm run build
 
 # This stage installs the runtime dependencies.
 FROM node:10 AS runtime-builder
+ARG TARGET
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY $TARGET/package.json $TARGET/package-lock.json ./
 RUN npm ci --production --unsafe-perm
 
-# This stage only needs the compiled Sapper application
-# and the runtime dependencies.
+# This stage only needs the compiled sapper application and the runtime dependencies.
 FROM node:10-alpine
-WORKDIR /app
+ARG TARGET
 COPY --from=app-builder /app/__sapper__ ./__sapper__
 COPY --from=app-builder /app/static ./static
 COPY --from=runtime-builder /app/node_modules ./node_modules
