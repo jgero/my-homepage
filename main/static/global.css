@@ -1,9 +1,10 @@
-html {
+/* css variables are set with the theme manager component at document level */
+
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
 }
 
-/* html, body, #sapper { */
-/*   margin: 0; */
-/*   padding: 0; */
-/*   width: 100%; */
-/*   height: 100%; */
-/* } */
