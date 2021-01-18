@@ -1,6 +1,11 @@
 <script>
-  import { Greeter } from "component-lib";
-  import { StrokedButton } from "component-lib";
+  import { Greeter, StrokedButton, theme } from "component-lib";
+  import { ThemeSwitcher } from "component-lib";
+
+  function switchTheme() {
+    console.log("switching theme");
+    theme.select("dark");
+  }
 </script>
 
 <style>
@@ -23,4 +28,5 @@
 </p>
 
 <Greeter />
-<StrokedButton />
+<StrokedButton on:click={switchTheme} />
+<ThemeSwitcher />

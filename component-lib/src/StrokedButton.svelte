@@ -56,4 +56,4 @@
   }
 </style>
 
-<div><button>{label}</button></div>
+<div><button on:click>{label}</button></div>

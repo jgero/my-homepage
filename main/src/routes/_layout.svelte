@@ -1,14 +1,19 @@
 <script>
-  import { applyColorPalette } from "component-lib";
+  import { ThemeManager } from "component-lib";
+  import Header from "../components/Header.svelte";
 </script>
 
 <style>
-  main {
-    background-color: var(--background);
-    padding: 3rem;
-  }
+  /* div { */
+  /*   background-color: var(--background); */
+  /*   width: 100%; */
+  /*   min-height: 100%; */
+  /*   font-family: "DM Sans", sans-serif; */
+  /*   color: var(--font); */
+  /* } */
 </style>
 
-<main use:applyColorPalette>
+<ThemeManager>
+  <Header />
   <slot />
-</main>
+</ThemeManager>
