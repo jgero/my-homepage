@@ -11,6 +11,7 @@
       var(--secondary)
     );
     margin: 3em;
+    margin-bottom: 0;
     border-radius: 0.5em;
     align-items: center;
   }
