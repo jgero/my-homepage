@@ -4,10 +4,7 @@ import marked from "marked";
 
 require("svelte/register");
 
-import { HeroHeader } from "component-lib";
-
-// const HeroHeader = require("../../../../component-lib/src/HeroHeader.svelte")
-//   .default;
+import { HeroHeader, SubHeader } from "component-lib";
 
 export function get_post(slug) {
   return getMarkdownContent(slug);
@@ -44,9 +41,14 @@ function getMarkdownContent(slug) {
   // renderer.code = highlight;
   renderer.heading = (text, level) => {
     switch (level) {
-      case 1:
+      case 1: {
         const { html } = HeroHeader.render({ header: text });
         return html;
+      }
+      case 2: {
+        const { html } = SubHeader.render({ header: text });
+        return html;
+      }
       default:
         throw new Error("unhandeled heading level");
     }
