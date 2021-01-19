@@ -1,10 +1,15 @@
 import fs from "fs";
 import path from "path";
 import marked from "marked";
+import hljs from "highlight.js/lib/core";
+// import and register javascript highlighting
+// if more langauges are needed they have to be added here
+import javascript from "highlight.js/lib/languages/javascript";
+hljs.registerLanguage("javascript", javascript);
 
 require("svelte/register");
 
-import { HeroHeader, SubHeader } from "component-lib";
+import { HeroHeader, SubHeader, Paragraph, Link, Listing } from "component-lib";
 
 export function get_post(slug) {
   return getMarkdownContent(slug);
@@ -37,8 +42,20 @@ function getMarkdownContent(slug) {
   // create marked renderer
   const renderer = new marked.Renderer();
   // customize renderer
-  // renderer.link = link_renderer;
-  // renderer.code = highlight;
+  renderer.code = (code, language) => {
+    // highlight code before giving it to the component
+    code = hljs.highlight(language, code).value;
+    const { html } = Listing.render({ code, language });
+    return html;
+  };
+  renderer.link = (href, _title, text) => {
+    const { html } = Link.render({ href, text });
+    return html;
+  };
+  renderer.paragraph = (text) => {
+    const { html } = Paragraph.render({ content: text });
+    return html;
+  };
   renderer.heading = (text, level) => {
     switch (level) {
       case 1: {

@@ -1,4 +1,4 @@
-.PHONY: portfolio_run portfolio_build space_run space_build main_run main_build
+.PHONY: portfolio_run portfolio_build portfolio_build_prod space_run space_build space_build_prod main_run main_build main_build_prod
 
 #-------------------------------------------------------------------------------#
 #---------------- FUNCTIONS TO BUILD AND RUN DEV IMAGES ------------------------#
@@ -20,13 +20,16 @@ run_docker = docker run \
 									-p 3000:3000 \
 									-p 10000:10000 \
 									my-webpage/$(1):dev
+#-------------------------------------------------------------------------------#
+#--------------- FUNCTIONS TO BUILD AND DEPLOY PROD IMAGES ---------------------#
+#-------------------------------------------------------------------------------#
 # function for building a prod image
 build_docker_prod = docker build \
 									-t my-webpage/$(1):prod \
 									-f ./docker/prod.Dockerfile \
 									--build-arg TARGET=$(1) \
 									.
-
+# TODO: add deploy and container cleanup scripts here
 #-------------------------------------------------------------------------------#
 #----------------- TARGETS TO BUILD AND RUN DEV CONTAINERS ---------------------#
 #-------------------------------------------------------------------------------#
@@ -51,5 +54,16 @@ main_build:
 	$(call build_docker,main)
 main_run:
 	$(call run_docker,main)
+main_build_prod:
+	$(call build_docker_prod,main)
+#-------------------------------------------------------------------------------#
+#---------------- TARGETS TO BUILD AND DEPLOY PROD IMAGES ----------------------#
+#-------------------------------------------------------------------------------#
+portfolio_build_prod:
+	$(call build_docker_prod,portfolio)
+
+space_build_prod:
+	$(call build_docker_prod,space)
+
 main_build_prod:
 	$(call build_docker_prod,main)

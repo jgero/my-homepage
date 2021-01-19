@@ -15,7 +15,11 @@
 </style>
 
 <svelte:head>
-  <title>placeholder</title>
+  <title>Johannes Gerold</title>
+  <meta property="og:title" content="Johannes Gerold" />
+  <meta property="og:description" content="This is me." />
+  <meta property="og:image" content="https://via.placeholder.com/150" />
+  <meta property="og:url" content="https://jgero.me" />
 </svelte:head>
 
 <h1>placeholder</h1>

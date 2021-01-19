@@ -11,7 +11,7 @@ Using the basic [sapper template](https://github.com/sveltejs/sapper-template) a
 
 Creating a custom marked renderer sounds way more difficult than it is. You basically just have to create a default renderer and overwrite the renderer methods with your own.
 
-```
+```javascript
 const renderer = new marked.Renderer();
 renderer.heading = (text, level, rawtext) => {
 	const fragment = makeSlug(rawtext);
@@ -36,7 +36,7 @@ This fragment from the official Svelte blog site takes a default renderer and ov
 
 Svelte has a [server side component API](https://svelte.dev/docs#Server-side_component_API). Together with [svelte register](https://svelte.dev/docs#svelte_register) it is easy to render components on the server without bundling them. The component API is used to create the component and pass in props, svelte register handles the rest.
 
-```
+```javascript
 require("svelte/register");
 
 import { HeroHeader, SubHeader } from "component-lib";
