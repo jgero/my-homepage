@@ -44,7 +44,7 @@ portfolio_build:
 	$(call build_dev,portfolio)
 .PHONY: portfolio_run
 portfolio_run:
-	$(call run_docker,portfolio)
+	$(call run_dev,portfolio)
 
 space: space_build space_run
 .PHONY: space_build
@@ -52,7 +52,7 @@ space_build:
 	$(call build_dev,space)
 .PHONY: space_run
 space_run:
-	$(call run_docker,space)
+	$(call run_dev,space)
 
 main: main_build main_run
 .PHONY: main_build
@@ -60,7 +60,7 @@ main_build:
 	$(call build_dev,main)
 .PHONY: main_run
 main_run:
-	$(call run_docker,main)
+	$(call run_dev,main)
 #-------------------------------------------------------------------------------#
 #---------------- TARGETS TO BUILD AND DEPLOY PROD IMAGES ----------------------#
 #------------ this is supposed to be run in the cloud build --------------------#
@@ -98,5 +98,5 @@ space_deploy:
 	$(call deploy,space)
 .PHONY: main_deploy
 main_deploy:
-	$(call deploy,space)
+	$(call deploy,main)
 
