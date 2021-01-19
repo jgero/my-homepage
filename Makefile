@@ -1,69 +1,102 @@
-.PHONY: portfolio_run portfolio_build portfolio_build_prod space_run space_build space_build_prod main_run main_build main_build_prod
-
 #-------------------------------------------------------------------------------#
 #---------------- FUNCTIONS TO BUILD AND RUN DEV IMAGES ------------------------#
 #-------------------------------------------------------------------------------#
-# function for building a dev image
-build_docker = docker build \
-									-t my-webpage/$(1):dev \
-									-f ./docker/dev.Dockerfile \
-									--build-arg TARGET=$(1) \
-									.
-# function for running a dev image
-run_docker = docker run \
-									--rm \
-									--tty \
-									-v $(PWD)/component-lib/:/app/component-lib/ \
-									-v $(PWD)/$(1)/src/:/app/main/src/ \
-									-v $(PWD)/$(1)/static/:/app/main/static/ \
-									-v $(PWD)/$(1)/rollup.config.js:/app/main/rollup.config.js \
-									-p 3000:3000 \
-									-p 10000:10000 \
-									my-webpage/$(1):dev
+# build a dev image
+build_dev = docker build \
+	-t my-webpage/$(1):dev \
+	-f ./docker/dev.Dockerfile \
+	--build-arg TARGET=$(1) \
+	.
+# run a dev image
+run_dev = docker run \
+	--rm \
+	--tty \
+	-v $(PWD)/component-lib/:/app/component-lib/ \
+	-v $(PWD)/$(1)/src/:/app/main/src/ \
+	-v $(PWD)/$(1)/static/:/app/main/static/ \
+	-v $(PWD)/$(1)/rollup.config.js:/app/main/rollup.config.js \
+	-p 3000:3000 \
+	-p 10000:10000 \
+	my-webpage/$(1):dev
 #-------------------------------------------------------------------------------#
 #--------------- FUNCTIONS TO BUILD AND DEPLOY PROD IMAGES ---------------------#
 #-------------------------------------------------------------------------------#
-# function for building a prod image
-build_docker_prod = docker build \
-									-t my-webpage/$(1):prod \
-									-f ./docker/prod.Dockerfile \
-									--build-arg TARGET=$(1) \
-									.
-# TODO: add deploy and container cleanup scripts here
+# build a prod image
+build_prod = docker build \
+	-t eu.gcr.io/webpage-jgero/$(1)-page:latest \
+	-f ./docker/prod.Dockerfile \
+	--build-arg TARGET=$(1) \
+	.
+# push a prod image to gcloud
+push = docker push eu.gcr.io/webpage-jgero/$(1)-page:latest
+# deploy the gcp cloud run services
+deploy = gcloud run deploy $(1)-page \
+	--image eu.gcr.io/webpage-jgero/$(1)-page:latest \
+	--region europe-west1 \
+	--platform managed
 #-------------------------------------------------------------------------------#
 #----------------- TARGETS TO BUILD AND RUN DEV CONTAINERS ---------------------#
+#--------- this is the recommended way of developing the pages -----------------#
 #-------------------------------------------------------------------------------#
 portfolio: portfolio_build portfolio_run
+.PHONY: portfolio_build
 portfolio_build:
-	$(call build_docker,portfolio)
+	$(call build_dev,portfolio)
+.PHONY: portfolio_run
 portfolio_run:
 	$(call run_docker,portfolio)
-portfolio_build_prod:
-	$(call build_docker_prod,portfolio)
 
 space: space_build space_run
+.PHONY: space_build
 space_build:
-	$(call build_docker,space)
+	$(call build_dev,space)
+.PHONY: space_run
 space_run:
 	$(call run_docker,space)
-space_build_prod:
-	$(call build_docker_prod,space)
 
 main: main_build main_run
+.PHONY: main_build
 main_build:
-	$(call build_docker,main)
+	$(call build_dev,main)
+.PHONY: main_run
 main_run:
 	$(call run_docker,main)
-main_build_prod:
-	$(call build_docker_prod,main)
 #-------------------------------------------------------------------------------#
 #---------------- TARGETS TO BUILD AND DEPLOY PROD IMAGES ----------------------#
+#------------ this is supposed to be run in the cloud build --------------------#
 #-------------------------------------------------------------------------------#
+build: portfolio_build_prod space_build_prod main_build_prod
+.PHONY: portfolio_build_prod
 portfolio_build_prod:
-	$(call build_docker_prod,portfolio)
+	$(call build_prod,portfolio)
 
+.PHONY: space_build_prod
 space_build_prod:
-	$(call build_docker_prod,space)
+	$(call build_prod,space)
 
+.PHONY: main_build_prod
 main_build_prod:
-	$(call build_docker_prod,main)
+	$(call build_prod,main)
+
+push: build portfolio_push space_push main_push
+.PHONY: portfolio_push
+portfolio_push:
+	$(call push,portfolio)
+.PHONY: space_push
+space_push:
+	$(call push,space)
+.PHONY: main_push
+main_push:
+	$(call push,main)
+
+deploy: portfolio_deploy space_deploy main_deploy
+.PHONY: portfolio_deploy
+portfolio_deploy:
+	$(call deploy,portfolio)
+.PHONY: space_deploy
+space_deploy:
+	$(call deploy,space)
+.PHONY: main_deploy
+main_deploy:
+	$(call deploy,space)
+

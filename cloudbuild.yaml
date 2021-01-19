@@ -9,90 +9,20 @@
 # ---------------------------------------------------------------------------------------
 steps:
 # ---------------------------------------------------------------------------------------
-# --------------------------- BUILD PORTFOLIO IMAGE -------------------------------------
+# --------------------------- BUILD AND PUSH IMAGES -------------------------------------
 # ---------------------------------------------------------------------------------------
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
+  entrypoint: 'make'
   args:
-    - '-c'
-    - |
-      docker build \
-          -t eu.gcr.io/$PROJECT_ID/portfolio-page:latest \
-          -f ./docker/prod.Dockerfile \
-          ./portfolio
-# push the portfolio image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest']
-# deploy portfolio image to Cloud Run
+    - 'push'
+# ---------------------------------------------------------------------------------------
+# ------------------------------- DEPLOY IMAGES -----------------------------------------
+# ---------------------------------------------------------------------------------------
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: gcloud
+  entrypoint: 'make'
   args:
-  - 'run'
   - 'deploy'
-  - 'portfolio-page'
-  - '--image'
-  - 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest'
-  - '--region'
-  - 'europe-west1'
-  - '--platform'
-  - 'managed'
-# ---------------------------------------------------------------------------------------
-# ------------------------------- BUILD SPACE IMAGE -------------------------------------
-# ---------------------------------------------------------------------------------------
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      docker build \
-          -t eu.gcr.io/$PROJECT_ID/space-page:latest \
-          -f ./docker/prod.Dockerfile \
-          ./space
-# push the space image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/space-page:latest']
-# deploy space image to Cloud Run
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: gcloud
-  args:
-  - 'run'
-  - 'deploy'
-  - 'space-page'
-  - '--image'
-  - 'eu.gcr.io/$PROJECT_ID/space-page:latest'
-  - '--region'
-  - 'europe-west1'
-  - '--platform'
-  - 'managed'
-# ---------------------------------------------------------------------------------------
-# ----------------------------- BUILD MAIN PAGE IMAGE -----------------------------------
-# ---------------------------------------------------------------------------------------
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      docker build \
-          -t eu.gcr.io/$PROJECT_ID/main-page:latest \
-          -f ./docker/prod.Dockerfile \
-          ./main
-# push the main image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/main-page:latest']
-# deploy main image to Cloud Run
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: gcloud
-  args:
-  - 'run'
-  - 'deploy'
-  - 'main-page'
-  - '--image'
-  - 'eu.gcr.io/$PROJECT_ID/main-page:latest'
-  - '--region'
-  - 'europe-west1'
-  - '--platform'
-  - 'managed'
 images:
-- 'eu.gcr.io/$PROJECT_ID/portfolio-page:latest'
-- 'eu.gcr.io/$PROJECT_ID/space-page:latest'
-- 'eu.gcr.io/$PROJECT_ID/main-page:latest'
+- 'eu.gcr.io/webpage-jgero/portfolio-page:latest'
+- 'eu.gcr.io/webpage-jgero/space-page:latest'
+- 'eu.gcr.io/webpage-jgero/main-page:latest'
