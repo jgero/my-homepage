@@ -1,6 +1,3 @@
-<script context="module">
-</script>
-
 <script>
   export let header = "text missing";
 </script>
