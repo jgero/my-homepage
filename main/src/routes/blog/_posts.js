@@ -7,10 +7,6 @@ import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 hljs.registerLanguage("javascript", javascript);
 
-require("svelte/register");
-
-import { HeroHeader, SubHeader, Paragraph, Link, Listing } from "component-lib";
-
 export function get_post(slug) {
   return getMarkdownContent(slug);
 }
@@ -45,30 +41,13 @@ function getMarkdownContent(slug) {
   renderer.code = (code, language) => {
     // highlight code before giving it to the component
     code = hljs.highlight(language, code).value;
-    const { html } = Listing.render({ code, language });
-    return html;
+    // add some wrapper elements to allow for better styling
+    return `<div class="listing"><pre><code class="language-${language}">${code}</code></pre></div>`;
   };
   renderer.link = (href, _title, text) => {
-    const { html } = Link.render({ href, text });
-    return html;
-  };
-  renderer.paragraph = (text) => {
-    const { html } = Paragraph.render({ content: text });
-    return html;
-  };
-  renderer.heading = (text, level) => {
-    switch (level) {
-      case 1: {
-        const { html } = HeroHeader.render({ header: text });
-        return html;
-      }
-      case 2: {
-        const { html } = SubHeader.render({ header: text });
-        return html;
-      }
-      default:
-        throw new Error("unhandeled heading level");
-    }
+    // add a target attribute to open links to external pages in new tabs
+    const target = href.startsWith("http") ? "_blank" : null;
+    return `<a href="${href}" ${target}>${text}</a>`;
   };
   // remove tabs and add custom renderer
   const html = marked(

@@ -1,6 +1,7 @@
 /* css variables are set with the theme manager component at document level */
 
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
   width: 100%;
@@ -8,3 +9,56 @@ html, body {
   background-color: var(--background);
 }
 
+h1 {
+  color: var(--font);
+  text-transform: uppercase;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 400;
+  margin: 0;
+  margin-block-start: 1em;
+  font-size: 3.5rem;
+}
+  h2 {
+    color: var(--font);
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 400;
+    margin: 0;
+    margin-block-start: 1em;
+    position: relative;
+  }
+  h2::before {
+    content: "";
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: -2px;
+    left: 0;
+    background-image: linear-gradient(
+      to right,
+      var(--primary),
+      var(--secondary)
+    );
+  }
+  p {
+    font-family: "DM Sans", sans-serif;
+    color: var(--font);
+    margin: 0;
+    margin-block-start: 1em;
+  }
+  div.listing {
+    background-image: linear-gradient(
+      to right,
+      var(--primary),
+      var(--secondary)
+    );
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    margin-top: 1em;
+  }
+  pre {
+    background-color: white;
+    padding: 1rem;
+    margin: 0;
+  }

@@ -1,6 +1,7 @@
 <script>
-  import { Greeter, Button, theme } from "component-lib";
-  import { ThemeSwitcher } from "component-lib";
+  import Button from "../components/Button.svelte";
+  import { theme } from "../theming/colors.js";
+  import ThemeSwitcher from "../theming/ThemeSwitcher.svelte";
 
   function switchTheme() {
     console.log("switching theme");
@@ -31,6 +32,5 @@
   <a href="https://space.jgero.me">here</a>
 </p>
 
-<Greeter />
 <Button on:click={switchTheme} />
 <ThemeSwitcher />

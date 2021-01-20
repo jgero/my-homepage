@@ -1,6 +1,5 @@
 import { writable } from "svelte/store";
 
-// TODO: add dark and light theme colors
 const themes = {
   dark: {
     primary: "#ffffce",

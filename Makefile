@@ -11,10 +11,9 @@ build_dev = docker build \
 run_dev = docker run \
 	--rm \
 	--tty \
-	-v $(PWD)/component-lib/:/app/component-lib/ \
-	-v $(PWD)/$(1)/src/:/app/main/src/ \
-	-v $(PWD)/$(1)/static/:/app/main/static/ \
-	-v $(PWD)/$(1)/rollup.config.js:/app/main/rollup.config.js \
+	-v $(PWD)/$(1)/src/:/app/$(1)/src/ \
+	-v $(PWD)/$(1)/static/:/app/$(1)/static/ \
+	-v $(PWD)/$(1)/rollup.config.js:/app/$(1)/rollup.config.js \
 	-p 3000:3000 \
 	-p 10000:10000 \
 	my-webpage/$(1):dev

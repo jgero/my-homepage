@@ -8,7 +8,6 @@
 
 <script>
   import PostCard from "../../components/PostCard.svelte";
-  import { HeroHeader } from "component-lib";
   export let data;
 </script>
 
@@ -27,7 +26,7 @@
 </svelte:head>
 
 <main>
-  <HeroHeader header="freshest blog posts" />
+  <h1>freshest blog posts</h1>
   {#each data as post}
     <PostCard {...post.metadata} />
   {/each}

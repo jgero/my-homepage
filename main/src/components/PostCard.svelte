@@ -1,5 +1,5 @@
 <script>
-  import { Button } from "component-lib";
+  import Button from "./Button.svelte";
   export let title;
   export let description;
   export let pubdate;
@@ -36,14 +36,12 @@
     justify-content: center;
   }
   h2 {
-    color: var(--font);
     font-size: 1.5rem;
-    text-transform: uppercase;
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 500;
     margin: 0;
   }
-  p,
+  h2::before {
+    display: none;
+  }
   time {
     font-family: "DM Sans", sans-serif;
   }
