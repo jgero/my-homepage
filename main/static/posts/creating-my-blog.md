@@ -70,7 +70,61 @@ renderer.heading = (text, level) => {
 };
 ```
 
-In theory requiring a script, importing some components and invoking some methods sounds easy enough. In practice creating a separate local npm package as the component library and requiring this register script led to some annoying bundling problems. Because of that i decided to just generate plain HTML for now and revisit this idea in the future, maybe when [svelte kit](https://svelte.dev/blog/whats-the-deal-with-sveltekit) is released.
+In theory requiring a script, importing some components and invoking some methods sounds easy enough. In practice creating a separate local npm package as the component library and requiring this register script led to some annoying bundling problems. Because of that i decided to just generate plain HTML without Svelte for now and revisit this idea in the future, maybe when [svelte kit](https://svelte.dev/blog/whats-the-deal-with-sveltekit) is released.
+
+## Syntax highlighting in code blocks
+
+For this I am using [highlight.js](https://highlightjs.org/). In the marked renderer with the default GitHub stylesheet for the highlights.
+
+```javascript
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+hljs.registerLanguage("javascript", javascript);
+
+// ...
+
+renderer.code = (code, language) => {
+  // highlight code before giving it to the component
+  code = hljs.highlight(language, code).value;
+  // add some wrapper elements to allow for better styling
+  return `<div class="listing"><pre><code class="language-${language}">${code}</code></pre></div>`;
+};
+```
+
+To keep the bundle size as small as possible i only import the highlight.js core and the javascript language. If I include some code blocks in other languages I will have to add these here aswell, but for now just javascript is fine. Similar to the link renderer I overwrote the code renderer. Wrapping it with another div element to allows me some easier styling. As content of the code element the highlighted output of highlight.js is used. This would work, but the stylesheet to apply the colors are still missing. Including `highlight.js/styles/github.css` in the `client.js` file of the Sapper app does the trick.
 
 ## Get the content from the files to the page
 
+Because the files are on the server this can only be done inside a server route. From there it is just a matter of reading the contents of a directory with the `fs` package and running the content of the files through the marked renderer.
+
+```javascript
+export function get_posts() {
+  return (
+    fs
+      .readdirSync("static/posts")
+      .map((file) => {
+        // ...
+      })
+  );
+}
+
+function getMarkdownContent(slug) {
+  const markdown = fs.readFileSync(`static/posts/${slug}.md`, "utf-8");
+  // ...
+}
+
+```
+
+In the `getMarkdownContent` function I run the marked renderer and in the `get_posts` function I add some extra metadata content like title and description for meta tags on the page later. Speaking of the page, let's have a look at how this is done.
+
+```javascript
+export async function preload() {
+  const r = await this.fetch("/blog.json");
+  const data = await r.json();
+  return { data };
+}
+```
+
+Sapper pages can have module script blocks to run some code on the server before the page is loaded. This is perfect in this case, I use that to make the request to my server route which provides me the already completely rendered blogs. I return this fetched data as a prop to the page. This has the effect that when a user clicks on the link to this page the browser only has to make one request to the server to get the completely populated page. If I made the request in the normal script of the component the browser would first load the empty page, then send another request to get the blog post content and then show the complete page.
+
+Using all these nice features of Sapper enables me to build a nice blog that can be rendered completely on the server side which results in a lightning quick experience.
