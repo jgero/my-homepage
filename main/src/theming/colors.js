@@ -10,7 +10,7 @@ const themes = {
   light: {
     primary: "#78ffce",
     secondary: "#c1f0ff",
-    background: "#fcfcfc",
+    background: "#ffffff",
     font: "#000000",
   },
 };

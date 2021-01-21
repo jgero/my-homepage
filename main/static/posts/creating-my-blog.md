@@ -1,11 +1,11 @@
 ---
 title: Creating my own blog
-description: How I created my own blog using Svelte/Sapper with posts consisting of svelte components rendred from markdown text.
+description: How I created my own blog using Svelte/Sapper with posts rendred from markdown text.
 pubdate: 2021-01-19T09:25:55.516Z
 ---
 # Creating my own blog
 
-Using the basic [sapper template](https://github.com/sveltejs/sapper-template) and just taking a [rollup plugin](https://github.com/jackfranklin/rollup-plugin-markdown) to import markdown files would be possible and quick to do, but I wanted to give it a little twist. I was already working on some kind of component library for my website so I wanted to use these components for the automatically rendered blog posts too. To do this I took some inspiration from the blog on the [official Svelte site](https://svelte.dev/) and used [marked](https://marked.js.org/) with a custom renderer.
+Using the basic [sapper template](https://github.com/sveltejs/sapper-template) and just taking a [rollup plugin](https://github.com/jackfranklin/rollup-plugin-markdown) to import markdown files would be possible and quick to do, but I wanted to be a little bit more flexible. I want to be able to hook into the rendering process to make some minor tweaks to the generated content like for example adding a _target_ attribute to external links to open them in a new tab. To do this I took some inspiration from the blog on the [official Svelte site](https://svelte.dev/) and used [marked](https://marked.js.org/) with a custom renderer.
 
 ## Custom marked renderer
 
@@ -30,7 +30,18 @@ const html = marked(
 );
 ```
 
-This fragment from the official Svelte blog site takes a default renderer and overwrites how headings are generated. They use it to enable page fragment anchors on the page. In the last lines of this code example the content is modified a bit with a regex and the renderer is applied and run with the marked library to get the html content to be used on the page.
+This fragment from the [official Svelte blog site](https://github.com/sveltejs/svelte/tree/master/site) takes a default renderer and overwrites how headings are generated. They use it to enable page fragment anchors on the page. In the last lines of this code example the content is modified a bit with a regex and the renderer is applied and run with the marked library to get the html content to be used on the page.
+
+```javascript
+renderer.link = (href, _title, text) => {
+  const target = href.startsWith("http") ? "_blank" : null;
+  return `<a href="${href}" ${target}>${text}</a>`;
+};
+```
+
+Like already mentioned above I use it to add a target attribute depending on if it is an external link.
+
+I explored the option of generating Svelte components in the markdown renderer as well. This would be really handy in conjunction with some sort of component library which is used for the "manually" coded parts of the page **and** the automatically generated.
 
 ## Generate Svelte components in the marked renderer
 
@@ -59,5 +70,7 @@ renderer.heading = (text, level) => {
 };
 ```
 
-I am using this to render headings as svelte components. My header components take a `header` prop which is just the text content the header should have. As you can see using these very handy APIs it is easily possible to reuse components of your component library in your rendered content aswell to save duplication or style inconsistencies.
+In theory requiring a script, importing some components and invoking some methods sounds easy enough. In practice creating a separate local npm package as the component library and requiring this register script led to some annoying bundling problems. Because of that i decided to just generate plain HTML for now and revisit this idea in the future, maybe when [svelte kit](https://svelte.dev/blog/whats-the-deal-with-sveltekit) is released.
+
+## Get the content from the files to the page
 
