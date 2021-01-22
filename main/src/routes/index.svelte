@@ -10,8 +10,29 @@
 </script>
 
 <style>
-  * {
-    color: blue;
+  main {
+    margin: 0 20vw;
+  }
+  section {
+    position: relative;
+    margin-top: 1.5rem;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    border-radius: 3.5rem;
+    padding: 0 2rem;
+  }
+  section > div {
+    font-size: 4rem;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    color: var(--primary);
+  }
+  section > p {
+    margin: 0;
+    margin-left: 1em;
+    flex: 1;
   }
 </style>
 
@@ -23,14 +44,28 @@
   <meta property="og:url" content="https://jgero.me" />
 </svelte:head>
 
-<h1>placeholder</h1>
-
-<p>
-  This page is currently just a placeholder. The portfolio can be found
-  <a href="https://portfolio.jgero.me">here</a>
-  and the sapce stats page
-  <a href="https://space.jgero.me">here</a>
-</p>
-
-<Button on:click={switchTheme} />
-<ThemeSwitcher />
+<main>
+  <h1>hello there!</h1>
+  <h2>who am i?</h2>
+  <section>
+    <div class="material-icons">account_circle</div>
+    <p>Read more about me in my portfolio</p>
+    <Button label="show me" href="https://portfolio.jgero.me" target="_blank" />
+  </section>
+  <h2>what am i doing?</h2>
+  <section>
+    <div class="material-icons">article</div>
+    <p>
+      I am writing a blog about interesting stuff I encounter in my projects
+    </p>
+    <Button label="show me" href="/blog" />
+  </section>
+  <section>
+    <div class="material-icons">insights</div>
+    <p>
+      working on a page to visualize data about space travel to practice coding
+      and because I love space related things
+    </p>
+    <Button label="show me" href="https://space.jgero.me" target="_blank" />
+  </section>
+</main>

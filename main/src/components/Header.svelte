@@ -1,5 +1,6 @@
 <script>
   import Button from "./Button.svelte";
+  import ThemeSwitcher from "../theming/ThemeSwitcher.svelte";
 </script>
 
 <style>
@@ -40,6 +41,7 @@
 <header>
   <a href="/">Johannes Gerold</a>
   <span />
+  <ThemeSwitcher />
   <nav>
     <Button href="/blog" label="blog" style="flat" />
     <Button
