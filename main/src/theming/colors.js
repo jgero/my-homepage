@@ -2,10 +2,10 @@ import { writable } from "svelte/store";
 
 const themes = {
   dark: {
-    primary: "#ffffce",
-    secondary: "#fff0ff",
-    background: "#fffcfc",
-    font: "#000000",
+    primary: "#ff2020",
+    secondary: "#dba915",
+    background: "#3c3c3c",
+    font: "#eeeded",
   },
   light: {
     primary: "#78ffce",

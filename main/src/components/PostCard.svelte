@@ -26,6 +26,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-top: 2rem;
   }
   article {
     background-color: var(--background);
@@ -44,6 +45,9 @@
   }
   time {
     font-family: "DM Sans", sans-serif;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    color: var(--font);
   }
   div {
     position: absolute;
@@ -70,8 +74,8 @@
 <section>
   <article>
     <h2>{title}</h2>
-    <p>{description}</p>
     <time datetime={pubdate}>{dateString}</time>
+    <p>{description}</p>
   </article>
   <div>
     <Button label="read" href={`/blog/${slug}`} style="flat" />

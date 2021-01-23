@@ -15,6 +15,12 @@
   main {
     margin: 0 20vw;
   }
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
 </style>
 
 <svelte:head>
@@ -27,7 +33,9 @@
 
 <main>
   <h1>freshest blog posts</h1>
-  {#each data as post}
-    <PostCard {...post.metadata} />
-  {/each}
+  <div>
+    {#each data as post}
+      <PostCard {...post.metadata} />
+    {/each}
+  </div>
 </main>
