@@ -5,7 +5,9 @@ import hljs from "highlight.js/lib/core";
 // import and register javascript highlighting
 // if more langauges are needed they have to be added here
 import javascript from "highlight.js/lib/languages/javascript";
+import typescript from "highlight.js/lib/languages/typescript";
 hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("typescript", typescript);
 
 export function get_post(slug) {
   return getMarkdownContent(slug);

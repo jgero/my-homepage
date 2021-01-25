@@ -41,7 +41,6 @@
 <header>
   <a href="/">Johannes Gerold</a>
   <span />
-  <ThemeSwitcher />
   <nav>
     <Button href="/blog" label="blog" style="flat" />
     <Button
@@ -51,4 +50,5 @@
       style="flat" />
     <Button href="/contact_me" label="contact me" style="flat" />
   </nav>
+  <ThemeSwitcher />
 </header>

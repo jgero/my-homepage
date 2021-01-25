@@ -21,6 +21,7 @@
     background-color: var(--background);
     border: 1px solid var(--font);
     border-radius: 0.5em;
+    margin: 1rem;
   }
   span::before {
     position: absolute;
