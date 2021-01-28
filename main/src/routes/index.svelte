@@ -1,12 +1,16 @@
 <script>
   import Button from "../components/Button.svelte";
-  import { theme } from "../theming/colors.js";
-  import ThemeSwitcher from "../theming/ThemeSwitcher.svelte";
+  import { onMount } from "svelte";
 
-  function switchTheme() {
-    console.log("switching theme");
-    theme.select("dark");
-  }
+  onMount(() => {
+    const go = new Go();
+    WebAssembly.instantiateStreaming(
+      fetch("sudoku.wasm"),
+      go.importObject
+    ).then((result) => {
+      go.run(result.instance);
+    });
+  });
 </script>
 
 <style>
