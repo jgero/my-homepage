@@ -1,5 +1,9 @@
 <script>
   import { fly } from "svelte/transition";
+  import {
+    send,
+    receive,
+  } from "../../components/startpage-views/router-animation.js";
   import Technologies from "../../components/project-showcases/roesena/Technologies.svelte";
   import Features from "../../components/project-showcases/roesena/Features.svelte";
 
@@ -72,7 +76,11 @@
 <main out:fly={{ x: 200, duration: 200 }}>
   <div class="hero-section">
     <header>
-      <h1 in:fly={{ duration: 1500, x: -200 }}>RöSeNa - App</h1>
+      <h1
+        in:receive={{ key: 'showcase-heading' }}
+        out:send={{ key: 'showcase-heading' }}>
+        RöSeNa - App
+      </h1>
       <div in:fly={{ duration: 1500, x: -200, delay: 200 }} />
       <h2 in:fly={{ duration: 1500, x: -200, delay: 400 }}>
         web-app for a carnival club

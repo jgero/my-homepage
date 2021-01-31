@@ -1,5 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
+  import { send, receive } from "./router-animation.js";
 
   import image1 from "../../../static/images/portfolio_project_1.png";
   import image2 from "../../../static/images/portfolio_project_2.png";
@@ -83,13 +84,15 @@
 <div class="wrapper">
   <section out:fly={{ x: -200, duration: 200 }}>
     <header>
-      <h1>
-        <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>project showcase</h1>
-        <div in:fly={{ x: -200, duration: 1500, delay: 200 }} class="spacer" />
-        <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>
-          web-app for a carnival club
-        </h2>
+      <h1
+        in:receive={{ key: 'showcase-heading', duration: 1400 }}
+        out:send={{ key: 'showcase-heading', duration: 200 }}>
+        project showcase
       </h1>
+      <div in:fly={{ x: -200, duration: 1500, delay: 200 }} class="spacer" />
+      <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>
+        web-app for a carnival club
+      </h2>
     </header>
     <p in:fly={{ x: -200, duration: 1500, delay: 600 }}>
       Webpage with login and user groups, user created articles, image upload,
