@@ -11,6 +11,17 @@
   }/${pubdate.getFullYear()}`;
 </script>
 
+<section>
+  <article>
+    <h2>{title}</h2>
+    <time datetime={pubdate}>{dateString}</time>
+    <p>{description}</p>
+  </article>
+  <div>
+    <Button label="read" href={`/blog/${slug}`} style="flat" />
+  </div>
+</section>
+
 <style>
   section {
     --border-size: 0.2rem;
@@ -70,14 +81,3 @@
     transform: scaleY(1);
   }
 </style>
-
-<section>
-  <article>
-    <h2>{title}</h2>
-    <time datetime={pubdate}>{dateString}</time>
-    <p>{description}</p>
-  </article>
-  <div>
-    <Button label="read" href={`/blog/${slug}`} style="flat" />
-  </div>
-</section>

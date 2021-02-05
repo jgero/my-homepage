@@ -3,6 +3,7 @@ title: Firebase image resizing cloud function
 description: How I created a image resizing cloud function to create thumbnails and a uniform image format on user uploads.
 pubdate: 2021-01-24T15:30:55.516Z
 ---
+
 # Firebase image resizing cloud function
 
 In a Firebase project of mine users have the option to upload images they take. This would result in a set of images that are very different from each other regarding size, format and quality. This is not optimal because coming up with layouts for images with unknown aspect ratios is annoying.
@@ -11,11 +12,20 @@ So I looked at the cloud function and storage docs how to do such a function and
 
 ```typescript
 export const cropImage = functions
-  .region('europe-west1')
+  .region("europe-west1")
   .storage.object()
   .onFinalize(async (object) => {
     // ...
-    await spawn('convert', [tempFilePath, '-resize', '800x550^', '-gravity', 'center', '-extent', '800x550', tempFilePath]);
+    await spawn("convert", [
+      tempFilePath,
+      "-resize",
+      "800x550^",
+      "-gravity",
+      "center",
+      "-extent",
+      "800x550",
+      tempFilePath,
+    ]);
     // ...
   });
 ```
@@ -29,11 +39,17 @@ To speed up loading times I changed the function to store the image in different
 for (const target of targetSizes) {
   const imgName = getFilenameForTarget(target, fileName);
   // add random id to end of filename to avoid weird file overwrite bug
-  const imgPathFunction = join(workingDir, imgName + '_' + Math.random().toString(36).substr(2, 9));
+  const imgPathFunction = join(
+    workingDir,
+    imgName + "_" + Math.random().toString(36).substr(2, 9)
+  );
   const imgPathBucket = join(target.dir, imgName);
 
   // resize source image
-  await sharp(tmpFilePath).resize(target.width, target.height).webp({ quality: target.quality }).toFile(imgPathFunction);
+  await sharp(tmpFilePath)
+    .resize(target.width, target.height)
+    .webp({ quality: target.quality })
+    .toFile(imgPathFunction);
 
   // Upload to storage
   // ...
@@ -54,13 +70,13 @@ This feels more like a workaround than a solution to the problem because I still
 The next thing I had to deal with was, that users already had uploaded some images with the old function. Already existing files would just stay as they are and brake in the frontend when I start moving to the new image paths in the requests. The plan was to convert the old images as well, but because it were over 150 already doing it manually was no option.
 
 ```typescript
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-import { tmpdir } from 'os';
-import { join } from 'path';
+import { tmpdir } from "os";
+import { join } from "path";
 
-import * as fs from 'fs-extra';
+import * as fs from "fs-extra";
 
 const runtimeOpts = {
   timeoutSeconds: 300,
@@ -68,20 +84,20 @@ const runtimeOpts = {
 
 export const imageRefactoring = functions
   .runWith(runtimeOpts)
-  .region('europe-west1')
-  .pubsub.schedule('0 2 * * *')
-  .timeZone('Europe/Berlin')
+  .region("europe-west1")
+  .pubsub.schedule("0 2 * * *")
+  .timeZone("Europe/Berlin")
   .onRun(async (_) => {
     // default storage bucket
     const bucket = admin.storage().bucket();
     // get all images
-    const images = await admin.firestore().collection('images').get();
+    const images = await admin.firestore().collection("images").get();
     console.log(`refactoring ${images.size} images`);
     // create workdir and wait for it
-    const workingDir = join(tmpdir(), 'images');
+    const workingDir = join(tmpdir(), "images");
     await fs.ensureDir(workingDir);
     // put all files in the same temp file
-    const tmpFilePath = join(workingDir, 'source');
+    const tmpFilePath = join(workingDir, "source");
 
     // move all the images by downloading and reuploading
     const ids: string[] = [];
@@ -90,8 +106,8 @@ export const imageRefactoring = functions
       try {
         // download source image
         console.log(`downloading ${ids[i]}`);
-        const destinationFilePath = join('tmp', ids[i]);
-        const file = bucket.file(join('uploads', `${ids[i]}_cropped`));
+        const destinationFilePath = join("tmp", ids[i]);
+        const file = bucket.file(join("uploads", `${ids[i]}_cropped`));
         const [metadata] = await file.getMetadata();
         await file.download({ destination: tmpFilePath });
         // upload it again in the tmp dir
@@ -114,4 +130,3 @@ export const imageRefactoring = functions
 With this temporary scheduled function I requested all the image Ids from some firestore documents, downloaded each image and uploaded again in the correct directory, so it would trigger the new conversion function. After I migrated all the images to the new locations I swapped the request and upload paths in the frontend and the swich was done.
 
 Now the overview pages load instantly even on mobile connections and higher quality images are still available when needed.
-

@@ -3,6 +3,22 @@
   import ThemeSwitcher from "../theming/ThemeSwitcher.svelte";
 </script>
 
+<header>
+  <a href="/">Johannes Gerold</a>
+  <span />
+  <nav>
+    <Button href="/blog" label="blog" style="flat" />
+    <Button
+      href="https://portfolio.jgero.me"
+      target="_blank"
+      label="portfolio"
+      style="flat"
+    />
+    <Button href="/contact_me" label="contact me" style="flat" />
+  </nav>
+  <ThemeSwitcher />
+</header>
+
 <style>
   header {
     display: flex;
@@ -37,18 +53,3 @@
     display: flex;
   }
 </style>
-
-<header>
-  <a href="/">Johannes Gerold</a>
-  <span />
-  <nav>
-    <Button href="/blog" label="blog" style="flat" />
-    <Button
-      href="https://portfolio.jgero.me"
-      target="_blank"
-      label="portfolio"
-      style="flat" />
-    <Button href="/contact_me" label="contact me" style="flat" />
-  </nav>
-  <ThemeSwitcher />
-</header>
