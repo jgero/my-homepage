@@ -39,6 +39,9 @@ deploy = gcloud run deploy $(1)-page \
 	--region europe-west1 \
 	--platform managed
 #-------------------------------------------------------------------------------#
+#------------------------- BUILD SUDOKU WASM MODULE ----------------------------#
+#-------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------#
 #----------------- TARGETS TO BUILD AND RUN DEV CONTAINERS ---------------------#
 #--------- this is the recommended way of developing the pages -----------------#
 #-------------------------------------------------------------------------------#
@@ -58,13 +61,16 @@ space_build:
 space_run:
 	$(call run_dev,space)
 
-main: main_build main_run
+main: main_build main/static/sudoku.wasm main_run
 .PHONY: main_build
 main_build:
 	$(call build_dev,main)
 .PHONY: main_run
 main_run:
 	$(call run_dev,main)
+# build WASM module from go
+main/static/sudoku.wasm: sudoku/*.go
+	GOOS=js GOARCH=wasm go build -o ./main/static/sudoku.wasm ./sudoku/sudoku.go
 #-------------------------------------------------------------------------------#
 #---------------- TARGETS TO BUILD AND DEPLOY PROD IMAGES ----------------------#
 #------------ this is supposed to be run in the cloud build --------------------#
