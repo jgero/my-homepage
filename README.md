@@ -1,6 +1,6 @@
 # jgero.me webpage
 
-This project is composed of multiple pages for the main domain and multiple subdomains.
+This project is composed of multiple pages for the main domain and multiple subdomains. All these pages are built with Svelte and Sapper and deployed to cloud run in the google cloud.
 
 ## develop, build and run
 
