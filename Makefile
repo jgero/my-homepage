@@ -1,14 +1,19 @@
 #-------------------------------------------------------------------------------#
+#-------------------------------- SETUP ----------------------------------------#
+#-------------------------------------------------------------------------------#
+# set docker as container runtime if nothing else is set
+CONTAINER_RUNTIME?=$(CONTAINER_RUNTIME)
+#-------------------------------------------------------------------------------#
 #---------------- FUNCTIONS TO BUILD AND RUN DEV IMAGES ------------------------#
 #-------------------------------------------------------------------------------#
 # build a dev image
-build_dev = docker build \
+build_dev = $(CONTAINER_RUNTIME) build \
 	-t my-webpage/$(1):dev \
-	-f ./docker/dev.Dockerfile \
+	-f ./$(CONTAINER_RUNTIME)/dev.Dockerfile \
 	--build-arg TARGET=$(1) \
 	.
 # run a dev image
-run_dev = docker run \
+run_dev = $(CONTAINER_RUNTIME) run \
 	--rm \
 	--tty \
 	-v $(PWD)/$(1)/src/:/app/$(1)/src/ \
@@ -21,13 +26,13 @@ run_dev = docker run \
 #--------------- FUNCTIONS TO BUILD AND DEPLOY PROD IMAGES ---------------------#
 #-------------------------------------------------------------------------------#
 # build a prod image
-build_prod = docker build \
+build_prod = $(CONTAINER_RUNTIME) build \
 	-t eu.gcr.io/webpage-jgero/$(1)-page:latest \
-	-f ./docker/prod.Dockerfile \
+	-f ./$(CONTAINER_RUNTIME)/prod.Dockerfile \
 	--build-arg TARGET=$(1) \
 	.
 # push a prod image to gcloud
-push = docker push eu.gcr.io/webpage-jgero/$(1)-page:latest
+push = $(CONTAINER_RUNTIME) push eu.gcr.io/webpage-jgero/$(1)-page:latest
 # deploy the gcp cloud run services
 deploy = gcloud run deploy $(1)-page \
 	--image eu.gcr.io/webpage-jgero/$(1)-page:latest \
