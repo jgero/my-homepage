@@ -1,7 +1,9 @@
 <script>
   import { onMount } from "svelte";
   let distanceText = "distance: not initialized";
+  let isClient = false;
   onMount(() => {
+    isClient = true;
     console.log("I am alive!");
     setInterval(() => {
       const distanceMsg = document
@@ -22,14 +24,17 @@
 
 <h1>{distanceText}</h1>
 
-<a-scene
-  vr-mode-ui="enabled: false"
-  embedded
-  arjs="sourceType: webcam; debugUIEnabled: false;">
-  <a-text
-    value="This content will always face you."
-    look-at="[gps-camera]"
-    scale="120 120 120"
-    gps-entity-place="latitude: 48.938411863997246; longitude: 10.209873807386952;" />
-  <a-camera gps-camera rotation-reader />
-</a-scene>
+<!--stop sapper from rendering this on the server, because that breaks aframe somehow-->
+{#if isClient}
+  <a-scene
+    vr-mode-ui="enabled: false"
+    embedded
+    arjs="sourceType: webcam; debugUIEnabled: false;">
+    <a-text
+      value="This content will always face you."
+      look-at="[gps-camera]"
+      scale="120 120 120"
+      gps-entity-place="latitude: 48.938411863997246; longitude: 10.209873807386952;" />
+    <a-camera gps-camera rotation-reader />
+  </a-scene>
+{/if}
