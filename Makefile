@@ -28,7 +28,7 @@ run_dev = $(CONTAINER_RUNTIME) run \
 # build a prod image
 build_prod = $(CONTAINER_RUNTIME) build \
 	-t eu.gcr.io/webpage-jgero/$(1)-page:latest \
-	-f ./$(CONTAINER_RUNTIME)/prod.Dockerfile \
+	-f ./docker/prod.Dockerfile \
 	--build-arg TARGET=$(1) \
 	.
 # push a prod image to gcloud
