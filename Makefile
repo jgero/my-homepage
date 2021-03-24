@@ -9,7 +9,7 @@ CONTAINER_RUNTIME?=docker
 # build a dev image
 build_dev = $(CONTAINER_RUNTIME) build \
 	-t my-webpage/$(1):dev \
-	-f ./$(CONTAINER_RUNTIME)/dev.Dockerfile \
+	-f ./docker/dev.Dockerfile \
 	--build-arg TARGET=$(1) \
 	.
 # run a dev image
@@ -58,6 +58,14 @@ space_build:
 space_run:
 	$(call run_dev,space)
 
+scavenger: scavenger_build scavenger_run
+.PHONY: scavenger_build
+scavenger_build:
+	$(call build_dev,scavenger-hunt)
+.PHONY: scavenger_run
+scavenger_run:
+	$(call run_dev,scavenger-hunt)
+
 main: main_build main_run
 .PHONY: main_build
 main_build:
@@ -69,37 +77,59 @@ main_run:
 #---------------- TARGETS TO BUILD AND DEPLOY PROD IMAGES ----------------------#
 #------------ this is supposed to be run in the cloud build --------------------#
 #-------------------------------------------------------------------------------#
-build: portfolio_build_prod space_build_prod main_build_prod
+# build
+build: portfolio_build_prod space_build_prod scavenger_build_prod main_build_prod
+# build portfolio
 .PHONY: portfolio_build_prod
 portfolio_build_prod:
 	$(call build_prod,portfolio)
-
+# build space
 .PHONY: space_build_prod
 space_build_prod:
 	$(call build_prod,space)
-
+# build scavenger-hunt
+.PHONY: scavenger_build_prod
+scavenger_build_prod:
+	$(call build_prod,scavenger-hunt)
+# build main
 .PHONY: main_build_prod
 main_build_prod:
 	$(call build_prod,main)
-
-push: build portfolio_push space_push main_push
+#-------------------------------------------------------------------------------#
+# push
+push: build portfolio_push space_push scavenger_push main_push
+# push portfolio
 .PHONY: portfolio_push
 portfolio_push:
 	$(call push,portfolio)
+# push space
 .PHONY: space_push
 space_push:
 	$(call push,space)
+# push scavenger-hunt
+.PHONY: scavenger_push
+scavenger_push:
+	$(call push,scavenger-hunt)
+# push main
 .PHONY: main_push
 main_push:
 	$(call push,main)
-
-deploy: portfolio_deploy space_deploy main_deploy
+#-------------------------------------------------------------------------------#
+# deploy
+deploy: portfolio_deploy space_deploy scavenger_deploy main_deploy
+# deploy portfolio
 .PHONY: portfolio_deploy
 portfolio_deploy:
 	$(call deploy,portfolio)
+# deploy space
 .PHONY: space_deploy
 space_deploy:
 	$(call deploy,space)
+# deploy scavenger-hunt
+.PHONY: scavenger_deploy
+scavenger_deploy:
+	$(call deploy,scavenger-hunt)
+# deploy main
 .PHONY: main_deploy
 main_deploy:
 	$(call deploy,main)
