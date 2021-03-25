@@ -19,10 +19,7 @@ export function getLogger() {
           if (!logLevelList.includes(logLevel)) {
             throw new Error("log entry has invalid log level");
           }
-          return [
-            ...existingLog,
-            { logLevel, message, timestamp: new Date().toTimeString() },
-          ];
+          return [...existingLog, { logLevel, message, timestamp: new Date() }];
         }),
     };
   }
