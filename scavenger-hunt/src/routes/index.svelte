@@ -6,17 +6,9 @@
 	onMount(() => {
 		myCoords = getMyCoords();
 	});
-
-	function getCoordinates() {
-		navigator.geolocation.getCurrentPosition((position) => {
-			myCoords.updateCoords(position.coords);
-		});
-	}
 </script>
 
 <h1>scavenger hunt!</h1>
-
-<button on:click={getCoordinates}>get my coordinates</button>
 
 {#if $myCoords}
 	<h2>my coordiantes are:</h2>
