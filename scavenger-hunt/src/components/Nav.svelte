@@ -1,6 +1,6 @@
 <script>
-	import { getMyCoords } from "../stores/my-coords";
 	import { onMount } from "svelte";
+	import { getMyCoords } from "../stores/my-coords";
 
 	export let segment;
 	let myCoords;
