@@ -1,7 +1,9 @@
 import * as sapper from "@sapper/app";
 
 import firebase from "firebase/app";
-import "firebase/firestore";
+import "hammerjs";
+//import "firebase/firestore";
+
 const config = {
   apiKey: "AIzaSyDpVHAOqxwi416LZQ2vjkCgTN_Cfz5DWcg",
   authDomain: "webpage-jgero.firebaseapp.com",
@@ -16,4 +18,3 @@ firebase.initializeApp(config);
 sapper.start({
   target: document.querySelector("#sapper"),
 });
-

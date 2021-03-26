@@ -96,7 +96,9 @@
 	</button>
 	{#if !isHidden}
 		<table>
-			{#each $logger as item (item.timestamp.toString())}
+			{#each $logger as item (item.timestamp
+				.toString()
+				.concat([Math.random().toString()]))}
 				<tr
 					class={item.logLevel}
 					use:scrollNewEntryIntoView
