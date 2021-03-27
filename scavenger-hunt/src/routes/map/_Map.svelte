@@ -1,19 +1,24 @@
 <script>
-	// HINT: when top is north then latitude is the y-axis and longitude the x-axis
 	import { onMount } from "svelte";
-	import { writable } from "svelte/store";
+	import { writable, derived } from "svelte/store";
 	import { getMyCoords } from "../../stores/my-coords";
 	import { getLogger } from "../../stores/debug-logger";
 	import Popup from "./_Popup.svelte";
 
-	const { subscribe, update } = writable({ x: 0, y: 0, isVisible: false });
+	// store for popup state
+	const { subscribe, update } = writable({
+		x: 0,
+		y: 0,
+		isVisible: false,
+		data: {},
+	});
 	let popupState = {
 		subscribe,
-		setCoords: ({ x, y }) => update(({ isVisible }) => ({ x, y, isVisible })),
-		show: () => update(({ x, y }) => ({ x, y, isVisible: true })),
-		hide: () => update(({ x, y }) => ({ x, y, isVisible: false })),
+		show: ({ x, y, data }) => update(() => ({ x, y, isVisible: true, data })),
+		hide: () => update(() => ({ x: 0, y: 0, isVisible: false, data: {} })),
 	};
 
+	// coordinate system dimensions (maybe could change depending on device size?)
 	const coordSystemDimensions = {
 		innerSize: 200,
 		padding: 75,
@@ -25,46 +30,28 @@
 	let myCoords, logger;
 	let mapRotation = 0;
 
-	export let places = [];
+	export let places;
 
 	onMount(() => {
 		myCoords = getMyCoords();
 		logger = getLogger();
-		caclculateCoordSystem();
-		myCoords.subscribe(() => {
-			// re-calculate the system when new coords from the user arrive
+		// merge all the stores to update when data changes
+		// the value of the store is just a random number because the value has to change to cause an emit
+		const notifier = derived([places, myCoords], () => Math.random());
+		notifier.subscribe(() => {
 			caclculateCoordSystem();
 		});
 	});
 
 	function caclculateCoordSystem() {
-		// map geolocation of the places and the user into one array
-		const markers = [
-			...places.map(({ latitude, longitude }) => ({ latitude, longitude })),
-		];
-		const myCurrentCoords = $myCoords;
-		if (myCurrentCoords) {
-			markers.push({
-				latitude: myCurrentCoords.latitude,
-				longitude: myCurrentCoords.longitude,
-			});
+		const locations = [...$places];
+		if ($myCoords) {
+			locations.push($myCoords);
 		}
-		// sorted arrays have to be spread to prevent overwriting
-		const latitudeAscending = [
-			...markers.sort((a, b) => a.latitude - b.latitude),
-		];
-		const longitudeAscending = [
-			...markers.sort((a, b) => a.longitude - b.longitude),
-		];
-
-		xOffset = longitudeAscending[0].longitude;
-		xSpan =
-			longitudeAscending[longitudeAscending.length - 1].longitude -
-			longitudeAscending[0].longitude;
-		yOffset = latitudeAscending[0].latitude;
-		ySpan =
-			latitudeAscending[latitudeAscending.length - 1].latitude -
-			latitudeAscending[0].latitude;
+		xOffset = Math.min(...locations.map((el) => el.longitude));
+		yOffset = Math.min(...locations.map((el) => el.latitude));
+		xSpan = Math.max(...locations.map((el) => el.longitude)) - xOffset;
+		ySpan = Math.max(...locations.map((el) => el.latitude)) - yOffset;
 	}
 
 	function getPositionOnMap(coords) {
@@ -127,9 +114,14 @@
 		});
 	}
 
-	function openPopup(event) {
-		popupState.setCoords({ x: event.clientX, y: event.clientY });
-		popupState.show();
+	function openPopup(event, place) {
+		if ($popupState.isVisible) {
+			popupState.hide();
+		} else {
+			const x = event.clientX;
+			const y = event.clientY;
+			popupState.show({ x, y, data: place });
+		}
 	}
 </script>
 
@@ -172,10 +164,10 @@
 					</g></svg>
 			</defs>
 			<g>
-				{#each places as place}
+				{#each $places as place}
 					<use
 						use:placeMarkerOnMap={place}
-						on:click|stopPropagation={openPopup}
+						on:click|stopPropagation={(event) => openPopup(event, place)}
 						xlink:href="#mode_standby" />
 				{/each}
 				{#if $myCoords}
