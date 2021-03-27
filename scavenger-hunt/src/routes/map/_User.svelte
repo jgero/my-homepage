@@ -2,6 +2,7 @@
 	import { getMap, getPositionOnMap } from "../../stores/map";
 	import { getMyCoords } from "../../stores/my-coords";
 	import { onMount } from "svelte";
+	import { fly } from "svelte/transition";
 
 	export let mapRotation;
 
@@ -40,6 +41,16 @@
 	}
 </script>
 
+<style>
+	.user {
+		transition: all 0.5s ease;
+	}
+</style>
+
 {#if $map && $myCoords}
-	<use use:registerMarker xlink:href="#user" />
+	<use
+		class="user"
+		use:registerMarker
+		transition:fly={{ y: -40, duration: 200 }}
+		xlink:href="#user" />
 {/if}

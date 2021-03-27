@@ -1,6 +1,7 @@
 <script>
 	import { getMap, getPositionOnMap } from "../../stores/map";
 	import { onMount } from "svelte";
+	import { fly } from "svelte/transition";
 
 	export let place;
 	export let mapRotation;
@@ -52,9 +53,17 @@
 	}
 </script>
 
+<style>
+	.location {
+		transition: all 0.5s ease;
+	}
+</style>
+
 {#if $map}
 	<use
+		class="location"
 		use:registerMarker={place}
+		transition:fly={{ y: -40, duration: 200 }}
 		on:click|stopPropagation={(event) => openPopup(event, place)}
 		xlink:href="#location" />
 {/if}

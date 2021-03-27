@@ -4,6 +4,7 @@
 	import { getMyCoords } from "../../stores/my-coords";
 	import { getLogger } from "../../stores/debug-logger";
 	import { getMap } from "../../stores/map";
+
 	import Popup from "./_Popup.svelte";
 	import Location from "./_Location.svelte";
 	import User from "./_User.svelte";
@@ -84,6 +85,9 @@
 	div {
 		width: 100%;
 		overflow: hidden;
+		border: 1px solid #c6e4f2;
+		border-radius: 0.6rem;
+		background-color: white;
 	}
 </style>
 
@@ -130,5 +134,4 @@
 		</svg>
 	{/if}
 </div>
-<p>{$mapRotation} degrees</p>
 <Popup {popupState} />

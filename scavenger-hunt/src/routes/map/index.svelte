@@ -37,7 +37,7 @@
 	}
 </script>
 
-<h1>Schatzkarte</h1>
+<h1>Karte</h1>
 {#if $places.length > 0}
 	<Map {places} />
 {/if}
