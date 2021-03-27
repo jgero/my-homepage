@@ -75,7 +75,7 @@
 			let delta = Math.floor(event.rotation) - rotationStart;
 			logger.log({
 				logLevel: "log",
-				message: `rotated map ${delta}° to ${mapRotation}°`,
+				message: `rotated map ${delta}° to ${$mapRotation}°`,
 			});
 		});
 	}

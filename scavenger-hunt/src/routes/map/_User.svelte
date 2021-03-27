@@ -44,6 +44,7 @@
 <style>
 	.user {
 		transition: all 0.5s ease;
+		fill: #0f8817;
 	}
 </style>
 
