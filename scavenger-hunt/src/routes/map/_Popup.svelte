@@ -1,13 +1,24 @@
 <script>
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
-  import { getLogger } from "../../stores/debug-logger";
+    import {derived} from "svelte/store"
+    import { getLogger } from "../../stores/debug-logger";
+    import { getMyCoords } from "../../stores/my-coords";
+    import { getDistanceFromLatLonInKm } from "../../utils/coordinates-to-meters";
   import firebase from "firebase/app";
   export let popupState;
-  let popupComponent, logger;
+  let popupComponent, myCoords, logger, diffInKm;
+
 
   onMount(() => {
     logger = getLogger();
+      myCoords = getMyCoords();
+      diffInKm = derived([myCoords, popupState], ([$myCoords, $popupState]) => {
+          if (!$myCoords || !$popupState.data) {
+              return "??";
+            }
+          return Math.round(getDistanceFromLatLonInKm($myCoords.latitude, $myCoords.longitude, $popupState.data.latitude, $popupState.data.longitude) * 10) / 10;
+        })
     popupState.subscribe(({ isVisible }) => {
       // when setting to visible attach the listener to close the popup
       if (isVisible) {
@@ -107,7 +118,8 @@
         <span>longitude:
           {Math.round($popupState.data.longitude * 100000) / 100000}</span>
         <br />
-        <span>Hier könnte noch mehr Text stehen...</span>
+        <!--<span>Hier könnte noch mehr Text stehen...</span>-->
+        <span>ca. {$diffInKm} km entfernt</span>
       </p>
       <button on:click={onDeleteLocation}>delete this location</button>
     </div>

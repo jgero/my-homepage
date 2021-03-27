@@ -3,88 +3,54 @@
 	import { writable, derived } from "svelte/store";
 	import { getMyCoords } from "../../stores/my-coords";
 	import { getLogger } from "../../stores/debug-logger";
+	import { getMap } from "../../stores/map";
 	import Popup from "./_Popup.svelte";
+	import Location from "./_Location.svelte";
+	import User from "./_User.svelte";
 
 	// store for popup state
-	const { subscribe, update } = writable({
+	const { subscribe: subscribePopup, update: updatePopup } = writable({
 		x: 0,
 		y: 0,
 		isVisible: false,
 		data: {},
 	});
 	let popupState = {
-		subscribe,
-		show: ({ x, y, data }) => update(() => ({ x, y, isVisible: true, data })),
-		hide: () => update(() => ({ x: 0, y: 0, isVisible: false, data: {} })),
+		subscribe: subscribePopup,
+		show: ({ x, y, data }) =>
+			updatePopup(() => ({ x, y, isVisible: true, data })),
+		hide: () => updatePopup(() => ({ x: 0, y: 0, isVisible: false, data: {} })),
 	};
-
-	// coordinate system dimensions (maybe could change depending on device size?)
-	const coordSystemDimensions = {
-		innerSize: 200,
-		padding: 75,
-		getOuterSize: function () {
-			return this.innerSize + 2 * this.padding;
-		},
+	// store for rotation
+	const { subscribe: subscribeRotation, update: updateRotation } = writable(0);
+	let mapRotation = {
+		subscribe: subscribeRotation,
+		setRotation: (newRotation) => updateRotation(() => newRotation),
 	};
-	let xOffset, xSpan, yOffset, ySpan;
-	let myCoords, logger;
-	let mapRotation = 0;
+	// external stores
+	let myCoords, logger, map;
 
+	// places loaded from firestore
 	export let places;
 
 	onMount(() => {
 		myCoords = getMyCoords();
 		logger = getLogger();
+		map = getMap();
 		// merge all the stores to update when data changes
 		// the value of the store is just a random number because the value has to change to cause an emit
 		const notifier = derived([places, myCoords], () => Math.random());
 		notifier.subscribe(() => {
-			caclculateCoordSystem();
+			const locations = [...$places];
+			if ($myCoords) {
+				locations.push($myCoords);
+			}
+			map.updateCoordSystemFromLocations(locations);
 		});
 	});
 
-	function caclculateCoordSystem() {
-		const locations = [...$places];
-		if ($myCoords) {
-			locations.push($myCoords);
-		}
-		xOffset = Math.min(...locations.map((el) => el.longitude));
-		yOffset = Math.min(...locations.map((el) => el.latitude));
-		xSpan = Math.max(...locations.map((el) => el.longitude)) - xOffset;
-		ySpan = Math.max(...locations.map((el) => el.latitude)) - yOffset;
-	}
-
-	function getPositionOnMap(coords) {
-		const xPositionPercent = (coords.longitude - xOffset) / xSpan;
-		const yPositionPercent = (coords.latitude - yOffset) / ySpan;
-		const xPositionAbsolute =
-			xPositionPercent * coordSystemDimensions.innerSize +
-			coordSystemDimensions.padding;
-		const yPositionAbsolute =
-			yPositionPercent * coordSystemDimensions.innerSize +
-			coordSystemDimensions.padding;
-		return {
-			x: xPositionAbsolute,
-			y: yPositionAbsolute,
-		};
-	}
-
-	function placeMarkerOnMap(node, coords) {
-		const absolutePosition = getPositionOnMap(coords);
-		// offset a bit so tip of the marker points to actual position on the map
-		node.setAttribute("x", absolutePosition.x - 12);
-		node.setAttribute("y", absolutePosition.y - 24);
-	}
-
-	function placeUserOnMap(node, coords) {
-		const absolutePosition = getPositionOnMap(coords);
-		// offset icon so actual point on the map is the center of the icon
-		node.setAttribute("x", absolutePosition.x - 12);
-		node.setAttribute("y", absolutePosition.y - 12);
-	}
-
 	function rotationGestureListener(node) {
-		node.style.transform = `rotate(${mapRotation}deg)`;
+		node.style.transform = `rotate(${$mapRotation}deg)`;
 		let rotationStart, lastMeasurement;
 		const mc = new Hammer.Manager(node, {
 			recognizers: [[Hammer.Rotate]],
@@ -97,13 +63,12 @@
 			if (lastMeasurement) {
 				delta = Math.floor(event.rotation) - lastMeasurement;
 				if (delta < 20 && delta > -20) {
-					const newRoatation = mapRotation + delta;
-					mapRotation = newRoatation % 360;
-					caclculateCoordSystem();
+					const newRoatation = $mapRotation + delta;
+					mapRotation.setRotation(newRoatation % 360);
 				}
 			}
 			lastMeasurement = Math.floor(event.rotation);
-			node.style.transform = `rotate(${mapRotation}deg)`;
+			node.style.transform = `rotate(${$mapRotation}deg)`;
 		});
 		mc.on("rotateend", (event) => {
 			let delta = Math.floor(event.rotation) - rotationStart;
@@ -112,16 +77,6 @@
 				message: `rotated map ${delta}° to ${mapRotation}°`,
 			});
 		});
-	}
-
-	function openPopup(event, place) {
-		if ($popupState.isVisible) {
-			popupState.hide();
-		} else {
-			const x = event.clientX;
-			const y = event.clientY;
-			popupState.show({ x, y, data: place });
-		}
 	}
 </script>
 
@@ -133,9 +88,9 @@
 </style>
 
 <div>
-	{#if xOffset && xSpan && yOffset && ySpan}
+	{#if $map}
 		<svg
-			viewBox="0 0 {coordSystemDimensions.getOuterSize()} {coordSystemDimensions.getOuterSize()}"
+			viewBox="0 0 {$map.outerSize} {$map.outerSize}"
 			xmlns="http://www.w3.org/2000/svg"
 			id="map"
 			use:rotationGestureListener>
@@ -145,37 +100,35 @@
 					height="24"
 					viewBox="0 0 24 24"
 					width="24"
-					id="navigation"><path d="M0 0h24v24H0z" fill="none" />
-					<path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" /></svg>
+					id="location"><path d="M0 0h24v24H0z" fill="none" />
+					<path
+						d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					enable-background="new 0 0 24 24"
 					height="24"
 					viewBox="0 0 24 24"
 					width="24"
-					id="mode_standby"><g>
-						<path d="M0,0h24v24H0V0z" fill="none" />
+					id="user"><g>
+						<rect fill="none" height="24" width="24" />
 					</g>
 					<g>
 						<g>
-							<path
-								d="M12,2C6.49,2,2,6.49,2,12s4.49,10,10,10s10-4.49,10-10S17.51,2,12,2z M12,20c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8 S16.41,20,12,20z M15,12c0,1.66-1.34,3-3,3s-3-1.34-3-3s1.34-3,3-3S15,10.34,15,12z" />
+							<g>
+								<path
+									d="M12,2C8.14,2,5,5.14,5,9c0,5.25,7,13,7,13s7-7.75,7-13C19,5.14,15.86,2,12,2z M12,4c1.1,0,2,0.9,2,2c0,1.11-0.9,2-2,2 s-2-0.89-2-2C10,4.9,10.9,4,12,4z M12,14c-1.67,0-3.14-0.85-4-2.15c0.02-1.32,2.67-2.05,4-2.05s3.98,0.73,4,2.05 C15.14,13.15,13.67,14,12,14z" />
+							</g>
 						</g>
 					</g></svg>
 			</defs>
 			<g>
 				{#each $places as place}
-					<use
-						use:placeMarkerOnMap={place}
-						on:click|stopPropagation={(event) => openPopup(event, place)}
-						xlink:href="#mode_standby" />
+					<Location {place} {mapRotation} {popupState} />
 				{/each}
-				{#if $myCoords}
-					<use use:placeUserOnMap={$myCoords} xlink:href="#navigation" />
-				{/if}
+				<User {mapRotation} />
 			</g>
 		</svg>
 	{/if}
 </div>
-<p>{mapRotation} degrees</p>
+<p>{$mapRotation} degrees</p>
 <Popup {popupState} />
