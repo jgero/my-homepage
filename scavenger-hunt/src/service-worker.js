@@ -68,6 +68,9 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname.includes("Firestore/Write")) {
     return;
   }
+  if (url.pathname.includes("Firestore/Listen")) {
+    return;
+  }
 
   if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
     event.respondWith(

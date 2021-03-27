@@ -45,12 +45,7 @@ export default {
         browser: true,
         dedupe: ["svelte"],
       }),
-      commonjs({
-        namedExports: {
-          "firebase/app": ["initializeApp", "firestore"],
-          hammerjs: ["Hammer"],
-        },
-      }),
+      commonjs(),
 
       legacy &&
         babel({

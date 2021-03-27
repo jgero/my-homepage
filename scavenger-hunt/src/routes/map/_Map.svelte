@@ -1,8 +1,18 @@
 <script>
 	// HINT: when top is north then latitude is the y-axis and longitude the x-axis
 	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
 	import { getMyCoords } from "../../stores/my-coords";
 	import { getLogger } from "../../stores/debug-logger";
+	import Popup from "./_Popup.svelte";
+
+	const { subscribe, update } = writable({ x: 0, y: 0, isVisible: false });
+	let popupState = {
+		subscribe,
+		setCoords: ({ x, y }) => update(({ isVisible }) => ({ x, y, isVisible })),
+		show: () => update(({ x, y }) => ({ x, y, isVisible: true })),
+		hide: () => update(({ x, y }) => ({ x, y, isVisible: false })),
+	};
 
 	const coordSystemDimensions = {
 		innerSize: 200,
@@ -116,6 +126,11 @@
 			});
 		});
 	}
+
+	function openPopup(event) {
+		popupState.setCoords({ x: event.clientX, y: event.clientY });
+		popupState.show();
+	}
 </script>
 
 <style>
@@ -158,7 +173,10 @@
 			</defs>
 			<g>
 				{#each places as place}
-					<use use:placeMarkerOnMap={place} xlink:href="#mode_standby" />
+					<use
+						use:placeMarkerOnMap={place}
+						on:click|stopPropagation={openPopup}
+						xlink:href="#mode_standby" />
 				{/each}
 				{#if $myCoords}
 					<use use:placeUserOnMap={$myCoords} xlink:href="#navigation" />
@@ -168,3 +186,4 @@
 	{/if}
 </div>
 <p>{mapRotation} degrees</p>
+<Popup {popupState} />
