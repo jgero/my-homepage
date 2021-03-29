@@ -23,7 +23,7 @@
 		hide: () => updatePopup(() => ({ x: 0, y: 0, isVisible: false, data: {} })),
 	};
 	// store for rotation
-	const { subscribe: subscribeRotation, update: updateRotation } = writable(0);
+	const { subscribe: subscribeRotation, update: updateRotation } = writable(40);
 	let mapRotation = {
 		subscribe: subscribeRotation,
 		setRotation: (newRotation) => updateRotation(() => newRotation),

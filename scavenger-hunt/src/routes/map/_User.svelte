@@ -27,8 +27,8 @@
 			const absolutePosition = getPositionOnMap($map, $myCoords);
 			node.setAttribute(
 				"transform",
-				`rotate(${360 - rotation}, ${absolutePosition.x - 12}, ${
-					absolutePosition.y - 24
+				`rotate(${360 - rotation}, ${absolutePosition.x}, ${
+					absolutePosition.y
 				})`
 			);
 		});
