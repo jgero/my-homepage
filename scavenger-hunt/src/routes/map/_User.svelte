@@ -3,6 +3,7 @@
 	import { getMyCoords } from "../../stores/my-coords";
 	import { onMount } from "svelte";
 	import { fly } from "svelte/transition";
+	import { derived } from "svelte/store";
 
 	export let mapRotation;
 
@@ -42,20 +43,22 @@
 	}
 
 	function registerAura(node) {
+		// redrawing on map change is enough because new location input triggers a map update
 		const unsubscribeMap = map.subscribe(() => {
-			// redrawing on map change is enough because new location input triggers a map update
 			const coords = $myCoords;
 			if (coords) {
 				const absolutePosition = getPositionOnMap($map, coords);
 				node.setAttribute("cx", absolutePosition.x);
 				node.setAttribute("cy", absolutePosition.y);
-				node.setAttribute("r", $map.kmLengthOnMap / 1000 * $myCoords.accuracy);
+				node.setAttribute(
+					"r",
+					($map.kmLengthOnMap / 1000) * $myCoords.accuracy
+				);
 			}
 		});
 		return {
 			destroy() {
 				unsubscribeMap();
-				unsubscribeRotation();
 			},
 		};
 	}
