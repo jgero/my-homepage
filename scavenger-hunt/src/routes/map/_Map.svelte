@@ -23,7 +23,7 @@
 		hide: () => updatePopup(() => ({ x: 0, y: 0, isVisible: false, data: {} })),
 	};
 	// store for rotation
-	const { subscribe: subscribeRotation, update: updateRotation } = writable(40);
+	const { subscribe: subscribeRotation, update: updateRotation } = writable(0);
 	let mapRotation = {
 		subscribe: subscribeRotation,
 		setRotation: (newRotation) => updateRotation(() => newRotation),
@@ -88,6 +88,12 @@
 		border: 1px solid #c6e4f2;
 		border-radius: 0.6rem;
 		background-color: white;
+		position: relative;
+	}
+	#overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 </style>
 
@@ -96,7 +102,36 @@
 		<svg
 			viewBox="0 0 {$map.outerSize} {$map.outerSize}"
 			xmlns="http://www.w3.org/2000/svg"
-			id="map"
+			id="overlay">
+			<line
+				x1={($map.outerSize - $map.meterLengthOnMap) / 2}
+				y1={$map.outerSize - 0.3 * $map.padding - 2}
+				x2={($map.outerSize - $map.meterLengthOnMap) / 2}
+				y2={$map.outerSize - 0.3 * $map.padding + 2}
+				stroke="black" />
+			<line
+				x1={($map.outerSize - $map.meterLengthOnMap) / 2}
+				y1={$map.outerSize - 0.3 * $map.padding}
+				x2={$map.outerSize - ($map.outerSize - $map.meterLengthOnMap) / 2}
+				y2={$map.outerSize - 0.3 * $map.padding}
+				stroke="black" />
+			<text
+				x={$map.outerSize / 2}
+				y={$map.outerSize - 0.3 * $map.padding + 10}
+				text-anchor="middle"
+				font-size="10">
+				1km
+			</text>
+			<line
+				x1={$map.outerSize - ($map.outerSize - $map.meterLengthOnMap) / 2}
+				y1={$map.outerSize - 0.3 * $map.padding - 2}
+				x2={$map.outerSize - ($map.outerSize - $map.meterLengthOnMap) / 2}
+				y2={$map.outerSize - 0.3 * $map.padding + 2}
+				stroke="black" />
+		</svg>
+		<svg
+			viewBox="0 0 {$map.outerSize} {$map.outerSize}"
+			xmlns="http://www.w3.org/2000/svg"
 			use:rotationGestureListener>
 			<defs>
 				<svg

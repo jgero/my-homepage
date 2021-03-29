@@ -21,14 +21,23 @@ export function getMap() {
       latDelta: null,
       lonKmInDeg: null,
       latKmInDeg: null,
+      meterLengthOnMap: null,
     });
     map = {
       subscribe,
       updateCoordSystemFromLocations: (locations) => {
-        return update((old) => ({
-          ...old,
-          ...buildCoordSystemFromLocations(locations),
-        }));
+        return update((oldMap) => {
+          const newMap = {
+            ...oldMap,
+            ...buildCoordSystemFromLocations(locations),
+          };
+          newMap.meterLengthOnMap = getPositionOnMap(newMap, {
+            latitude: newMap.latMin,
+            longitude: newMap.lonMin + newMap.lonKmInDeg,
+          }).x;
+          console.log(newMap);
+          return newMap;
+        });
       },
     };
   }
@@ -89,7 +98,7 @@ function buildCoordSystemFromLocations(locations) {
       message: `calculated map with deviation lon: ${deviationLonInM}m and deviation lat: ${deviationLatInM}m`,
     });
   }
-  return { lonMin, lonDelta, lonKmInDeg, latMin, latDelta, lonKmInDeg };
+  return { lonMin, lonDelta, lonKmInDeg, latMin, latDelta, latKmInDeg };
 }
 
 export function getPositionOnMap(map, coords) {
