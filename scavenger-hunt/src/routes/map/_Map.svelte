@@ -104,15 +104,15 @@
 			xmlns="http://www.w3.org/2000/svg"
 			id="overlay">
 			<line
-				x1={($map.outerSize - $map.meterLengthOnMap) / 2}
+				x1={($map.outerSize - $map.kmLengthOnMap) / 2}
 				y1={$map.outerSize - 0.3 * $map.padding - 2}
-				x2={($map.outerSize - $map.meterLengthOnMap) / 2}
+				x2={($map.outerSize - $map.kmLengthOnMap) / 2}
 				y2={$map.outerSize - 0.3 * $map.padding + 2}
 				stroke="black" />
 			<line
-				x1={($map.outerSize - $map.meterLengthOnMap) / 2}
+				x1={($map.outerSize - $map.kmLengthOnMap) / 2}
 				y1={$map.outerSize - 0.3 * $map.padding}
-				x2={$map.outerSize - ($map.outerSize - $map.meterLengthOnMap) / 2}
+				x2={$map.outerSize - ($map.outerSize - $map.kmLengthOnMap) / 2}
 				y2={$map.outerSize - 0.3 * $map.padding}
 				stroke="black" />
 			<text
@@ -123,9 +123,9 @@
 				1km
 			</text>
 			<line
-				x1={$map.outerSize - ($map.outerSize - $map.meterLengthOnMap) / 2}
+				x1={$map.outerSize - ($map.outerSize - $map.kmLengthOnMap) / 2}
 				y1={$map.outerSize - 0.3 * $map.padding - 2}
-				x2={$map.outerSize - ($map.outerSize - $map.meterLengthOnMap) / 2}
+				x2={$map.outerSize - ($map.outerSize - $map.kmLengthOnMap) / 2}
 				y2={$map.outerSize - 0.3 * $map.padding + 2}
 				stroke="black" />
 		</svg>

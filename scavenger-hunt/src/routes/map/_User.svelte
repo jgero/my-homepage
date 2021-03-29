@@ -16,6 +16,7 @@
 	function registerMarker(node) {
 		// position of the marker has to be offset a bit so the tip of the marker points to the exact location on the map
 		const unsubscribeMap = map.subscribe(() => {
+			// redrawing on map change is enough because new location input triggers a map update
 			const coords = $myCoords;
 			if (coords) {
 				const absolutePosition = getPositionOnMap($map, coords);
@@ -39,12 +40,35 @@
 			},
 		};
 	}
+
+	function registerAura(node) {
+		const unsubscribeMap = map.subscribe(() => {
+			// redrawing on map change is enough because new location input triggers a map update
+			const coords = $myCoords;
+			if (coords) {
+				const absolutePosition = getPositionOnMap($map, coords);
+				node.setAttribute("cx", absolutePosition.x);
+				node.setAttribute("cy", absolutePosition.y);
+				node.setAttribute("r", $map.kmLengthOnMap / 1000 * $myCoords.accuracy);
+			}
+		});
+		return {
+			destroy() {
+				unsubscribeMap();
+				unsubscribeRotation();
+			},
+		};
+	}
 </script>
 
 <style>
 	.user {
 		transition: all 0.5s ease;
 		fill: #0f8817;
+	}
+	circle {
+		fill: red;
+		opacity: 0.2;
 	}
 </style>
 
@@ -54,4 +78,5 @@
 		use:registerMarker
 		transition:fly={{ y: -40, duration: 200 }}
 		xlink:href="#user" />
+	<circle use:registerAura />
 {/if}

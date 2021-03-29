@@ -21,7 +21,7 @@ export function getMap() {
       latDelta: null,
       lonKmInDeg: null,
       latKmInDeg: null,
-      meterLengthOnMap: null,
+      kmLengthOnMap: null,
     });
     map = {
       subscribe,
@@ -31,11 +31,10 @@ export function getMap() {
             ...oldMap,
             ...buildCoordSystemFromLocations(locations),
           };
-          newMap.meterLengthOnMap = getPositionOnMap(newMap, {
+          newMap.kmLengthOnMap = getPositionOnMap(newMap, {
             latitude: newMap.latMin,
             longitude: newMap.lonMin + newMap.lonKmInDeg,
           }).x;
-          console.log(newMap);
           return newMap;
         });
       },
