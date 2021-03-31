@@ -3,7 +3,6 @@
 	import { getMyCoords } from "../../stores/my-coords";
 	import { onMount } from "svelte";
 	import { fly } from "svelte/transition";
-	import { derived } from "svelte/store";
 
 	export let mapRotation;
 

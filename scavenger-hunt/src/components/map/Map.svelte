@@ -5,9 +5,9 @@
 	import { getLogger } from "../../stores/debug-logger";
 	import { getMap } from "../../stores/map";
 
-	import Popup from "./_Popup.svelte";
-	import Location from "./_Location.svelte";
-	import User from "./_User.svelte";
+	import Popup from "./Popup.svelte";
+	import Location from "./Location.svelte";
+	import User from "./User.svelte";
 
 	// store for popup state
 	const { subscribe: subscribePopup, update: updatePopup } = writable({
@@ -43,6 +43,9 @@
 		const notifier = derived([places, myCoords], () => Math.random());
 		notifier.subscribe(() => {
 			const locations = [...$places];
+			if (locations.length === 0) {
+				return;
+			}
 			if ($myCoords) {
 				locations.push($myCoords);
 			}

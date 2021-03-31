@@ -31,12 +31,6 @@
 					absolutePosition.y
 				})`
 			);
-			//node.setAttribute(
-				//"transform",
-				//`rotate(${360 - rotation}, ${absolutePosition.x - 12}, ${
-					//absolutePosition.y - 24
-				//})`
-			//);
 		});
 		return {
 			destroy() {
@@ -86,7 +80,7 @@
 				const eased = cubicOut(t);
 				return `
  						stroke-dasharray: ${Math.ceil(node.getTotalLength())}px;
- 						stroke-dashoffset: ${ Math.ceil(node.getTotalLength()) * (eased-1)};
+ 						stroke-dashoffset: ${Math.ceil(node.getTotalLength()) * (eased - 1)};
 					`;
 			},
 		};
@@ -110,7 +104,7 @@
 		transition:fly={{ y: -40, duration: 200 }}
 		on:click|stopPropagation={(event) => openPopup(event, place)}
 		xlink:href="#location" />
-	{#if $popupState.data && $popupState.data.id === place.id}
+	{#if $popupState.data === place}
 		<line use:drawDistanceLine transition:dash={{ duration: 200 }} />
 	{/if}
 {/if}

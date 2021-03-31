@@ -6,6 +6,8 @@
 	let userId;
 	let authListener;
 
+	// TODO: move this stuff into the layout component
+
 	onMount(() => {
 		logger = getLogger();
 		// listen to auth state changes to restore login on app open
@@ -72,6 +74,10 @@
 	<button on:click={createUser}>START</button>
 {:else}
 	<a href={`/route/create/${userId}`}>Route erstellen</a>
+	<br />
+	<a href={`/route/join/${userId}`}>eigener Route beitreten</a>
+	<br />
 	<a href="/route/join">Route beitreten</a>
+	<br />
 	<button on:click={resetUser}>RESET</button>
 {/if}
