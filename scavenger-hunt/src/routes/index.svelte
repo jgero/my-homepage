@@ -6,8 +6,6 @@
 	let userId;
 	let authListener;
 
-	// TODO: move this stuff into the layout component
-
 	onMount(() => {
 		logger = getLogger();
 		// listen to auth state changes to restore login on app open

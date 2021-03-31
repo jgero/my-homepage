@@ -53,7 +53,6 @@
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude),
         name,
-        id: Math.random().toString(10).substr(2, 12),
       });
       await firebase.firestore().collection("routes").doc(userId).set(route);
     } else {

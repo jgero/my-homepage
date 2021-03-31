@@ -55,31 +55,6 @@
     node.style.top = `calc(${$popupState.y}px - 40vw - 1rem)`;
     node.style.left = `calc(${$popupState.x}px - 20vw - 0rem)`;
   }
-
-  function onDeleteLocation() {
-    logger.log({
-      logLevel: "warning",
-      message: `deleting location ${$popupState.data.id}`,
-    });
-    firebase
-      .firestore()
-      .collection("route")
-      .doc($popupState.data.id)
-      .delete()
-      .then(() => {
-        logger.log({
-          logLevel: "log",
-          message: "location deleted successfully",
-        });
-        popupState.hide();
-      })
-      .catch((error) => {
-        logger.log({
-          logLevel: "error",
-          message: `could not delete location ${$popupState.data.id} because of ${error}`,
-        });
-      });
-  }
 </script>
 
 <style>
@@ -93,9 +68,6 @@
     padding: 0.6rem;
     border-radius: 0.6rem;
     background-color: white;
-  }
-  button {
-    font-size: 0.6rem;
   }
   div {
     position: relative;
@@ -129,7 +101,6 @@
         <!--<span>Hier könnte noch mehr Text stehen...</span>-->
         <span>ca. {$diffInKm} km entfernt</span>
       </p>
-      <button on:click={onDeleteLocation}>delete this location</button>
     </div>
   </aside>
 {/if}
