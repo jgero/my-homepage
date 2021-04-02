@@ -16,9 +16,10 @@ build_dev = $(CONTAINER_RUNTIME) build \
 run_dev = $(CONTAINER_RUNTIME) run \
 	--rm \
 	--tty \
-	-v $(PWD)/$(1)/src/:/app/$(1)/src/ \
-	-v $(PWD)/$(1)/static/:/app/$(1)/static/ \
-	-v $(PWD)/$(1)/rollup.config.js:/app/$(1)/rollup.config.js \
+	-v $(PWD)/$(1)/src/:/app/$(1)/src/:z \
+	-v $(PWD)/$(1)/static/:/app/$(1)/static/:z \
+	-v $(PWD)/$(1)/rollup.config.js:/app/$(1)/rollup.config.js:z \
+	--mount type=image,source=my-webpage/$(1):dev,destination=/app/$(1)/src/node_modules/,rw=true \
 	-p 3000:3000 \
 	-p 10000:10000 \
 	my-webpage/$(1):dev
@@ -133,4 +134,3 @@ scavenger_deploy:
 .PHONY: main_deploy
 main_deploy:
 	$(call deploy,main)
-
