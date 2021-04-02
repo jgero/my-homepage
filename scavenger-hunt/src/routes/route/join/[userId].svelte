@@ -22,20 +22,18 @@
 		logger = getLogger();
 		unsubSnapshotListener = firebase
 			.firestore()
-			.collection("routes")
+			.collection("routes").doc(userId)
 			.onSnapshot(
-				(snapshot) => {
-					if (snapshot.empty) {
+				(doc) => {
+					if (!doc.exists) {
 						logger.log({ logLevel: "log", message: "snapshot is empty" });
 						return;
 					}
-					snapshot.forEach((doc) => {
 						logger.log({
 							logLevel: "log",
 							message: `route of user ${userId} loaded`,
 						});
 						places.update(() => doc.data().places);
-					});
 				},
 				(error) => {
 					logger.log({
