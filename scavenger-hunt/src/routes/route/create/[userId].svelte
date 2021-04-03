@@ -5,10 +5,10 @@
 </script>
 
 <script>
-  import firebase from "firebase/app";
-  import { onMount, onDestroy } from "svelte";
-  import { getLogger } from "../../../stores/debug-logger";
-  import { getMyCoords } from "../../../stores/my-coords";
+  import firebase from 'firebase/app';
+  import { onMount, onDestroy } from 'svelte';
+  import { getLogger } from '../../../stores/debug-logger';
+  import { getMyCoords } from '../../../stores/my-coords';
 
   export let userId;
 
@@ -21,17 +21,20 @@
     myCoords = getMyCoords();
     unsubSnapshotListener = firebase
       .firestore()
-      .collection("routes")
+      .collection('routes')
       .onSnapshot(
         (snapshot) => {
           if (snapshot.empty) {
-            logger.log({ logLevel: "log", message: "snapshot is empty" });
+            logger.log({
+              logLevel: 'log',
+              message: 'snapshot is empty',
+            });
             route = { lastEdit: new Date(), places: [] };
             return;
           }
           snapshot.forEach((doc) => {
             logger.log({
-              logLevel: "log",
+              logLevel: 'log',
               message: `route of user ${userId} loaded`,
             });
             route = doc.data();
@@ -39,7 +42,7 @@
         },
         (error) => {
           logger.log({
-            logLevel: "error",
+            logLevel: 'error',
             message: `could not fetch route data: ${JSON.stringify(error)}`,
           });
         }
@@ -54,10 +57,10 @@
         longitude: parseFloat(longitude),
         name,
       });
-      await firebase.firestore().collection("routes").doc(userId).set(route);
+      await firebase.firestore().collection('routes').doc(userId).set(route);
     } else {
       logger.log({
-        logLevel: "error",
+        logLevel: 'error',
         message: `did not send data because of missing fields`,
       });
     }

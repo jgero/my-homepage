@@ -1,9 +1,9 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 let logger;
 
 const maxLogLength = 100;
-const logLevelList = ["log", "error", "warning"];
+const logLevelList = ['log', 'error', 'warning'];
 
 export function getLogger() {
   if (!logger) {
@@ -17,7 +17,7 @@ export function getLogger() {
             existingLog.shift();
           }
           if (!logLevelList.includes(logLevel)) {
-            throw new Error("log entry has invalid log level");
+            throw new Error('log entry has invalid log level');
           }
           return [...existingLog, { logLevel, message, timestamp: new Date() }];
         }),

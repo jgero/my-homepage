@@ -1,11 +1,11 @@
 <script>
-  import { onMount } from "svelte";
-  import { fly } from "svelte/transition";
-  import { derived } from "svelte/store";
-  import { getLogger } from "../../stores/debug-logger";
-  import { getMyCoords } from "../../stores/my-coords";
-  import { getDistanceFromLatLonInKm } from "../../utils/coordinates-to-meters";
-  import firebase from "firebase/app";
+  import { onMount } from 'svelte';
+  import { fly } from 'svelte/transition';
+  import { derived } from 'svelte/store';
+  import { getLogger } from '../../stores/debug-logger';
+  import { getMyCoords } from '../../stores/my-coords';
+  import { getDistanceFromLatLonInKm } from '../../utils/coordinates-to-meters';
+  import firebase from 'firebase/app';
   export let popupState;
   let popupComponent, myCoords, logger, diffInKm;
 
@@ -14,7 +14,7 @@
     myCoords = getMyCoords();
     diffInKm = derived([myCoords, popupState], ([$myCoords, $popupState]) => {
       if (!$myCoords || !$popupState.data) {
-        return "??";
+        return '??';
       }
       return (
         Math.round(
@@ -30,7 +30,7 @@
     popupState.subscribe(({ isVisible }) => {
       // when setting to visible attach the listener to close the popup
       if (isVisible) {
-        document.documentElement.addEventListener("click", onClickOutside);
+        document.documentElement.addEventListener('click', onClickOutside);
       }
     });
   });
@@ -47,7 +47,7 @@
       parent = parent.parentNode;
     }
     // remove the listener when closing the popup
-    document.documentElement.removeEventListener("click", onClickOutside);
+    document.documentElement.removeEventListener('click', onClickOutside);
     popupState.hide();
   }
 
@@ -56,6 +56,32 @@
     node.style.left = `calc(${$popupState.x}px - 20vw - 0rem)`;
   }
 </script>
+
+{#if $popupState.isVisible}
+  <aside
+    bind:this={popupComponent}
+    use:setPosition
+    transition:fly={{ y: -40, duration: 200 }}
+  >
+    <div>
+      <h4><strong>{$popupState.data.name}</strong></h4>
+      <p>
+        <span
+          >latitude:
+          {Math.round($popupState.data.latitude * 100000) / 100000}</span
+        >
+        <br />
+        <span
+          >longitude:
+          {Math.round($popupState.data.longitude * 100000) / 100000}</span
+        >
+        <br />
+        <!--<span>Hier könnte noch mehr Text stehen...</span>-->
+        <span>ca. {$diffInKm} km entfernt</span>
+      </p>
+    </div>
+  </aside>
+{/if}
 
 <style>
   aside {
@@ -75,7 +101,7 @@
   }
   div::after {
     position: absolute;
-    content: "";
+    content: '';
     left: calc(50% - 0.5rem);
     bottom: -1.6rem;
     border-top: 1rem solid black;
@@ -83,24 +109,3 @@
     border-right: 0.5rem solid transparent;
   }
 </style>
-
-{#if $popupState.isVisible}
-  <aside
-    bind:this={popupComponent}
-    use:setPosition
-    transition:fly={{ y: -40, duration: 200 }}>
-    <div>
-      <h4><strong>{$popupState.data.name}</strong></h4>
-      <p>
-        <span>latitude:
-          {Math.round($popupState.data.latitude * 100000) / 100000}</span>
-        <br />
-        <span>longitude:
-          {Math.round($popupState.data.longitude * 100000) / 100000}</span>
-        <br />
-        <!--<span>Hier könnte noch mehr Text stehen...</span>-->
-        <span>ca. {$diffInKm} km entfernt</span>
-      </p>
-    </div>
-  </aside>
-{/if}

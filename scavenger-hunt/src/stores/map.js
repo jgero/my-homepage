@@ -1,10 +1,10 @@
-import { writable } from "svelte/store";
-import { getLogger } from "./debug-logger";
+import { writable } from 'svelte/store';
+import { getLogger } from './debug-logger';
 import {
   getDistanceFromLatLonDiffInKm,
   getLatDiffForKm,
   getLonDiffForKm,
-} from "../utils/coordinates-to-meters";
+} from '../utils/coordinates-to-meters';
 
 let map;
 let logger = getLogger();
@@ -83,17 +83,17 @@ function buildCoordSystemFromLocations(locations) {
     Math.round(getDistanceFromLatLonDiffInKm(latKmInDeg, 0) * 1000) - 1000;
   if (deviationLatInM + deviationLonInM < 40) {
     logger.log({
-      logLevel: "log",
-      message: "calculated map dimensions with minimal unit deviation",
+      logLevel: 'log',
+      message: 'calculated map dimensions with minimal unit deviation',
     });
   } else if (deviationLonInM + deviationLatInM < 120) {
     logger.log({
-      logLevel: "warning",
+      logLevel: 'warning',
       message: `calculated map with deviation lon: ${deviationLonInM}m and deviation lat: ${deviationLatInM}m`,
     });
   } else {
     logger.log({
-      logLevel: "error",
+      logLevel: 'error',
       message: `calculated map with deviation lon: ${deviationLonInM}m and deviation lat: ${deviationLatInM}m`,
     });
   }

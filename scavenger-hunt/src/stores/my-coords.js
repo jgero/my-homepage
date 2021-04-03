@@ -1,5 +1,5 @@
-import { writable } from "svelte/store";
-import { getLogger } from "./debug-logger";
+import { writable } from 'svelte/store';
+import { getLogger } from './debug-logger';
 
 let myCoords;
 let interval;
@@ -11,8 +11,16 @@ export function getMyCoords() {
     myCoords = {
       subscribe,
       updateCoords: ({ latitude, longitude, accuracy, heading }) => {
-        logger.log({ logLevel: "log", message: "location was updated" });
-        return update(() => ({ latitude, longitude, accuracy, heading }));
+        logger.log({
+          logLevel: 'log',
+          message: 'location was updated',
+        });
+        return update(() => ({
+          latitude,
+          longitude,
+          accuracy,
+          heading,
+        }));
       },
       startInterval: () => {
         // check if there is already an interval running
