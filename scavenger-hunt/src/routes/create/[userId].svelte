@@ -7,8 +7,8 @@
 <script>
   import firebase from 'firebase/app';
   import { onMount, onDestroy } from 'svelte';
-  import { getLogger } from '../../../stores/debug-logger';
-  import { getMyCoords } from '../../../stores/my-coords';
+  import { getLogger } from '../../stores/debug-logger';
+  import { getMyCoords } from '../../stores/my-coords';
 
   export let userId;
 

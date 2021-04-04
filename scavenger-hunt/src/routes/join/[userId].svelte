@@ -8,9 +8,9 @@
   import firebase from 'firebase/app';
   import { onMount, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
-  import { getLogger } from '../../../stores/debug-logger';
+  import { getLogger } from '../../stores/debug-logger';
 
-  import Map from '../../../components/map/Map.svelte';
+  import Map from '../../components/map/Map.svelte';
 
   export let userId;
 
