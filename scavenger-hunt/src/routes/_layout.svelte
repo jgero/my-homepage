@@ -5,12 +5,7 @@
   export let segment;
 </script>
 
-<Nav {segment} />
-
-<main>
-  <slot />
-</main>
-<Logger />
+<slot />
 
 <style>
   main {

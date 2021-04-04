@@ -7,6 +7,7 @@
 
   onMount(() => {
     myCoords = getMyCoords();
+    console.log(segment);
   });
 
   function toggleLocationService() {
@@ -18,14 +19,23 @@
   }
 </script>
 
-<nav>
-  <a href="/" aria-current={segment === undefined ? 'page' : undefined}>home</a>
-  <a href="/map" aria-current={segment === 'map' ? 'page' : undefined}>Map</a>
-  <div class="spacer" />
-  <button on:click={toggleLocationService}>
-    {#if $myCoords === null}gps_off{:else}gps_fixed{/if}
-  </button>
-</nav>
+{#if !segment.startsWith('join')}
+  <nav>
+    <ul>
+      <li>
+        <a href="/" aria-current={segment === undefined ? 'page' : undefined}>
+          <span class="material-icons">home</span>
+          HOME
+        </a>
+      </li>
+    </ul>
+    <a href="/map" aria-current={segment === 'map' ? 'page' : undefined}>Map</a>
+    <div class="spacer" />
+    <button on:click={toggleLocationService}>
+      {#if $myCoords === null}gps_off{:else}gps_fixed{/if}
+    </button>
+  </nav>
+{/if}
 
 <style>
   nav {

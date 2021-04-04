@@ -55,4 +55,10 @@
   });
 </script>
 
+<header>
+  <h1>Route von {userId}</h1>
+  <a href="/" class="material-icons">logout</a>
+  <button class="material-icons">gps_fixed</button>
+</header>
+
 <Map {places} />

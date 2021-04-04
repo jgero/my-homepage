@@ -17,5 +17,5 @@ const config = {
 firebase.initializeApp(config);
 
 sapper.start({
-  target: document.querySelector('#sapper'),
+  target: document.querySelector('body'),
 });
