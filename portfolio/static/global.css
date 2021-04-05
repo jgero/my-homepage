@@ -10,7 +10,7 @@ html, body, #sapper {
   width: 100%;
   height: 100%;
   background-color: var(--light-5);
-  overflow: auto;
+  overflow-x: hidden;
   /* disable chrome pull to reload */
   overscroll-behavior-y: contain;
 }
