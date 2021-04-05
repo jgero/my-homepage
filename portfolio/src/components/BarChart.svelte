@@ -3,6 +3,19 @@
   export let heading;
 </script>
 
+<figure>
+  <figcaption>{heading}</figcaption>
+  {#each data as datapoint}
+    <div class={datapoint.frequency}>{datapoint.name}</div>
+  {/each}
+  <ul>
+    <li><span>known</span></li>
+    <li><span>infrequent</span></li>
+    <li><span>weekly</span></li>
+    <li><span>daily</span></li>
+  </ul>
+</figure>
+
 <style>
   figure {
     margin: 0;
@@ -69,7 +82,7 @@
     margin-top: 0.5em;
   }
   li::before {
-    content: "";
+    content: '';
     position: absolute;
     width: 1px;
     height: 0.5em;
@@ -93,16 +106,3 @@
     transform: translateX(-50%);
   }
 </style>
-
-<figure>
-  <figcaption>{heading}</figcaption>
-  {#each data as datapoint}
-    <div class={datapoint.frequency}>{datapoint.name}</div>
-  {/each}
-  <ul>
-    <li><span>known</span></li>
-    <li><span>infrequent</span></li>
-    <li><span>weekly</span></li>
-    <li><span>daily</span></li>
-  </ul>
-</figure>

@@ -1,7 +1,49 @@
 <script>
-  import { fly } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
+  import { fly } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
 </script>
+
+<div class="container">
+  <div
+    in:fly={{ x: -500, duration: 2000, easing: quintOut }}
+    out:fly={{ x: -100, duration: 200, easing: quintOut }}
+    class="cloud-1"
+  >
+    <div class="positioning-helper">
+      <div class="circle" />
+      <div class="circle" />
+      <div class="circle" />
+      <div class="circle" />
+      <div class="rectangle" />
+    </div>
+  </div>
+  <div
+    in:fly={{ x: 200, duration: 2000, easing: quintOut }}
+    out:fly={{ x: 30, duration: 200, easing: quintOut }}
+    class="cloud-2"
+  >
+    <div class="positioning-helper">
+      <div class="circle" />
+      <div class="circle" />
+      <div class="circle" />
+      <div class="circle" />
+      <div class="rectangle" />
+    </div>
+  </div>
+  <div
+    in:fly={{ x: 500, duration: 2000, easing: quintOut }}
+    out:fly={{ x: 100, duration: 200, easing: quintOut }}
+    class="cloud-3"
+  >
+    <div class="positioning-helper">
+      <div class="circle" />
+      <div class="circle" />
+      <div class="circle" />
+      <div class="circle" />
+      <div class="rectangle" />
+    </div>
+  </div>
+</div>
 
 <style>
   .container {
@@ -11,7 +53,7 @@
     margin: 0 auto;
   }
 
-  div[class^="cloud"] {
+  div[class^='cloud'] {
     opacity: 0.75;
     position: absolute;
     height: 300px;
@@ -83,42 +125,3 @@
     height: 150px;
   }
 </style>
-
-<div class="container">
-  <div
-    in:fly={{ x: -500, duration: 2000, easing: quintOut }}
-    out:fly={{ x: -100, duration: 200, easing: quintOut }}
-    class="cloud-1">
-    <div class="positioning-helper">
-      <div class="circle" />
-      <div class="circle" />
-      <div class="circle" />
-      <div class="circle" />
-      <div class="rectangle" />
-    </div>
-  </div>
-  <div
-    in:fly={{ x: 200, duration: 2000, easing: quintOut }}
-    out:fly={{ x: 30, duration: 200, easing: quintOut }}
-    class="cloud-2">
-    <div class="positioning-helper">
-      <div class="circle" />
-      <div class="circle" />
-      <div class="circle" />
-      <div class="circle" />
-      <div class="rectangle" />
-    </div>
-  </div>
-  <div
-    in:fly={{ x: 500, duration: 2000, easing: quintOut }}
-    out:fly={{ x: 100, duration: 200, easing: quintOut }}
-    class="cloud-3">
-    <div class="positioning-helper">
-      <div class="circle" />
-      <div class="circle" />
-      <div class="circle" />
-      <div class="circle" />
-      <div class="rectangle" />
-    </div>
-  </div>
-</div>

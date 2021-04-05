@@ -1,25 +1,34 @@
 <script>
-  import { fly } from "svelte/transition";
+  import { fly } from 'svelte/transition';
 
   const topics = [
     {
-      icon: "directions_run",
+      icon: 'directions_run',
       text: `Sport is a very important part of my life. I have been doing acrobatics for 13 years at a local
             club, at which I am a coach for multiple groups as well. Additionally to the organized sport, I am
             inline skating and running outside, so I am active more or less every day.`,
     },
     {
-      icon: "public",
+      icon: 'public',
       text: `Space, astronomy, space probes and space travel are a fascinating science. Seeing the wonders
             of our universe and how they are discovered inspires and motivates me to be productive every day.`,
     },
     {
-      icon: "code",
+      icon: 'code',
       text: `Programming is the largest part of my life. Most of the time I work with Web-Aplications,
             because I love the web for the open plattform it is.`,
     },
   ];
 </script>
+
+<div in:fly={{ y: 200, duration: 1000 }}>
+  {#each topics as topic}
+    <section>
+      <span class="material-icons">{topic.icon}</span>
+      <p>{topic.text}</p>
+    </section>
+  {/each}
+</div>
 
 <style>
   div {
@@ -53,12 +62,3 @@
     margin: 0 auto;
   }
 </style>
-
-<div in:fly={{ y: 200, duration: 1000 }}>
-  {#each topics as topic}
-    <section>
-      <span class="material-icons">{topic.icon}</span>
-      <p>{topic.text}</p>
-    </section>
-  {/each}
-</div>

@@ -1,36 +1,39 @@
 button,
-  a.button {
-    outline: none;
-    border: none;
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 400;
-    text-transform: uppercase;
-    font-size: 1rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    width: max-content;
-  }
-  button.primary, a.primary {
-    background-color: var(--light-2);
-    color: var(--dark-1);
-    box-shadow: 3px 3px 0 0 var(--light-3);
-    transition: all 0.3s ease-out;
-  }
-  button.primary:hover, a.primary:hover {
-    box-shadow: 0px opx 0 0 var(--light-3);
-  }
-  button.primary:active, a.primary:active {
-    background-color: var(--light-1);
-  }
-  button.stroked,
-  a.stroked {
-    background-color: rgba(0, 0, 0, 0);
-    color: var(--dark-4);
-    border: 1px solid var(--dark-4);
-    transition: background-color 0.3s ease-out, color 0.3s ease-out;
-  }
-  button.stroked:hover,
-  a.stroked:hover {
-    background-color: var(--dark-4);
-    color: var(--light-5);
-  }
+a.button {
+  outline: none;
+  border: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: max-content;
+}
+button.primary,
+a.primary {
+  background-color: var(--light-2);
+  color: var(--dark-1);
+  box-shadow: 3px 3px 0 0 var(--light-3);
+  transition: all 0.3s ease-out;
+}
+button.primary:hover,
+a.primary:hover {
+  box-shadow: 0px opx 0 0 var(--light-3);
+}
+button.primary:active,
+a.primary:active {
+  background-color: var(--light-1);
+}
+button.stroked,
+a.stroked {
+  background-color: rgba(0, 0, 0, 0);
+  color: var(--dark-4);
+  border: 1px solid var(--dark-4);
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+button.stroked:hover,
+a.stroked:hover {
+  background-color: var(--dark-4);
+  color: var(--light-5);
+}
