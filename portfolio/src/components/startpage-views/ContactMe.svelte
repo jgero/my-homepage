@@ -6,7 +6,7 @@
   let message = "";
   let resultMessage = "";
 
-  const messageRegExp = new RegExp("^[\\w\\näöüÄÖÜ .,-]+$");
+  const messageRegExp = new RegExp("^[\\w\\näöüÄÖÜ .,-?!]+$");
 
   function checkMessage() {
     document
