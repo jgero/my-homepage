@@ -1,5 +1,5 @@
 # use complete node 10 image
-FROM node:10
+FROM docker.io/node:10
 
 # using local argument to specify target
 ARG TARGET=main
