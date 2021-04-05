@@ -9,19 +9,6 @@
   import Location from './Location.svelte';
   import User from './User.svelte';
 
-  // store for popup state
-  const { subscribe: subscribePopup, update: updatePopup } = writable({
-    x: 0,
-    y: 0,
-    isVisible: false,
-    data: {},
-  });
-  let popupState = {
-    subscribe: subscribePopup,
-    show: ({ x, y, data }) =>
-      updatePopup(() => ({ x, y, isVisible: true, data })),
-    hide: () => updatePopup(() => ({ x: 0, y: 0, isVisible: false, data: {} })),
-  };
   // store for rotation
   const { subscribe: subscribeRotation, update: updateRotation } = writable(0);
   let mapRotation = {
@@ -32,7 +19,7 @@
   let myCoords, logger, map;
 
   // places loaded from firestore
-  export let places;
+  export let places, popupState;
 
   onMount(() => {
     myCoords = getMyCoords();
@@ -172,12 +159,11 @@
 
 <style>
   div {
+    position: relative;
     width: 100%;
     overflow: hidden;
-    border: 1px solid #c6e4f2;
     border-radius: 0.6rem;
-    background-color: white;
-    position: relative;
+    box-shadow: -2px -2px 4px 0px #ffffff, 2px 2px 4px 0px #00000025;
   }
   #overlay {
     position: absolute;
