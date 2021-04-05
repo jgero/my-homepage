@@ -207,6 +207,7 @@
       class="input-container">
       <textarea
         id="message"
+        type="text"
         required
         on:change={checkMessage}
         bind:value={message} />
