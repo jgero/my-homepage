@@ -5,7 +5,6 @@
   import { getLogger } from '../../stores/debug-logger';
   import { getMyCoords } from '../../stores/my-coords';
   import { getDistanceFromLatLonInKm } from '../../utils/coordinates-to-meters';
-  import firebase from 'firebase/app';
   export let popupState;
   let popupComponent, myCoords, logger, diffInKm;
 
@@ -37,18 +36,23 @@
 
   function onClickOutside(event) {
     if (!$popupState.isVisible) {
+      logger.log({
+        logLevel: 'error',
+        message: 'popup listener still catched click while popup was invisible',
+      });
       return;
     }
-    var parent = event.target;
+    // check all parents
+    parent = event.target;
     while (parent) {
-      if (parent === popupComponent) {
+      // close the popup if clicked inside the map
+      if (parent.tagName === 'svg') {
+        document.documentElement.removeEventListener('click', onClickOutside);
+        popupState.hide();
         return;
       }
       parent = parent.parentNode;
     }
-    // remove the listener when closing the popup
-    document.documentElement.removeEventListener('click', onClickOutside);
-    popupState.hide();
   }
 
   function setPosition(node) {
