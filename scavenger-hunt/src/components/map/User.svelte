@@ -81,5 +81,6 @@
   circle {
     fill: red;
     opacity: 0.2;
+    pointer-events: none;
   }
 </style>
