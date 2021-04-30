@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { getLogger } from './debug-logger';
+import firebase from 'firebase/app';
 
 let userId;
 let authListener;

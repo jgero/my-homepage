@@ -12,8 +12,8 @@
 
   import RouteHeader from '../../components/RouteHeader.svelte';
   import Map from '../../components/map/Map.svelte';
-  import LocationDetails from "../../components/LocationDetails.svelte";
-  import Logger from "../../components/Logger.svelte";
+  import LocationDetails from '../../components/LocationDetails.svelte';
+  import Logger from '../../components/Logger.svelte';
 
   export let userId;
 
@@ -76,7 +76,7 @@
 <main>
   <Map {places} {popupState} />
   {#if $popupState.isVisible}
-  <LocationDetails location={$popupState.data} />
+    <LocationDetails location={$popupState.data} />
   {/if}
 </main>
 <Logger />
