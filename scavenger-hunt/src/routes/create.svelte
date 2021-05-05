@@ -90,6 +90,21 @@
         }
     }
 
+    async function deletePlace(place) {
+        const { id } = place;
+        route.places = route.places.filter(el => el.id !== id);
+        route.lastEdit = new Date();
+        await firebase
+            .firestore()
+            .collection('routes')
+            .doc($userId)
+            .set(route);
+        logger.log({
+            logLevel: 'log',
+            message: `route updated`,
+        });
+    }
+
     function useCurrentLocation() {
         selectedPlace.latitude = $myCoords.latitude;
         selectedPlace.longitude = $myCoords.longitude;
@@ -161,7 +176,10 @@
 {#if route && route.places}
     <ul>
         {#each route.places as place}
-            <li on:click={() => (selectedPlace = place)}>{place.name}</li>
+            <li on:click={() => (selectedPlace = place)}>{place.name}
+                <button on:click={() => deletePlace(place)}>DELETE</button>
+
+            </li>
         {/each}
     </ul>
 {/if}
