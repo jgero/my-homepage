@@ -1,8 +1,20 @@
 <script>
-  import github from "../../static/images/github.png";
+  import github from '../../static/images/github.png';
 
   export let hasShadow;
 </script>
+
+<nav class={hasShadow ? 'shadow' : ''}>
+  <ul>
+    <li><a href="/#top">johannes gerold</a></li>
+    <li><a class="button stroked" href="/#contact_me">contact me</a></li>
+    <li>
+      <a href="https://github.com/jgero" target="_blank">
+        <img src={github} alt="github icon" />
+      </a>
+    </li>
+  </ul>
+</nav>
 
 <style>
   nav {
@@ -21,7 +33,7 @@
     margin: 0;
     padding: var(--space);
     display: flex;
-    font-family: "Barlow Condensed", sans-serif;
+    font-family: 'Barlow Condensed', sans-serif;
     font-weight: 400;
   }
 
@@ -45,15 +57,3 @@
     margin-inline-start: calc(2 * var(--space));
   }
 </style>
-
-<nav class={hasShadow ? 'shadow' : ''}>
-  <ul>
-    <li><a href="/#top">johannes gerold</a></li>
-    <li><a class="button stroked" href="/#contact_me">contact me</a></li>
-    <li>
-      <a href="https://github.com/jgero" target="_blank">
-        <img src={github} alt="github icon" />
-      </a>
-    </li>
-  </ul>
-</nav>

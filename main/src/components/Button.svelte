@@ -5,6 +5,12 @@
   export let style = "stroked";
 </script>
 
+<div class={style}>
+  {#if href}
+    <a {href} {target}>{label}</a>
+  {:else}<button on:click>{label}</button>{/if}
+</div>
+
 <style>
   div,
   button,
@@ -88,9 +94,3 @@
     background-color: transparent;
   }
 </style>
-
-<div class={style}>
-  {#if href}
-    <a {href} {target}>{label}</a>
-  {:else}<button on:click>{label}</button>{/if}
-</div>

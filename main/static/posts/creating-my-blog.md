@@ -3,6 +3,7 @@ title: Creating my own blog
 description: How I created my own blog using Svelte/Sapper with posts rendred from markdown text.
 pubdate: 2021-01-19T09:25:55.516Z
 ---
+
 # Creating my own blog
 
 Using the basic [sapper template](https://github.com/sveltejs/sapper-template) and just taking a [rollup plugin](https://github.com/jackfranklin/rollup-plugin-markdown) to import markdown files would be possible and quick to do, but I wanted to be a little bit more flexible. I want to be able to hook into the rendering process to make some minor tweaks to the generated content like for example adding a _target_ attribute to external links to open them in a new tab. To do this I took some inspiration from the blog on the [official Svelte site](https://svelte.dev/) and used [marked](https://marked.js.org/) with a custom renderer.
@@ -14,9 +15,9 @@ Creating a custom marked renderer sounds way more difficult than it is. You basi
 ```javascript
 const renderer = new marked.Renderer();
 renderer.heading = (text, level, rawtext) => {
-	const fragment = makeSlug(rawtext);
+  const fragment = makeSlug(rawtext);
 
-	return `
+  return `
 		<h${level}>
 			<span id="${fragment}" class="offset-anchor"></span>
 			<a href="blog/${slug}#${fragment}" class="anchor" aria-hidden="true"></a>
@@ -25,8 +26,8 @@ renderer.heading = (text, level, rawtext) => {
 };
 
 const html = marked(
-	content.replace(/^\t+/gm, match => match.split('\t').join('  ')),
-	{ renderer }
+  content.replace(/^\t+/gm, (match) => match.split("\t").join("  ")),
+  { renderer }
 );
 ```
 
@@ -99,20 +100,15 @@ Because the files are on the server this can only be done inside a server route.
 
 ```javascript
 export function get_posts() {
-  return (
-    fs
-      .readdirSync("static/posts")
-      .map((file) => {
-        // ...
-      })
-  );
+  return fs.readdirSync("static/posts").map((file) => {
+    // ...
+  });
 }
 
 function getMarkdownContent(slug) {
   const markdown = fs.readFileSync(`static/posts/${slug}.md`, "utf-8");
   // ...
 }
-
 ```
 
 In the `getMarkdownContent` function I run the marked renderer and in the `get_posts` function I add some extra metadata content like title and description for meta tags on the page later. Speaking of the page, let's have a look at how this is done.

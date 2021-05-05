@@ -1,12 +1,12 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy } from 'svelte';
 
   let fragment;
 
   onMount(() => {
-    window.addEventListener("hashchange", updateFragment);
+    window.addEventListener('hashchange', updateFragment);
     if (!window.location.hash) {
-      window.location.hash = "top";
+      window.location.hash = 'top';
     } else {
       fragment = window.location.hash;
     }
@@ -14,7 +14,7 @@
 
   onDestroy(() => {
     try {
-      window.removeEventListener("hashchange", updateFragment);
+      window.removeEventListener('hashchange', updateFragment);
     } catch (e) {
       fragment = undefined;
     }
@@ -24,6 +24,38 @@
     fragment = window.location.hash;
   }
 </script>
+
+<aside>
+  <nav>
+    <ul>
+      <li>
+        <a
+          aria-current={!fragment || fragment === '#top' ? 'page' : undefined}
+          href="/#top">home</a
+        >
+      </li>
+      <li>
+        <a
+          aria-current={fragment === '#project_showcase' ? 'page' : undefined}
+          href="/#project_showcase">project showcase</a
+        >
+      </li>
+      <li>
+        <a
+          aria-current={fragment === '#about_me' ? 'page' : undefined}
+          href="/#about_me">about me</a
+        >
+      </li>
+      <li>
+        <a
+          aria-current={fragment === '#contact_me' ? 'page' : undefined}
+          href="/#contact_me">contact me</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <div>scroll</div>
+</aside>
 
 <style>
   aside {
@@ -70,7 +102,7 @@
 
   div {
     --line-spacing: 1em;
-    font-family: "Barlow Condensed", sans-serif;
+    font-family: 'Barlow Condensed', sans-serif;
     font-weight: 400;
     color: var(--light-3);
     text-transform: uppercase;
@@ -80,7 +112,7 @@
   }
 
   div::after {
-    content: "";
+    content: '';
     display: block;
     width: 2px;
     height: 10em;
@@ -90,31 +122,3 @@
       translateY(var(--line-spacing));
   }
 </style>
-
-<aside>
-  <nav>
-    <ul>
-      <li>
-        <a
-          aria-current={!fragment || fragment === '#top' ? 'page' : undefined}
-          href="/#top">home</a>
-      </li>
-      <li>
-        <a
-          aria-current={fragment === '#project_showcase' ? 'page' : undefined}
-          href="/#project_showcase">project showcase</a>
-      </li>
-      <li>
-        <a
-          aria-current={fragment === '#about_me' ? 'page' : undefined}
-          href="/#about_me">about me</a>
-      </li>
-      <li>
-        <a
-          aria-current={fragment === '#contact_me' ? 'page' : undefined}
-          href="/#contact_me">contact me</a>
-      </li>
-    </ul>
-  </nav>
-  <div>scroll</div>
-</aside>

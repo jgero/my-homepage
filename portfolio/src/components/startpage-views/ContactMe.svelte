@@ -1,28 +1,28 @@
 <script>
-  import { fly } from "svelte/transition";
+  import { fly } from 'svelte/transition';
 
-  let email = "";
-  let name = "";
-  let message = "";
-  let resultMessage = "";
+  let email = '';
+  let name = '';
+  let message = '';
+  let resultMessage = '';
 
-  const messageRegExp = new RegExp("^[\\w\\näöüÄÖÜ .,-]+$");
+  const messageRegExp = new RegExp('^[\\w\\näöüÄÖÜ .,-?!]+$');
 
   function checkMessage() {
     document
-      .getElementById("message")
+      .getElementById('message')
       .setCustomValidity(
-        messageRegExp.test(message) ? "" : "Please match the requested format."
+        messageRegExp.test(message) ? '' : 'Please match the requested format.'
       );
   }
 
   async function sendContactInfo() {
-    document.getElementById("submit-button").disabled = true;
-    resultMessage = "Sending E-Mail...";
-    const res = await fetch("/contact.json", {
-      method: "POST",
+    document.getElementById('submit-button').disabled = true;
+    resultMessage = 'Sending E-Mail...';
+    const res = await fetch('/contact.json', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name,
@@ -33,24 +33,83 @@
     const response = await res.json();
     if (response.success) {
       // show snackbar
-      resultMessage = "E-Mail was sent successfully!";
+      resultMessage = 'E-Mail was sent successfully!';
       setTimeout(() => {
-        resultMessage = "";
+        resultMessage = '';
       }, 5000);
       // clear inputs
-      email = "";
-      name = "";
-      message = "";
+      email = '';
+      name = '';
+      message = '';
     } else {
-      resultMessage = "Something went wrong";
+      resultMessage = 'Something went wrong';
       setTimeout(() => {
-        resultMessage = "";
+        resultMessage = '';
       }, 5000);
       console.error(`Sending mail failed with: ${response.message}`);
     }
-    document.getElementById("submit-button").disabled = false;
+    document.getElementById('submit-button').disabled = false;
   }
 </script>
+
+<svelte:head>
+  <title>Johannes Gerold - contact me</title>
+</svelte:head>
+
+<div class="container">
+  <header out:fly={{ x: -200, duration: 200 }}>
+    <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>contact me</h1>
+    <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
+    <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>mail@jgero.me</h2>
+  </header>
+
+  <form
+    out:fly={{ x: 200, duration: 200 }}
+    on:submit|preventDefault={sendContactInfo}
+  >
+    <div in:fly={{ x: 200, duration: 1500, delay: 0 }} class="input-container">
+      <input type="email" id="email" required bind:value={email} />
+      <label for="email" class={email ? 'stowed' : ''}>E-Mail</label>
+    </div>
+    <div
+      in:fly={{ x: 200, duration: 1500, delay: 200 }}
+      class="input-container"
+    >
+      <input
+        type="text"
+        id="name"
+        required
+        pattern="^[\wäöüÄÖÜ .-]+$"
+        bind:value={name}
+      />
+      <label for="name" class={name ? 'stowed' : ''}>Name</label>
+    </div>
+    <div
+      in:fly={{ x: 200, duration: 1500, delay: 400 }}
+      class="input-container"
+    >
+      <textarea
+        id="message"
+        type="text"
+        required
+        on:change={checkMessage}
+        bind:value={message}
+      />
+      <label for="message" class={message ? 'stowed' : ''}>Message</label>
+    </div>
+    <button
+      type="submit"
+      id="submit-button"
+      in:fly={{ x: 200, duration: 1500, delay: 600 }}
+      class="primary">send message</button
+    >
+  </form>
+</div>
+{#if resultMessage !== ''}
+  <p transition:fly={{ y: 70, duration: 200 }} class="snackbar">
+    {resultMessage}
+  </p>
+{/if}
 
 <style>
   div.container {
@@ -59,14 +118,14 @@
     padding: 10vh 2rem;
     box-sizing: border-box;
     grid-template-columns: 1fr 3fr;
-    grid-template-areas: "header form";
+    grid-template-areas: 'header form';
   }
   @media screen and (max-width: 600px) {
     div.container {
       padding: 5vh 2rem;
       grid-template-columns: auto;
       grid-template-rows: 1fr 3fr;
-      grid-template-areas: "header" "form";
+      grid-template-areas: 'header' 'form';
     }
   }
   header {
@@ -144,7 +203,7 @@
     padding: 0.4rem;
     width: 100%;
     font-size: 1rem;
-    font-family: "DM Sans", sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background-color: var(--light-4);
     color: var(--dark-2);
     border: none;
@@ -172,55 +231,3 @@
     border-radius: 0.4em;
   }
 </style>
-
-<svelte:head>
-  <title>Johannes Gerold - contact me</title>
-</svelte:head>
-
-<div class="container">
-  <header out:fly={{ x: -200, duration: 200 }}>
-    <h1 in:fly={{ x: -200, duration: 1500, delay: 0 }}>contact me</h1>
-    <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
-    <h2 in:fly={{ x: -200, duration: 1500, delay: 400 }}>mail@jgero.me</h2>
-  </header>
-
-  <form
-    out:fly={{ x: 200, duration: 200 }}
-    on:submit|preventDefault={sendContactInfo}>
-    <div in:fly={{ x: 200, duration: 1500, delay: 0 }} class="input-container">
-      <input type="email" id="email" required bind:value={email} />
-      <label for="email" class={email ? 'stowed' : ''}>E-Mail</label>
-    </div>
-    <div
-      in:fly={{ x: 200, duration: 1500, delay: 200 }}
-      class="input-container">
-      <input
-        type="text"
-        id="name"
-        required
-        pattern="^[\wäöüÄÖÜ .-]+$"
-        bind:value={name} />
-      <label for="name" class={name ? 'stowed' : ''}>Name</label>
-    </div>
-    <div
-      in:fly={{ x: 200, duration: 1500, delay: 400 }}
-      class="input-container">
-      <textarea
-        id="message"
-        required
-        on:change={checkMessage}
-        bind:value={message} />
-      <label for="message" class={message ? 'stowed' : ''}>Message</label>
-    </div>
-    <button
-      type="submit"
-      id="submit-button"
-      in:fly={{ x: 200, duration: 1500, delay: 600 }}
-      class="primary">send message</button>
-  </form>
-</div>
-{#if resultMessage !== ''}
-  <p transition:fly={{ y: 70, duration: 200 }} class="snackbar">
-    {resultMessage}
-  </p>
-{/if}

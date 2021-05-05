@@ -1,3 +1,21 @@
+<figure>
+  <div class="solar-system">
+    <div class="orbit-1">
+      <div class="body planet-1" />
+      <div class="orbit-2">
+        <div class="body planet-2" />
+        <div class="orbit-3">
+          <div class="body planet-3" />
+          <div class="orbit-4">
+            <div class="body planet-4" />
+            <div class="body sun" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</figure>
+
 <style>
   figure {
     transform: rotate(10deg);
@@ -10,14 +28,14 @@
     padding: 10px;
     transform: skew(-55deg, 10deg);
   }
-  div[class^="orbit"],
+  div[class^='orbit'],
   figure {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  div[class^="orbit"] {
+  div[class^='orbit'] {
     border: 2px solid #d0d0d0;
     border-radius: 50%;
     position: relative;
@@ -82,21 +100,3 @@
     }
   }
 </style>
-
-<figure>
-  <div class="solar-system">
-    <div class="orbit-1">
-      <div class="body planet-1" />
-      <div class="orbit-2">
-        <div class="body planet-2" />
-        <div class="orbit-3">
-          <div class="body planet-3" />
-          <div class="orbit-4">
-            <div class="body planet-4" />
-            <div class="body sun" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</figure>

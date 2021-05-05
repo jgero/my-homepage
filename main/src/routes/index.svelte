@@ -9,33 +9,6 @@
   }
 </script>
 
-<style>
-  main {
-    margin: 0 20vw;
-  }
-  section {
-    position: relative;
-    margin-top: 1.5rem;
-    height: 7rem;
-    display: flex;
-    align-items: center;
-    border-radius: 3.5rem;
-    padding: 0 2rem;
-  }
-  section > div {
-    font-size: 4rem;
-    width: 1em;
-    height: 1em;
-    line-height: 1em;
-    color: var(--primary);
-  }
-  section > p {
-    margin: 0;
-    margin-left: 1em;
-    flex: 1;
-  }
-</style>
-
 <svelte:head>
   <title>Johannes Gerold</title>
   <meta property="og:title" content="Johannes Gerold" />
@@ -69,3 +42,30 @@
     <Button label="show me" href="https://space.jgero.me" target="_blank" />
   </section>
 </main>
+
+<style>
+  main {
+    margin: 0 20vw;
+  }
+  section {
+    position: relative;
+    margin-top: 1.5rem;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    border-radius: 3.5rem;
+    padding: 0 2rem;
+  }
+  section > div {
+    font-size: 4rem;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    color: var(--primary);
+  }
+  section > p {
+    margin: 0;
+    margin-left: 1em;
+    flex: 1;
+  }
+</style>

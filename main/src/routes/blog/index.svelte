@@ -11,18 +11,6 @@
   export let data;
 </script>
 
-<style>
-  main {
-    margin: 0 20vw;
-  }
-  div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-</style>
-
 <svelte:head>
   <title>Blog - Johannes Gerold</title>
   <meta property="og:title" content="Blog - Johannes Gerold" />
@@ -39,3 +27,15 @@
     {/each}
   </div>
 </main>
+
+<style>
+  main {
+    margin: 0 20vw;
+  }
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+</style>

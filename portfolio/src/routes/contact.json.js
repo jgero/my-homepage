@@ -1,6 +1,6 @@
-import { createTransport } from "nodemailer";
+import { createTransport } from 'nodemailer';
 // Import the Secret Manager client and instantiate it:
-const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
+const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 const client = new SecretManagerServiceClient();
 
 export async function post(req, res) {
@@ -13,21 +13,21 @@ export async function post(req, res) {
     // access the secrets from google cloud
     const [accessResponseAddress] = await client.accessSecretVersion({
       name:
-        "projects/webpage-jgero/secrets/contact-bot-email-address/versions/latest",
+        'projects/webpage-jgero/secrets/contact-bot-email-address/versions/latest',
     });
     responsePayloadAddress = accessResponseAddress.payload.data.toString(
-      "utf8"
+      'utf8'
     );
     const [accessResponsePassword] = await client.accessSecretVersion({
       name:
-        "projects/webpage-jgero/secrets/contact-bot-email-password/versions/latest",
+        'projects/webpage-jgero/secrets/contact-bot-email-password/versions/latest',
     });
     responsePayloadPassword = accessResponsePassword.payload.data.toString(
-      "utf8"
+      'utf8'
     );
   } catch (e) {
     res.writeHead(500, {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     });
     res.end(JSON.stringify({ success: false, message: e.message }));
     return;
@@ -35,7 +35,7 @@ export async function post(req, res) {
 
   // create a nodemailer transporter
   const transporter = createTransport({
-    host: "mail.privateemail.com",
+    host: 'mail.privateemail.com',
     port: 465,
     auth: {
       user: responsePayloadAddress,
@@ -51,22 +51,22 @@ export async function post(req, res) {
   let mailOptions = {
     from: responsePayloadAddress,
     replyTo: data.email,
-    to: "mail@jgero.me",
-    cc: "",
-    subject: "[my webpage] contact form submission",
+    to: 'mail@jgero.me',
+    cc: '',
+    subject: '[my webpage] contact form submission',
     html: htmlMessage,
   };
   transporter
     .sendMail(mailOptions)
     .then(() => {
       res.writeHead(200, {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       });
       res.end(JSON.stringify({ success: true }));
     })
     .catch((e) => {
       res.writeHead(500, {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       });
       res.end(JSON.stringify({ success: false, message: e.message }));
     });

@@ -10,6 +10,8 @@
   }
 </script>
 
+<span on:click={toggleTheme} class:toggled={$themeNameStore === "light"} />
+
 <style>
   span {
     display: block;
@@ -47,5 +49,3 @@
     left: 1em;
   }
 </style>
-
-<span on:click={toggleTheme} class:toggled={$themeNameStore === 'light'} />

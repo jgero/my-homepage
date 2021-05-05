@@ -1,9 +1,36 @@
 <script>
-  import { fly } from "svelte/transition";
+  import { fly } from 'svelte/transition';
 
-  import Topics from "../components/about_me/Topics.svelte";
-  import Charts from "../components/about_me/Charts.svelte";
+  import Topics from '../components/about_me/Topics.svelte';
+  import Charts from '../components/about_me/Charts.svelte';
 </script>
+
+<svelte:head>
+  <title>Johannes Gerold - About Me</title>
+</svelte:head>
+
+<main out:fly={{ x: 200, duration: 200 }}>
+  <header>
+    <h1 in:fly={{ x: -200, duration: 1500 }}>who am i?</h1>
+    <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
+  </header>
+
+  <section in:fly={{ y: -200, duration: 500, delay: 1000 }}>
+    <img src="/images/me.webp" alt="me" />
+    <p>
+      I am a passionate software developer born in 1998 in Baden-Württemberg,
+      Germany. While studying for my Bachelors degree in Aalen from 2016 to
+      2020, programming became not only my future profession, but also a beloved
+      free-time activity. Right after finishing my Bachelors degree I started my
+      Masters degree in 2020.
+      <br />
+      Web development has been my main focus, most of my bigger projects are showcased
+      on this website.
+    </p>
+  </section>
+  <Topics />
+  <Charts />
+</main>
 
 <style>
   main {
@@ -64,30 +91,3 @@
     max-width: var(--max-text-width);
   }
 </style>
-
-<svelte:head>
-  <title>Johannes Gerold - About Me</title>
-</svelte:head>
-
-<main out:fly={{ x: 200, duration: 200 }}>
-  <header>
-    <h1 in:fly={{ x: -200, duration: 1500 }}>who am i?</h1>
-    <div in:fly={{ x: -200, duration: 1500, delay: 200 }} />
-  </header>
-
-  <section in:fly={{ y: -200, duration: 500, delay: 1000 }}>
-    <img src="/images/me.webp" alt="me" />
-    <p>
-      I am a passionate software developer born in 1998 in Baden-Württemberg,
-      Germany. While studying for my Bachelors degree in Aalen from 2016 to
-      2020, programming became not only my future profession, but also a beloved
-      free-time activity. Right after finishing my Bachelors degree I started my
-      Masters degree in 2020.
-      <br />
-      Web development has been my main focus, most of my bigger projects are
-      showcased on this website.
-    </p>
-  </section>
-  <Topics />
-  <Charts />
-</main>
