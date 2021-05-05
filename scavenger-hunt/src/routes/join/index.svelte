@@ -9,7 +9,7 @@
     });
 </script>
 
-<RouteHeader title="Route beitreten"/>
+<RouteHeader title="Route beitreten" />
 {#if $userId}
     <h1>Meiner eigenen Route beitreten</h1>
     <a href="/join/{$userId}">beitreten</a>

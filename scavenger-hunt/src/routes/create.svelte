@@ -2,13 +2,13 @@
     import firebase from 'firebase/app';
     import { onMount, onDestroy } from 'svelte';
 
-    import RouteHeader from "../components/RouteHeader.svelte";
+    import RouteHeader from '../components/RouteHeader.svelte';
     import { getLogger } from '../stores/debug-logger';
     import { getMyCoords } from '../stores/my-coords';
     import { getUserId } from '../stores/user';
 
     let logger, myCoords, userId;
-    let route, latitude, longitude, name;
+    let route, selectedPlace, form;
 
     let unsubSnapshotListener;
     let unsubscribe;
@@ -54,30 +54,58 @@
         });
     });
 
-    async function addCurrentLocation() {
-        if (latitude && longitude && name) {
+    async function savePlace() {
+        const { name, latitude, longitude, id } = selectedPlace;
+        if (form.checkValidity()) {
             route.lastEdit = new Date();
-            route.places.push({
-                latitude: parseFloat(latitude),
-                longitude: parseFloat(longitude),
-                name,
-            });
+            let index = route.places.findIndex((el) => el.id === id);
+            if (index >= 0) {
+                route.places[index] = {
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude),
+                    name,
+                    id,
+                };
+            } else {
+                route.places.push({
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude),
+                    name,
+                });
+            }
             await firebase
                 .firestore()
                 .collection('routes')
                 .doc($userId)
                 .set(route);
+            logger.log({
+                logLevel: 'log',
+                message: `route updated`,
+            });
         } else {
             logger.log({
                 logLevel: 'error',
-                message: `did not send data because of missing fields`,
+                message: `invalid fields`,
             });
         }
     }
 
     function useCurrentLocation() {
-        latitude = $myCoords.latitude;
-        longitude = $myCoords.longitude;
+        selectedPlace.latitude = $myCoords.latitude;
+        selectedPlace.longitude = $myCoords.longitude;
+    }
+
+    function setupNewLocation() {
+        selectedPlace = {
+            name: '',
+            id: Math.random().toString().substr(2, 12),
+        };
+        if ($myCoords) {
+            useCurrentLocation();
+        } else {
+            selectedPlace.latitude = '';
+            selectedPlace.longitude = '';
+        }
     }
 
     onDestroy(() => {
@@ -90,24 +118,63 @@
     });
 </script>
 
-<RouteHeader title='Route bearbeiten'/>
+<RouteHeader title="Route bearbeiten" />
 
-<label for="latitude">latitude</label>
-<input id="latitude" type="text" bind:value={latitude} />
-<label for="longitude">longitude</label>
-<input id="longitude" type="text" bind:value={longitude} />
-<label for="name">name</label>
-<input id="name" type="text" bind:value={name} />
-<button on:click={addCurrentLocation}>SAVE</button>
-{#if $myCoords}
-    <button on:click={useCurrentLocation}>USE MY LOCATION</button>
-{/if}
+<main>
+    {#if selectedPlace}
+        <form on:submit|preventDefault={savePlace} bind:this={form}>
+            <input
+                id="name"
+                type="text"
+                bind:value={selectedPlace.name}
+                required
+                pattern="^[0-9a-zA-ZäöüÄÖÜß _-]*$"
+            />
+            <label for="latitude">latitude</label>
+            <input
+                id="latitude"
+                type="text"
+                bind:value={selectedPlace.latitude}
+                required
+                pattern="^[0-9]*\.[0-9]*$"
+            />
+            <label for="longitude">longitude</label>
+            <input
+                id="longitude"
+                type="text"
+                bind:value={selectedPlace.longitude}
+                required
+                pattern="^[0-9]*\.[0-9]*$"
+            />
+            <button type="submit">SAVE</button>
+            {#if $myCoords}
+                <button type="button" on:click={useCurrentLocation}
+                    >USE MY LOCATION</button
+                >
+            {/if}
+        </form>
+    {/if}
+</main>
+
+<button on:click={setupNewLocation}>NEW</button>
 
 {#if route && route.places}
-<ul>
-    {#each route.places as place}
-        <li>{place.name}</li>
-    {/each}
-</ul>
+    <ul>
+        {#each route.places as place}
+            <li on:click={() => (selectedPlace = place)}>{place.name}</li>
+        {/each}
+    </ul>
 {/if}
 
+<style>
+    form {
+        display: grid;
+        grid-template-rows: 2fr 1fr 1fr;
+        grid-template-columns: 25% 75%;
+        grid-template-areas: 'h h' 'latn latc' 'lonn lonc';
+    }
+    form #name {
+        font-size: 2rem;
+        grid-area: h;
+    }
+</style>
