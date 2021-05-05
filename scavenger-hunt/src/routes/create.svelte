@@ -71,6 +71,7 @@
                     latitude: parseFloat(latitude),
                     longitude: parseFloat(longitude),
                     name,
+                    id
                 });
             }
             await firebase
@@ -121,6 +122,7 @@
             selectedPlace.latitude = '';
             selectedPlace.longitude = '';
         }
+        console.log(selectedPlace);
     }
 
     onDestroy(() => {
