@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import QRCode from 'qrcode';
 
     import { getUserId } from '../../stores/user';
@@ -8,14 +8,25 @@
 
     let userId, logger;
     let qrBase64;
+    let unsub;
     onMount(() => {
         userId = getUserId();
         logger = getLogger();
-        writeQrCode({ foo: 'bar', bar: 'baz' });
+
+        unsub = userId.subscribe((uid) => {
+            const hostname = window.location.hostname;
+            let joinURL = '';
+            if (hostname === 'localhost') {
+                joinURL = `http://localhost/join/${uid}`;
+            } else {
+                joinURL = `https://${hostname}/join/${uid}`;
+            }
+            writeQrCode(joinURL);
+        });
     });
 
-    function writeQrCode(data) {
-        QRCode.toDataURL(JSON.stringify(data), (err, code) => {
+    function writeQrCode(dataString) {
+        QRCode.toDataURL(dataString, (err, code) => {
             if (err) {
                 logger.log({
                     logLevel: 'log',
@@ -25,6 +36,12 @@
             qrBase64 = code;
         });
     }
+
+    onDestroy(() => {
+        if (unsub) {
+            unsub();
+        }
+    });
 </script>
 
 <RouteHeader title="Route beitreten" />
