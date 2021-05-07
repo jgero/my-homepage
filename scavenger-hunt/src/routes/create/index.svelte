@@ -98,9 +98,18 @@
         await firebase.firestore().collection('routes').doc($userId).set(route);
         logger.log({
             logLevel: 'log',
-            message: `route updated`,
+            message: 'updated places',
         });
     }
+
+   async function resetSearchers() {
+        route.searchers = [];
+        await firebase.firestore().collection('routes').doc($userId).set(route);
+        logger.log({
+            logLevel: 'log',
+            message: 'reset searchers',
+        });
+    } 
 
     function useCurrentLocation() {
         selectedPlace.latitude = $myCoords.latitude;
@@ -180,6 +189,9 @@
             </li>
         {/each}
     </ul>
+
+    <p>{route.searchers ? route.searchers.length : 0} suchende sind der Route hinzugefügt</p>
+    <button on:click={resetSearchers}>suchende löschen</button>
 {/if}
 
 <style>
