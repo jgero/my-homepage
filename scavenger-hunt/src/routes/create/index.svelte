@@ -2,10 +2,10 @@
     import firebase from 'firebase/app';
     import { onMount, onDestroy } from 'svelte';
 
-    import RouteHeader from '../components/RouteHeader.svelte';
-    import { getLogger } from '../stores/debug-logger';
-    import { getMyCoords } from '../stores/my-coords';
-    import { getUserId } from '../stores/user';
+    import RouteHeader from '../../components/RouteHeader.svelte';
+    import { getLogger } from '../../stores/debug-logger';
+    import { getMyCoords } from '../../stores/my-coords';
+    import { getUserId } from '../../stores/user';
 
     let logger, myCoords, userId;
     let route, selectedPlace, form;

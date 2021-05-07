@@ -14,14 +14,13 @@
         logger = getLogger();
 
         unsub = userId.subscribe((uid) => {
-            const hostname = window.location.hostname;
-            let joinURL = '';
-            if (hostname === 'localhost') {
-                joinURL = `http://localhost/join/${uid}`;
-            } else {
-                joinURL = `https://${hostname}/join/${uid}`;
+            if (!uid) {
+                return;
             }
-            writeQrCode(joinURL);
+            const hostname = window.location.hostname;
+            let addMeURL = hostname === 'localhost' ? 'http://localhost' : `https://${hostname}`;
+            addMeURL += `/create/addUser/${uid}`
+            writeQrCode(addMeURL);
         });
     });
 
@@ -31,6 +30,11 @@
                 logger.log({
                     logLevel: 'log',
                     message: `qr-gen errror: ${JSON.stringify(err)}`,
+                });
+            } else {
+                logger.log({
+                    logLevel: 'log',
+                    message: `qr-gen with content: ${dataString}`,
                 });
             }
             qrBase64 = code;
