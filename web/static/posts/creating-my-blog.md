@@ -26,7 +26,7 @@ renderer.heading = (text, level, rawtext) => {
 };
 
 const html = marked(
-  content.replace(/^\t+/gm, (match) => match.split("\t").join("  ")),
+  content.replace(/^\t+/gm, (match) => match.split('\t').join('  ')),
   { renderer }
 );
 ```
@@ -35,7 +35,7 @@ This fragment from the [official Svelte blog site](https://github.com/sveltejs/s
 
 ```javascript
 renderer.link = (href, _title, text) => {
-  const target = href.startsWith("http") ? "_blank" : null;
+  const target = href.startsWith('http') ? '_blank' : null;
   return `<a href="${href}" ${target}>${text}</a>`;
 };
 ```
@@ -49,9 +49,9 @@ I explored the option of generating Svelte components in the markdown renderer a
 Svelte has a [server side component API](https://svelte.dev/docs#Server-side_component_API). Together with [svelte register](https://svelte.dev/docs#svelte_register) it is easy to render components on the server without bundling them. The component API is used to create the component and pass in props, svelte register handles the rest.
 
 ```javascript
-require("svelte/register");
+require('svelte/register');
 
-import { HeroHeader, SubHeader } from "component-lib";
+import { HeroHeader, SubHeader } from 'component-lib';
 
 // ....
 
@@ -66,7 +66,7 @@ renderer.heading = (text, level) => {
       return html;
     }
     default:
-      throw new Error("unhandeled heading level");
+      throw new Error('unhandeled heading level');
   }
 };
 ```
@@ -78,9 +78,9 @@ In theory requiring a script, importing some components and invoking some method
 For this I am using [highlight.js](https://highlightjs.org/). In the marked renderer with the default GitHub stylesheet for the highlights.
 
 ```javascript
-import hljs from "highlight.js/lib/core";
-import javascript from "highlight.js/lib/languages/javascript";
-hljs.registerLanguage("javascript", javascript);
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+hljs.registerLanguage('javascript', javascript);
 
 // ...
 
@@ -100,13 +100,13 @@ Because the files are on the server this can only be done inside a server route.
 
 ```javascript
 export function get_posts() {
-  return fs.readdirSync("static/posts").map((file) => {
+  return fs.readdirSync('static/posts').map((file) => {
     // ...
   });
 }
 
 function getMarkdownContent(slug) {
-  const markdown = fs.readFileSync(`static/posts/${slug}.md`, "utf-8");
+  const markdown = fs.readFileSync(`static/posts/${slug}.md`, 'utf-8');
   // ...
 }
 ```
@@ -115,7 +115,7 @@ In the `getMarkdownContent` function I run the marked renderer and in the `get_p
 
 ```javascript
 export async function preload() {
-  const r = await this.fetch("/blog.json");
+  const r = await this.fetch('/blog.json');
   const data = await r.json();
   return { data };
 }

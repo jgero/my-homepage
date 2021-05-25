@@ -40,7 +40,7 @@
 
   section :global(a) {
     display: inline-block;
-    font-family: "DM Sans", sans-serif;
+    font-family: 'DM Sans', sans-serif;
     outline: none;
     color: var(--font);
     text-decoration: none;
@@ -52,7 +52,7 @@
     transform: scale(1.02);
   }
   section :global(a)::before {
-    content: "";
+    content: '';
     width: 100%;
     height: 2px;
     position: absolute;
@@ -67,7 +67,7 @@
   }
   section :global(a)::after {
     --overlap: 0.2em;
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
     position: absolute;

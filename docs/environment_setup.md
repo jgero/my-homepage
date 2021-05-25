@@ -14,6 +14,30 @@ The development pod consists of the sapper development server. Currently using a
 when I'm only running a single container inside it, but the idea is, that later when I maybe add a
 database or more services that need to communicate with each other, this is way faster to set up.
 
+### Starting the containers manually
+
+Setting up a pod in podman is more or less trivial, but the commands to start the containers with
+the mounts and ports can have a few nice extras. For example a anonymous volume for `node_modules`
+so `npm install` has cache and does not have to be run as often and I don't have `node_modules`
+littered all around my system. To achieve this I use this command:
+
+```
+podman run \
+	--rm \
+	--tty \
+	-v $(PWD)/src/:/app/src/:z \
+	-v $(PWD)/static/:/app/static/:z \
+	-v $(PWD)/rollup.config.js:/app/rollup.config.js:z \
+	--mount type=image,source=my-webpage:dev,destination=/app/src/node_modules/,rw=true \
+	-p 3000:3000 \
+	-p 10000:10000 \
+	my-webpage/sapper:dev
+```
+
+> Note that the anonymous (type image) volume comes last and thus is layered on top of the
+> `$(PWD)/src/` volume and prevents the `node_modules` from being mounted into the host fs.
+
+
 ### Useful commands
 
 - `podman pod restart my-webpage-dev` to restart all the containers inside the pod
@@ -21,4 +45,28 @@ database or more services that need to communicate with each other, this is way 
 - `podman contianer logs my-webpage-dev-sapper` to get all the logs from a specific container
 - `podman contianer attach my-webpage-dev-sapper` to attach to a container and get all the logs from
   it
+
+### Cleaning up
+
+Cleaning up all the containers and images is in theory pretty straight forward. Just delete the pod
+and all the images that are used there. The problem is that podman (like docker) does not offer some
+kind of regex matching on the image delete command. Thus some more creativity and searching in the
+internet is necessary and it lead me to this solution:
+
+```
+podman image ls \
+	| grep "my-webpage.*dev" \
+	| tr -s ' ' \
+	| cut -d ' ' -f 3 \
+	| xargs -I [] podman image rm []
+```
+
+It may look a bit complicated but it's actualy not doing anything wild. First I grep all images that
+have a name containing "my-webpage" and the tag "dev". After that all the whitespaces are truncated
+down to just one. With cut I select only the image ID of the previously matched images and with
+xargs the actual removal of the images happens.
+
+## Production
+
+TODO
 

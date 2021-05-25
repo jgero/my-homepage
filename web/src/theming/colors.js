@@ -1,17 +1,17 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 const themes = {
   dark: {
-    primary: "#ff2020",
-    secondary: "#dba915",
-    background: "#3c3c3c",
-    font: "#eeeded",
+    primary: '#ff2020',
+    secondary: '#dba915',
+    background: '#3c3c3c',
+    font: '#eeeded',
   },
   light: {
-    primary: "#78ffce",
-    secondary: "#c1f0ff",
-    background: "#ffffff",
-    font: "#000000",
+    primary: '#78ffce',
+    secondary: '#c1f0ff',
+    background: '#ffffff',
+    font: '#000000',
   },
 };
 
@@ -29,4 +29,4 @@ function createThemeStore() {
 }
 
 export const theme = createThemeStore();
-export const themeNameStore = writable("light");
+export const themeNameStore = writable('light');

@@ -1,8 +1,20 @@
 fmt_check:
 	bash scripts/fmt_check.sh
 
-build_container:
+build:
 	bash scripts/build_prod.sh
 
-.PHONY: fmt_check build_container
+build_dev:
+	bash scripts/build_dev.sh
+
+dev: build_dev
+	podman play kube build/package/my-webpage-dev.yml
+
+stop:
+	bash scripts/stop.sh
+
+clean:
+	bash scripts/clean.sh
+
+.PHONY: fmt_check build build_dev dev stop clean
 

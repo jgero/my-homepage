@@ -1,8 +1,8 @@
 <script>
-  export let label = "label missing";
+  export let label = 'label missing';
   export let href;
   export let target;
-  export let style = "stroked";
+  export let style = 'stroked';
 </script>
 
 <div class={style}>
@@ -35,7 +35,7 @@
   }
   /* element to create the shade effect */
   div::before {
-    content: "";
+    content: '';
     z-index: -1;
     position: absolute;
     width: 100%;
@@ -68,7 +68,7 @@
     text-decoration: none;
     color: var(--font);
     padding: calc(2 * var(--border-size));
-    font-family: "Barlow Condensed", sans-serif;
+    font-family: 'Barlow Condensed', sans-serif;
     font-weight: 500;
     text-transform: uppercase;
     background-color: transparent;

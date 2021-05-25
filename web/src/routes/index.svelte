@@ -1,16 +1,9 @@
 <script>
-  import Button from "../components/Button.svelte";
-  import { theme } from "../theming/colors.js";
-  import ThemeSwitcher from "../theming/ThemeSwitcher.svelte";
-
-  function switchTheme() {
-    console.log("switching theme");
-    theme.select("dark");
-  }
+  import Button from '../components/Button.svelte';
 </script>
 
 <svelte:head>
-  <title>test</title>
+  <title>Johannes Gerold</title>
   <meta property="og:title" content="Johannes Gerold" />
   <meta property="og:description" content="This is me." />
   <meta property="og:image" content="https://via.placeholder.com/150" />
@@ -23,7 +16,7 @@
   <section>
     <div class="material-icons">account_circle</div>
     <p>Read more about me in my portfolio</p>
-    <Button label="show me" href="https://portfolio.jgero.me" target="_blank" />
+    <Button label="show me" href="/portfolio" />
   </section>
   <h2>what am i doing?</h2>
   <section>
@@ -39,7 +32,7 @@
       working on a page to visualize data about space travel to practice coding
       and because I love space related things
     </p>
-    <Button label="show me" href="https://space.jgero.me" target="_blank" />
+    <Button label="show me" href="/space" />
   </section>
 </main>
 

@@ -1,5 +1,5 @@
 <script>
-  import Button from "./Button.svelte";
+  import Button from './Button.svelte';
   export let title;
   export let description;
   export let pubdate;
@@ -55,7 +55,7 @@
     display: none;
   }
   time {
-    font-family: "DM Sans", sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.8rem;
     opacity: 0.5;
     color: var(--font);

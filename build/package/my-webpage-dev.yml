@@ -9,8 +9,8 @@ kind: Pod
 metadata:
   creationTimestamp: "2021-05-25T12:41:28Z"
   labels:
-    app: my-webpage
-  name: my-webpage
+    app: my-webpage-dev
+  name: my-webpage-dev
 spec:
   containers:
   - args:

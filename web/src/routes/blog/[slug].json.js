@@ -1,4 +1,4 @@
-import { get_post } from "./_posts.js";
+import { get_post } from './_posts.js';
 
 export async function get(req, res) {
   const { slug } = req.params;
