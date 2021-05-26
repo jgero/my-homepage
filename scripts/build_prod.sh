@@ -3,8 +3,9 @@
 COMMIT_HASH="$(git rev-parse --short HEAD)"
 
 podman build \
-	-t "my-webpage:${COMMIT_HASH}"
-	-f ../build/package/prod.Containerfile
-	--ignorefile ../.containerignore
-	../
+	-t "my-webpage:${COMMIT_HASH}" \
+	-t my-webpage:latest \
+	-f build/package/prod.Containerfile \
+	--ignorefile .containerignore \
+	.
 

@@ -4,6 +4,9 @@ fmt_check:
 build:
 	bash scripts/build_prod.sh
 
+start: build
+	podman play kube build/package/my-webpage-prod.yml
+
 build_dev:
 	bash scripts/build_dev.sh
 
@@ -16,5 +19,5 @@ stop:
 clean:
 	bash scripts/clean.sh
 
-.PHONY: fmt_check build build_dev dev stop clean
+.PHONY: fmt_check build start build_dev dev stop clean
 

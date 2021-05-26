@@ -69,5 +69,9 @@ xargs the actual removal of the images happens.
 
 ## Production
 
-TODO
+The production image is comprised of the binary of the go server and the "exported" sapper app as
+static files. With extra compilation flags the go application can be compiled to a binary that can
+run in a container "FROM scratch". Combined with the compiler flag to only build for linux targets
+results in an extremely small container. This container is wrapped into a pod, later it has an nginx
+reverse proxy as well in it to handle the https stuff, but that is not included yet.
 
