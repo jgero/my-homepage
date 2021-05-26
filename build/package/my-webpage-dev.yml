@@ -13,6 +13,37 @@ metadata:
   name: my-webpage-dev
 spec:
   containers:
+  - command:
+    - /out/webserver
+    env:
+    - name: PATH
+      value: /go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    - name: GOPATH
+      value: /go
+    - name: GOLANG_VERSION
+      value: 1.16.4
+    image: localhost/my-webpage/go:dev
+    name: go-build-webserver
+    ports:
+    - containerPort: 8080
+      hostPort: 8080
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      privileged: false
+      readOnlyRootFilesystem: false
+      seLinuxOptions: {}
+    workingDir: /app
   - args:
     - npm
     - run
@@ -31,7 +62,7 @@ spec:
     - name: YARN_VERSION
       value: 1.22.5
     image: localhost/my-webpage/sapper:dev
-    name: romanticbhabha
+    name: sapper-dev-server
     ports:
     - containerPort: 3000
       hostPort: 3000

@@ -10,9 +10,10 @@ my-webpage-dev.yaml` and run it again with `podman play kube my-webpage-dev.yaml
 
 ## Development
 
-The development pod consists of the sapper development server. Currently using a pod may be overkill
-when I'm only running a single container inside it, but the idea is, that later when I maybe add a
-database or more services that need to communicate with each other, this is way faster to set up.
+The development pod consists of the sapper development server and the go application. Currently
+using a pod may seem like an overkill and cumbersome when I'm only running these simple containers
+that could run on their own, but the idea is, that later when I maybe add a database or more
+services that need to communicate with each other, this is way faster to set up.
 
 ### Starting the containers manually
 
