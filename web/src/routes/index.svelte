@@ -15,8 +15,8 @@
   <h2>who am i?</h2>
   <section>
     <div class="material-icons">account_circle</div>
-    <p>Read more about me in my portfolio</p>
-    <Button label="show me" href="/portfolio" />
+    <p>Read more about me</p>
+    <Button label="show me" href="/about" />
   </section>
   <h2>what am i doing?</h2>
   <section>

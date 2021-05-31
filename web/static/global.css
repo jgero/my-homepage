@@ -38,7 +38,7 @@ h2::before {
   left: 0;
   background-image: linear-gradient(to right, var(--primary), var(--secondary));
 }
-p {
+p, ul {
   font-family: 'DM Sans', sans-serif;
   color: var(--font);
   margin: 0;

@@ -8,12 +8,7 @@
   <span />
   <nav>
     <Button href="/blog" label="blog" style="flat" />
-    <Button
-      href="https://portfolio.jgero.me"
-      target="_blank"
-      label="portfolio"
-      style="flat"
-    />
+    <Button href="/about" label="about" style="flat" />
     <Button href="/contact_me" label="contact me" style="flat" />
   </nav>
   <ThemeSwitcher />
