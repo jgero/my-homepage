@@ -16,7 +16,7 @@
   <section>
     <div class="material-icons">account_circle</div>
     <p>Read more about me</p>
-    <Button label="show me" href="/about" />
+    <Button label="show me" href="/about/me" />
   </section>
   <h2>what am i doing?</h2>
   <section>
@@ -37,9 +37,6 @@
 </main>
 
 <style>
-  main {
-    margin: 0 20vw;
-  }
   section {
     position: relative;
     margin-top: 1.5rem;

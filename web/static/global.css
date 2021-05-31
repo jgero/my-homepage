@@ -44,6 +44,9 @@ p, ul {
   margin: 0;
   margin-block-start: 1em;
 }
+main {
+	margin: 0 20vw 30vh 20vw;
+}
 div.listing {
   background-image: linear-gradient(to right, var(--primary), var(--secondary));
   padding: 0.2rem;

@@ -29,9 +29,6 @@
 </main>
 
 <style>
-  main {
-    margin: 0 20vw;
-  }
   div {
     display: flex;
     flex-wrap: wrap;

@@ -1,3 +1,7 @@
+<script>
+import Button from "../../components/Button.svelte";
+</script>
+
 <main>
 <h1>About</h1>
 
@@ -8,6 +12,8 @@ An der Sechta 2 <br>
 73479 Ellwangen, Germany <br>
 E-Mail: mail@jgero.me
 </p>
+
+<Button label="see more" href="/about/me" />
 
 <h2>Data processing when visiting this site</h2>
 <p>
@@ -38,10 +44,4 @@ E-Mail: mail@jgero.me
 <p>Using the contact form is completely optional and not at all required to use when visiting the
 	site.</p>
 </main>
-
-<style>
-main {
-	margin: 0 20vw;
-}
-</style>
 
