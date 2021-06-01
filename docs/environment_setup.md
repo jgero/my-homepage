@@ -10,42 +10,26 @@ my-webpage-dev.yaml` and run it again with `podman play kube my-webpage-dev.yaml
 
 ## Development
 
-The development pod consists of the sapper development server and the go application. Currently
-using a pod may seem like an overkill and cumbersome when I'm only running these simple containers
-that could run on their own, but the idea is, that later when I maybe add a database or more
-services that need to communicate with each other, this is way faster to set up.
+Initially I was using a pod for the development setup, but after some troubles with volumes I
+switched back to just starting the containers individually from a shell script.
 
-### Starting the containers manually
+If I decide in the future to use some kind of database or some services depend on each other, I may
+need to consider going back to using pods or some other way of starting multiple containers.
 
-Setting up a pod in podman is more or less trivial, but the commands to start the containers with
-the mounts and ports can have a few nice extras. For example a anonymous volume for `node_modules`
-so `npm install` has cache and does not have to be run as often and I don't have `node_modules`
-littered all around my system. To achieve this I use this command:
+## Production
 
-```
-podman run \
-	--rm \
-	--tty \
-	-v $(PWD)/src/:/app/src/:z \
-	-v $(PWD)/static/:/app/static/:z \
-	-v $(PWD)/rollup.config.js:/app/rollup.config.js:z \
-	--mount type=image,source=my-webpage:dev,destination=/app/src/node_modules/,rw=true \
-	-p 3000:3000 \
-	-p 10000:10000 \
-	my-webpage/sapper:dev
-```
-
-> Note that the anonymous (type image) volume comes last and thus is layered on top of the
-> `$(PWD)/src/` volume and prevents the `node_modules` from being mounted into the host fs.
-
+The production image is comprised of the binary of the go server and the "exported" sapper app as
+static files. With extra compilation flags the go application can be compiled to a binary that can
+run in a container "FROM scratch". Combined with the compiler flag to only build for linux targets
+results in an extremely small container. This container is wrapped into a pod, later it has an nginx
+reverse proxy as well in it to handle the https stuff, but that is not included yet.
 
 ### Useful commands
 
-- `podman pod restart my-webpage-dev` to restart all the containers inside the pod
-- `podman container restart my-webpage-dev-sapper` to restart only one specific container
-- `podman contianer logs my-webpage-dev-sapper` to get all the logs from a specific container
-- `podman contianer attach my-webpage-dev-sapper` to attach to a container and get all the logs from
-  it
+- `podman pod restart my-webpage` to restart all the containers inside the pod
+- `podman container restart my-webpage` to restart only one specific container
+- `podman contianer logs my-webpage` to get all the logs from a specific container
+- `podman contianer attach my-webpage` to attach to a container and get all the logs from it
 
 ### Cleaning up
 
@@ -66,12 +50,4 @@ It may look a bit complicated but it's actualy not doing anything wild. First I 
 have a name containing "my-webpage" and the tag "dev". After that all the whitespaces are truncated
 down to just one. With cut I select only the image ID of the previously matched images and with
 xargs the actual removal of the images happens.
-
-## Production
-
-The production image is comprised of the binary of the go server and the "exported" sapper app as
-static files. With extra compilation flags the go application can be compiled to a binary that can
-run in a container "FROM scratch". Combined with the compiler flag to only build for linux targets
-results in an extremely small container. This container is wrapped into a pod, later it has an nginx
-reverse proxy as well in it to handle the https stuff, but that is not included yet.
 

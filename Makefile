@@ -11,7 +11,7 @@ build_dev:
 	bash scripts/build_dev.sh
 
 dev: build_dev
-	podman play kube build/package/my-webpage-dev.yml
+	bash scripts/start_dev.sh
 
 stop:
 	bash scripts/stop.sh
