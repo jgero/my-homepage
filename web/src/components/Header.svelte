@@ -5,13 +5,16 @@
 
 <header>
 	<a href="/">Johannes Gerold</a>
+	<ThemeSwitcher />
 	<span />
 	<nav>
 		<Button href="/blog" label="blog" style="flat" />
 		<Button href="/about" label="about" style="flat" />
 		<Button href="/contact_me" label="contact me" style="flat" />
+		<a href="https://github.com/jgero" target="_blank">
+			<img src="github.png" alt="github logo">
+		</a>
 	</nav>
-	<ThemeSwitcher />
 </header>
 
 <style>
@@ -27,7 +30,7 @@
 		border-radius: 0.5em;
 		align-items: center;
 	}
-	a {
+	header > a {
 		text-transform: uppercase;
 		outline: none;
 		text-decoration: none;
@@ -37,8 +40,8 @@
 		font-family: 'Barlow Condensed', sans-serif;
 		font-weight: 400;
 	}
-	a:focus,
-	a:active {
+	header > a:focus,
+	header > a:active {
 		text-decoration: underline;
 	}
 	span {
@@ -46,5 +49,9 @@
 	}
 	nav {
 		display: flex;
+		margin-inline-end: 2rem;
+	}
+	nav > a {
+		align-self: center;
 	}
 </style>
