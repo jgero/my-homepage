@@ -5,6 +5,7 @@ FROM docker.io/node:14
 # repeat that step if the package files change
 WORKDIR /app
 COPY package.json package.json
+COPY .prettierrc.yaml .prettierrc.yaml
 COPY package-lock.json package-lock.json
 RUN ["npm", "install"]
 
