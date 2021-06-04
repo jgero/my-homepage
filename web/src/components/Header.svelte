@@ -1,6 +1,6 @@
 <script>
-  import Button from './Button.svelte';
-  import ThemeSwitcher from '../theming/ThemeSwitcher.svelte';
+  import Button from "./Button.svelte";
+  import ThemeSwitcher from "../theming/ThemeSwitcher.svelte";
 </script>
 
 <header>
@@ -34,7 +34,7 @@
     color: var(--font);
     font-size: 1.5rem;
     margin: 1em;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     font-weight: 400;
   }
   a:focus,

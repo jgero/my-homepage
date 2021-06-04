@@ -1,16 +1,16 @@
 <script>
-  import { themeNameStore, theme } from './colors.js';
+  import { themeNameStore, theme } from "./colors.js";
 
   function toggleTheme() {
-    if ($themeNameStore === 'light') {
-      theme.select('dark');
+    if ($themeNameStore === "light") {
+      theme.select("dark");
     } else {
-      theme.select('light');
+      theme.select("light");
     }
   }
 </script>
 
-<span on:click={toggleTheme} class:toggled={$themeNameStore === 'light'} />
+<span on:click={toggleTheme} class:toggled={$themeNameStore === "light"} />
 
 <style>
   span {
@@ -29,7 +29,7 @@
     position: absolute;
     top: 0.1em;
     left: 0.1em;
-    content: '';
+    content: "";
     height: 0.8em;
     width: 0.8em;
     border-radius: 0.4em;
@@ -40,10 +40,10 @@
     left: 1.5em;
   }
   span::after {
-    content: 'Theme';
+    content: "Theme";
     color: var(--font);
     font-size: 0.7rem;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: "Barlow Condensed", sans-serif;
     position: absolute;
     top: -1.1em;
     left: 1em;
