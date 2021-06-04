@@ -38,6 +38,15 @@ h2::before {
   left: 0;
   background-image: linear-gradient(to right, var(--primary), var(--secondary));
 }
+h3 {
+  color: var(--font);
+  text-transform: uppercase;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  margin: 0;
+  margin-block-start: 1em;
+  font-size: 1.7rem;
+}
 p, ul {
   font-family: 'DM Sans', sans-serif;
   color: var(--font);
