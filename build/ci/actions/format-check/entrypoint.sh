@@ -13,5 +13,5 @@ else
     echo "==> [DONE]"
 fi
 
-return EXIT_CODE
+exit EXIT_CODE
 
