@@ -3,4 +3,4 @@ description: 'check format of the go api and the web app'
 runs:
   using: 'docker'
   image: 'docker://golang:1.16.4'
-  entrypoint: 'entrypoint.sh'
+  entrypoint: 'build/ci/actions/format-check/entrypoint.sh'
