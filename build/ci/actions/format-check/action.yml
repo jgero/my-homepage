@@ -1,0 +1,5 @@
+name: 'check format'
+description: 'check format of the go api and the web app'
+runs:
+  using: 'docker'
+  image: 'Containerfile'
