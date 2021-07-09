@@ -9,6 +9,9 @@ fmt_check:
 		-v "$(PWD):/app:z" \
 		my-webpage-format-check:dev
 
+fmt_apply:
+	gofmt -w .
+
 build:
 	bash scripts/build_prod.sh
 
