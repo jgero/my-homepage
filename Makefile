@@ -1,5 +1,16 @@
 fmt_check:
-	bash scripts/fmt_check.sh
+	podman build \
+		-f "build/ci/actions/format-check/Dockerfile" \
+		-t "my-webpage-format-check:dev" \
+		build/ci/actions/format-check
+	podman run \
+		--rm \
+		--workdir /app \
+		-v "$(PWD):/app:z" \
+		my-webpage-format-check:dev
+
+fmt_apply:
+	gofmt -w .
 
 build:
 	bash scripts/build_prod.sh
